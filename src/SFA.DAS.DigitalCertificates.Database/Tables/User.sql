@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[User]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+    [GovUkIdentifier] VARCHAR(100) NOT NULL,
+    [EmailAddress] VARCHAR(100) NOT NULL,
+    [PhoneNumber] VARCHAR(20) NULL,
+    [LastLoginAt] DATETIME2 NULL,
+    [LockedAt] DATETIME2 NULL,
+    [ValidFrom] DATETIME2 (0) GENERATED ALWAYS AS ROW START,
+    [ValidTo] DATETIME2 (0) GENERATED ALWAYS AS ROW END,
+    PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo)
+)
+WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserHistory]));
+GO
