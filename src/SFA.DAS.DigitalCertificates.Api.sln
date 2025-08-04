@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F0113337-E298-4D11-AA06-23B69C2337E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABFC9EAF-042D-448D-9CD3-073DD6D0A18A}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Api.UnitTests", "SFA.DAS.DigitalCertificates.Api.UnitTests\SFA.DAS.DigitalCertificates.Api.UnitTests.csproj", "{0F59142D-9770-862F-D8F0-9BE7955DEFB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Application.UnitTests", "SFA.DAS.DigitalCertificates.Application.UnitTests\SFA.DAS.DigitalCertificates.Application.UnitTests.csproj", "{51296197-D3F9-779A-C4FA-C9117323F2A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Domain.UnitTests", "SFA.DAS.DigitalCertificates.Domain.UnitTests\SFA.DAS.DigitalCertificates.Domain.UnitTests.csproj", "{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Api", "SFA.DAS.DigitalCertificates.Api\SFA.DAS.DigitalCertificates.Api.csproj", "{9D7CE9DD-5EA3-108F-A041-6CB4E3780B12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Application", "SFA.DAS.DigitalCertificates.Application\SFA.DAS.DigitalCertificates.Application.csproj", "{5FEAC171-6FC9-59B5-884B-0E950D5EFC2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Data", "SFA.DAS.DigitalCertificates.Data\SFA.DAS.DigitalCertificates.Data.csproj", "{A2121C90-3761-77C3-3330-E0609B233256}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.DAS.DigitalCertificates.Database", "SFA.DAS.DigitalCertificates.Database\SFA.DAS.DigitalCertificates.Database.sqlproj", "{4EB62E3C-047A-4090-853E-EA91EE6EB484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Domain", "SFA.DAS.DigitalCertificates.Domain\SFA.DAS.DigitalCertificates.Domain.csproj", "{547E76C7-E4D3-8F58-08AA-1D165B8FD209}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F59142D-9770-862F-D8F0-9BE7955DEFB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F59142D-9770-862F-D8F0-9BE7955DEFB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F59142D-9770-862F-D8F0-9BE7955DEFB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F59142D-9770-862F-D8F0-9BE7955DEFB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51296197-D3F9-779A-C4FA-C9117323F2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51296197-D3F9-779A-C4FA-C9117323F2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51296197-D3F9-779A-C4FA-C9117323F2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51296197-D3F9-779A-C4FA-C9117323F2A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7CE9DD-5EA3-108F-A041-6CB4E3780B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7CE9DD-5EA3-108F-A041-6CB4E3780B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7CE9DD-5EA3-108F-A041-6CB4E3780B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7CE9DD-5EA3-108F-A041-6CB4E3780B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FEAC171-6FC9-59B5-884B-0E950D5EFC2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FEAC171-6FC9-59B5-884B-0E950D5EFC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FEAC171-6FC9-59B5-884B-0E950D5EFC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FEAC171-6FC9-59B5-884B-0E950D5EFC2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2121C90-3761-77C3-3330-E0609B233256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2121C90-3761-77C3-3330-E0609B233256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2121C90-3761-77C3-3330-E0609B233256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2121C90-3761-77C3-3330-E0609B233256}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EB62E3C-047A-4090-853E-EA91EE6EB484}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F59142D-9770-862F-D8F0-9BE7955DEFB2} = {F0113337-E298-4D11-AA06-23B69C2337E0}
+		{51296197-D3F9-779A-C4FA-C9117323F2A3} = {F0113337-E298-4D11-AA06-23B69C2337E0}
+		{29DCFDF0-AD53-8DF8-FDC5-E8E1EFA3043A} = {F0113337-E298-4D11-AA06-23B69C2337E0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7F47414-703D-47FF-A992-51F2D169D6F3}
+	EndGlobalSection
+EndGlobal
