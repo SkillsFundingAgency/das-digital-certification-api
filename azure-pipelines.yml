@@ -18,7 +18,7 @@ variables:
 - name: BuildPlatform
   value: any cpu
 - group: RELEASE Management Resources
-- group: RELEASE das-certification-api
+- group: RELEASE das-digital-certification-api
 - name: Deploy
   value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.Reason'], 'Manual'), eq(variables['Build.Reason'], 'PullRequest'))]
 
