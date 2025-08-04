@@ -90,8 +90,7 @@
         "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
         "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
         "databaseName": "[concat(replace(variables('resourceNamePrefix'), 'api', ''), '-db')]",
-        "privateLinkScopeName": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-shared-ampls'))]",
-        "configNames": "SFA.DAS.DigitalCertificates.Api"
+        "privateLinkScopeName": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-shared-ampls'))]"
     },
     "resources": [
         {
@@ -215,7 +214,7 @@
                                 },
                                 {
                                     "name": "ConfigNames",
-                                    "value": "[variables('configNames')]"
+                                    "value": "SFA.DAS.DigitalCertificates.Api"
                                 },
                                 {
                                     "name": "Version",
