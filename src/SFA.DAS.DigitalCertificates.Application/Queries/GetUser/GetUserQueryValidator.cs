@@ -6,8 +6,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUser
     {
         public GetUserQueryValidator()
         {
-            RuleFor(x => x.GovUkIdentifier)
-                .NotNull()
+            RuleFor(x => x.GovUkIdentifier).NotEmpty()
                 .WithMessage("GovUkIdentifier must be provided.");
         }
     }
