@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,5 +17,9 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
         public async Task<User?> Get(string govUkIdentifer)
             => await Entities
                 .FirstOrDefaultAsync(er => er.GovUkIdentifier == govUkIdentifer);
+
+        public async Task<User?> GetByUserId(Guid userId)
+            => await Entities
+                .FirstOrDefaultAsync(er => er.Id == userId);
     }
 }
