@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
     [ApiController]
-    [Route("api/users/")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
