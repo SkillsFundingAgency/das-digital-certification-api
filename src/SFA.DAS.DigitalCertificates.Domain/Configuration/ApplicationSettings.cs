@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using SFA.DAS.Api.Common.Configuration;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Configuration
 {
     public class ApplicationSettings
     {
-        public AzureActiveDirectoryApiConfiguration? AzureAd { get; set; }
+        public AzureActiveDirectoryConfiguration? AzureAd { get; set; }
 
         public string? DbConnectionString { get; set; }
         public string? NServiceBusConnectionString { get; set; }
