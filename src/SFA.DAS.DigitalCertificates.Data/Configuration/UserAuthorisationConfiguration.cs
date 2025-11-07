@@ -6,15 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 namespace SFA.DAS.DigitalCertificates.Data.Configuration
 {
     [ExcludeFromCodeCoverage]
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserAuthorisationConfiguration : IEntityTypeConfiguration<UserAuthorisation>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserAuthorisation> builder)
         {
-            builder.ToTable(nameof(User))
+            builder.ToTable(nameof(UserAuthorisation))
                 .HasKey(x => x.Id);
 
-            builder.HasOne(e => e.UserAuthorisation)
-                .WithOne(u => u.User)
+            builder.HasOne(e => e.User)
+                .WithOne(u => u.UserAuthorisation)
                 .HasForeignKey<UserAuthorisation>(a => a.UserId);
         }
     }

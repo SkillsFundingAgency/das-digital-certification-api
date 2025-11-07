@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
 {
-    public class WhenQueryingUser
+    public class WhenHandlingGetUserQuery
     {
         [Test, AutoMoqData]
         public async Task And_User_IsFound_ByGovUkIdentifier_ThenUserIsReturned(

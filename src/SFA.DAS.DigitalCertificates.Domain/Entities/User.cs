@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Entities
 {
@@ -10,5 +11,9 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public string? PhoneNumber { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public DateTime? LockedAt { get; set; }
+
+        public UserAuthorisation? UserAuthorisation {  get; set; }
+
+        public IEnumerable<UserIdentity>? UserIdentities { get; set; }
     }
 }
