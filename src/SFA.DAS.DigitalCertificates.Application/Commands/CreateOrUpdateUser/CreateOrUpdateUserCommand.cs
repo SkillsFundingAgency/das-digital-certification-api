@@ -12,7 +12,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
         public string? PhoneNumber { get; set; }
 
         public required List<Name> Names { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         public static implicit operator CreateOrUpdateUserCommand(CreateOrUpdateUserRequest source)
         {
