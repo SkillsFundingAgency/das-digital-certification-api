@@ -36,8 +36,4 @@
     <ProjectReference Include="..\SFA.DAS.DigitalCertificates.Data\SFA.DAS.DigitalCertificates.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
 </Project>

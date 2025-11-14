@@ -9,8 +9,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
     public class CreateOrUpdateUserCommandHandler : IRequestHandler<CreateOrUpdateUserCommand, CreateOrUpdateUserCommandResponse>
     {
         private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IUserEntityContext _userEntityContext;       
-        
+        private readonly IUserEntityContext _userEntityContext;
+
         public CreateOrUpdateUserCommandHandler(
             IDateTimeProvider dateTimeProvider,
             IUserEntityContext userEntityContext)
@@ -28,24 +28,20 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
                 user = new User
                 {
                     GovUkIdentifier = command.GovUkIdentifier,
-                    EmailAddress = command.EmailAddress,
-                    PhoneNumber = command.PhoneNumber,
-                    LastLoginAt = _dateTimeProvider.Now
+                    EmailAddress = command.EmailAddress
                 };
 
                 _userEntityContext.Add(user);
-                await _userEntityContext.SaveChangesAsync();
+            }
+            else
+            {
+                user.EmailAddress = command.EmailAddress;
             }
 
-            // check whether the user is authorized i.e. associated with a Uln - if it is then
-            // only the EmailAddress and PhoneNumber should probably be updated? this is
-            // a question awaiting alans input - do we care here anyway or does the api just 
-            // ignore the names in that case
+            user.PhoneNumber = command.PhoneNumber;
+            user.LastLoginAt = _dateTimeProvider.Now;
 
-            // if the names are to be updated then will check if they are different if they 
-            // are different should delete the existing ones and create new ones as updating
-            // them is pointlessly complicated
-
+            await _userEntityContext.SaveChangesAsync(cancellationToken);
 
             return new CreateOrUpdateUserCommandResponse() { UserId = user.Id };
         }
