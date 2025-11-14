@@ -91,6 +91,5 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
             var act = async () => await mediator.Send(new GetUserQuery { GovUkIdentifier = null! });
             await act.Should().ThrowAsync<ValidationException>();
         }
-
     }
 }
