@@ -1,9 +1,7 @@
 ﻿using System;
-using NUnit.Framework;
 using FluentAssertions;
+using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Extensions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Security.Policy;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Extensions
 {
