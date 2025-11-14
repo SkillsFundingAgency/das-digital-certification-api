@@ -121,10 +121,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests
             {
                 var applicationSettings = new ApplicationSettings
                 {
-                    NotificationTemplates = new System.Collections.Generic.List<NotificationTemplate>
-                    {
-                        new NotificationTemplate { TemplateName = "SomeTemplate", TemplateId = Guid.NewGuid() }
-                    }
                 };
 
                 return Options.Create(applicationSettings);

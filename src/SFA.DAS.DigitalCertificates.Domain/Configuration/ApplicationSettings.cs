@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SFA.DAS.Api.Common.Configuration;
+﻿using SFA.DAS.Api.Common.Configuration;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Configuration
 {
@@ -8,12 +7,5 @@ namespace SFA.DAS.DigitalCertificates.Domain.Configuration
         public AzureActiveDirectoryConfiguration? AzureAd { get; set; }
 
         public string? DbConnectionString { get; set; }
-        public string? NServiceBusConnectionString { get; set; }
-        public string? NServiceBusLicense { get; set; }
-
-        /// <summary>
-        /// The GOV.UK Notify email template configuration
-        /// </summary>
-        public List<NotificationTemplate>? NotificationTemplates { get; set; }
     }
 }
