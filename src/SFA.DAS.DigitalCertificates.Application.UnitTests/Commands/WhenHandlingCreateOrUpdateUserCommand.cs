@@ -66,7 +66,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
             // Arrange
             var now = DateTime.UtcNow;
             dateTimeProvider.Setup(x => x.Now).Returns(now);
-            
+
             var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com" };
             userEntityContext.Setup(x => x.Get(command.GovUkIdentifier))
                 .ReturnsAsync(existingUser);

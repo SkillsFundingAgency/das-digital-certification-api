@@ -10,7 +10,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
     {
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IUserEntityContext _userEntityContext;
-        
+
         public CreateOrUpdateUserCommandHandler(
             IDateTimeProvider dateTimeProvider,
             IUserEntityContext userEntityContext)

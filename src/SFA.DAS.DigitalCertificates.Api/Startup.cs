@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using SFA.DAS.Api.Common.AppStart;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DigitalCertificates.Api.AppStart;
@@ -156,11 +155,6 @@ namespace SFA.DAS.DigitalCertificates.Api
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/ping");
             });
-        }
-
-        public void ConfigureContainer(UpdateableServiceProvider serviceProvider)
-        {
-            serviceProvider.StartNServiceBus(Configuration).GetAwaiter().GetResult();
         }
     }
 }

@@ -1,8 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using SFA.DAS.NServiceBus.Configuration.MicrosoftDependencyInjection;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.DigitalCertificates.Api
 {
@@ -19,7 +17,6 @@ namespace SFA.DAS.DigitalCertificates.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .UseNServiceBusContainer();
+                });
     }
 }

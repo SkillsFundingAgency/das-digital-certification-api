@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>SFA.DAS.RequestApprenticeTraining.Database</Name>
+    <Name>SFA.DAS.DigitalCertificates.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{4eb62e3c-047a-4090-853e-ea91ee6eb484}</ProjectGuid>
@@ -12,8 +12,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>SFA.DAS.RequestApprenticeTraining.Database</RootNamespace>
-    <AssemblyName>SFA.DAS.RequestApprenticeTraining.Database</AssemblyName>
+    <RootNamespace>SFA.DAS.DigitalCertificates.Database</RootNamespace>
+    <AssemblyName>SFA.DAS.DigitalCertificates.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
