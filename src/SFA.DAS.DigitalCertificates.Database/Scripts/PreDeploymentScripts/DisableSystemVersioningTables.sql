@@ -21,3 +21,18 @@ BEGIN
     );
 END
 
+IF EXISTS (
+    SELECT 1
+    FROM sys.tables t
+    JOIN sys.schemas s ON t.schema_id = s.schema_id
+    WHERE t.name = 'UserAuthorisation'
+    AND s.name = 'dbo'
+    AND t.temporal_type = 2
+)
+BEGIN
+    ALTER TABLE [dbo].[UserAuthorisation]
+    SET (
+        SYSTEM_VERSIONING = OFF
+    );
+END
+

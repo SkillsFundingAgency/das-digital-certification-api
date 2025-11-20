@@ -80,6 +80,8 @@
     <None Include="Scripts\PostDeploymentScripts\LookupData\SynchronizeLookupData.sql" />
     <Build Include="Tables\UserHistory.sql" />
     <Build Include="Tables\ActionType.sql" />
+    <Build Include="Tables\UserAuthorisation.sql" />
+    <Build Include="Tables\UserAuthorisationHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

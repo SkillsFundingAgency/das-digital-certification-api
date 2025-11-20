@@ -57,7 +57,11 @@ namespace SFA.DAS.DigitalCertificates.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder
+                .ApplyConfiguration(new UserConfiguration())
+                .ApplyConfiguration(new UserAuthorisationConfiguration())
+                .ApplyConfiguration(new UserIdentityConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -5,6 +5,7 @@ using AutoFixture.NUnit3;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -59,7 +60,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         }
 
         [Test, MoqAutoData]
-        public async Task And_CommandThrowsException_Then_ReturnBadRequest(
+        public async Task And_CommandThrowsException_Then_Return500Result(
             CreateOrUpdateUserRequest request,
             [Frozen] Mock<IMediator> mediator,
             [Greedy] UsersController controller)
@@ -73,7 +74,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await controller.CreateOrUpdateUser(request);
 
             // Assert
-            result.Should().BeOfType<BadRequestResult>();
+            var statusCodeResult = result as StatusCodeResult;
+            
+            statusCodeResult.Should().NotBeNull();
+            statusCodeResult!.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         }
     }
 }
