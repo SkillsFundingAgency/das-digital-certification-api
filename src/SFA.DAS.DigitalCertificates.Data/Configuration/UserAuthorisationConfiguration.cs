@@ -12,10 +12,6 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
         {
             builder.ToTable(nameof(UserAuthorisation))
                 .HasKey(x => x.Id);
-
-            builder.HasOne(e => e.User)
-                .WithOne(u => u.UserAuthorisation)
-                .HasForeignKey<UserAuthorisation>(a => a.UserId);
         }
     }
 }

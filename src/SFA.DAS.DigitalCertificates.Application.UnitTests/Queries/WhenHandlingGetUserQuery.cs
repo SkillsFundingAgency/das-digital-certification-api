@@ -65,7 +65,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
 
         [TestCase(null)]
         [TestCase("")]
-        public async Task GetUserQueryValidator_Throws_When_GovUkIdentifier_IsNull(string govUkIdentifier)
+        public async Task And_GetUserQueryValidator_Throws_When_GovUkIdentifier_IsNull(string govUkIdentifier)
         {
             var validator = new GetUserQueryValidator();
             var query = new GetUserQuery { GovUkIdentifier = govUkIdentifier };
@@ -77,13 +77,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
         }
 
         [Test]
-        public async Task Sending_Query_With_Null_Id_Throws_ValidationException()
+        public async Task And_Sending_Query_With_Null_Id_Throws_ValidationException()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserQuery>());
             services.AddValidatorsFromAssemblyContaining<GetUserQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped<IUserEntityContext, DigitalCertificatesDataContext>(); // your testable/in-memory registration
+            services.AddScoped<IUserEntityContext, DigitalCertificatesDataContext>();
 
             using var sp = services.BuildServiceProvider();
             var mediator = sp.GetRequiredService<IMediator>();

@@ -1,13 +1,14 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
-using System;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -40,7 +41,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve user for {GovUkIdentifier}", govUkIdentifier);
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -60,7 +61,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create or update user.");
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -80,7 +81,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve user authorisation for {UserId}", userId);
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

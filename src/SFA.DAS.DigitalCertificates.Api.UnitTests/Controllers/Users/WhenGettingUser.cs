@@ -1,16 +1,17 @@
-﻿using AutoFixture.NUnit3;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoFixture.NUnit3;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.Testing.AutoFixture;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
@@ -55,8 +56,8 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         }
 
         [Test, MoqAutoData]
-        public async Task And_MediatorCommandIsUnsuccessful_Then_ReturnBadRequest
-            (string govUkIdentifier,
+        public async Task And_MediatorCommandIsUnsuccessful_Then_Return500Result(
+            string govUkIdentifier,
             [Frozen] Mock<IMediator> mediator,
             [Greedy] UsersController controller)
         {
@@ -69,7 +70,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await controller.GetUser(govUkIdentifier);
 
             // Assert
-            result.Should().BeOfType<BadRequestResult>();
+            var statusCodeResult = result as StatusCodeResult;
+
+            statusCodeResult.Should().NotBeNull();
+            statusCodeResult!.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         }
     }
 }
