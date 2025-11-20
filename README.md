@@ -60,8 +60,8 @@ This utility uses the standard Apprenticeship Service configuration. All configu
 
 ```
 * .NetCore 8.0
-* Azure Functions V4
 * Azure Table Storage
+* MediatR
 * NUnit
 * Moq
 * FluentAssertions

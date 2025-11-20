@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -6,15 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using NServiceBus.ObjectBuilder.MSDependencyInjection;
+using SFA.DAS.Api.Common.AppStart;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DigitalCertificates.Api.AppStart;
 using SFA.DAS.DigitalCertificates.Api.Authentication;
-using SFA.DAS.DigitalCertificates.Api.Authorization;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 
 namespace SFA.DAS.DigitalCertificates.Api
 {
@@ -53,13 +53,20 @@ namespace SFA.DAS.DigitalCertificates.Api
             var applicationSettingsSection = Configuration.GetSection(nameof(ApplicationSettings));
             var applicationSettings = applicationSettingsSection.Get<ApplicationSettings>();
 
+            var policies = new Dictionary<string, string>
+                {
+                    {PolicyNames.Default, RoleNames.Default}
+                };
+
             services.Configure<ApplicationSettings>(applicationSettingsSection);
             services.AddSingleton(s => s.GetRequiredService<IOptions<ApplicationSettings>>().Value);
 
             var isDevelopment = Environment.IsDevelopment();
-            services
-                .AddApiAuthentication(applicationSettings, isDevelopment)
-                .AddApiAuthorization(isDevelopment);
+            if (!isDevelopment)
+            {
+                services
+                    .AddAuthentication(applicationSettings?.AzureAd, policies);
+            }
 
             services.AddSwaggerGen(opt =>
             {
@@ -129,25 +136,25 @@ namespace SFA.DAS.DigitalCertificates.Api
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SFA.DAS.DigitalCertificates.Api v1"));
-
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SFA.DAS.DigitalCertificates.Api v1");
+                c.RoutePrefix = string.Empty;
+            });
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseMiddleware<SecurityHeadersMiddleware>();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHealthChecks("/ping");
             });
-        }
-
-        public void ConfigureContainer(UpdateableServiceProvider serviceProvider)
-        {
-            serviceProvider.StartNServiceBus(Configuration).GetAwaiter().GetResult();
         }
     }
 }
