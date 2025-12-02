@@ -7,7 +7,8 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
     {
         public Guid UserId { get; set; }
         public Guid CertificateId { get; set; }
-        public string? CertificateType { get; set; }
+        public required string CertificateType { get; set; }
+        public required string CourseName { get; set; }
         public List<SharingDetail>? Sharings { get; set; }
     }
 
@@ -25,7 +26,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
     public class SharingEmailDetail
     {
         public Guid SharingEmailId { get; set; }
-        public string? EmailAddress { get; set; }
+        public required string EmailAddress { get; set; }
         public Guid EmailLinkCode { get; set; }
         public DateTime SentTime { get; set; }
         public List<DateTime>? SharingEmailAccess { get; set; }

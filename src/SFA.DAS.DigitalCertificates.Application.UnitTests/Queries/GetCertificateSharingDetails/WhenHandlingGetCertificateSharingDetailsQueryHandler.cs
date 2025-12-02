@@ -9,7 +9,7 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Domain.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 using UserEntity = SFA.DAS.DigitalCertificates.Domain.Entities.User;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertificateSharingDetails
@@ -65,8 +65,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             _userContextMock.Setup(x => x.GetByUserId(userId)).ReturnsAsync(user);
             var sharings = new List<Sharing>
             {
-                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-2), ExpiryTime = DateTime.UtcNow.AddDays(1), Status = SharingStatus.Live.ToString() },
-                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-1), ExpiryTime = DateTime.UtcNow.AddDays(2), Status = "Deleted" }
+                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA",CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-2), ExpiryTime = DateTime.UtcNow.AddDays(1), Status = SharingStatus.Live.ToString() },
+                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA",CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-1), ExpiryTime = DateTime.UtcNow.AddDays(2), Status = "Deleted" }
             };
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 
@@ -86,8 +86,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             _userContextMock.Setup(x => x.GetByUserId(userId)).ReturnsAsync(user);
             var sharings = new List<Sharing>
             {
-                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-2), ExpiryTime = DateTime.UtcNow.AddDays(1), Status = SharingStatus.Live.ToString() },
-                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-1), ExpiryTime = DateTime.UtcNow.AddDays(2), Status = SharingStatus.Live.ToString() }
+                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA",CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-2), ExpiryTime = DateTime.UtcNow.AddDays(1), Status = SharingStatus.Live.ToString() },
+                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA",CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-1), ExpiryTime = DateTime.UtcNow.AddDays(2), Status = SharingStatus.Live.ToString() }
             };
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 

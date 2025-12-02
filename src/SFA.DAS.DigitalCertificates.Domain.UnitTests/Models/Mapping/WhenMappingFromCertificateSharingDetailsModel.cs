@@ -14,6 +14,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
             var certificateType = "TestType";
+            var courseName = "TestType";
             var sharings = new List<SharingDetail>
             {
                 new SharingDetail
@@ -33,6 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
                 UserId = userId,
                 CertificateId = certificateId,
                 CertificateType = certificateType,
+                CourseName = courseName,
                 Sharings = sharings
             };
 
