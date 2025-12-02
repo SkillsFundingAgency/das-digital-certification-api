@@ -19,11 +19,12 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
 
             services.AddValidatorsFromAssemblyContaining<GetUserQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            
+
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
         }
     }
 }

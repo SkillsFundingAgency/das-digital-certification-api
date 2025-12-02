@@ -8,5 +8,11 @@
             SupportUlnNotFound = 1,
             UserLocked = 2
         }
+        public enum SharingStatus
+        {
+            Live = 0,
+            Deleted = 1,
+            Expired = 2
+        }
     }
 }

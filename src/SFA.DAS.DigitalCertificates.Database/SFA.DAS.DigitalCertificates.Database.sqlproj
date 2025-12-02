@@ -82,6 +82,10 @@
     <Build Include="Tables\ActionType.sql" />
     <Build Include="Tables\UserAuthorisation.sql" />
     <Build Include="Tables\UserAuthorisationHistory.sql" />
+    <Build Include="Tables\Sharing.sql" />
+    <Build Include="Tables\SharingEmail.sql" />
+    <Build Include="Tables\SharingEmailAccess.sql" />
+    <Build Include="Tables\SharingAccess.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
