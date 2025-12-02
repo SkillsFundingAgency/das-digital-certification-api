@@ -4,6 +4,7 @@ using SFA.DAS.DigitalCertificates.Domain.Models;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails
 {
@@ -43,7 +44,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingD
                 .Take(request.Limit ?? int.MaxValue)
                 .ToList();
 
-            var certificateType = liveSharings.FirstOrDefault()?.CertificateType;
+            var certificateType = liveSharings.FirstOrDefault()?.CertificateType ?? string.Empty;
+            var courseName = liveSharings.FirstOrDefault()?.CourseName ?? string.Empty;
 
             var sharingDetails = liveSharings.Select(s => new SharingDetail
             {
@@ -69,6 +71,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingD
                 {
                     UserId = request.UserId,
                     CertificateId = request.CertificateId,
+                    CourseName = courseName,
                     CertificateType = certificateType,
                     Sharings = sharingDetails
                 }

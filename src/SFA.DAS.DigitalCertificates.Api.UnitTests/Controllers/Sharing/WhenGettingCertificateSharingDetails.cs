@@ -47,7 +47,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            var details = new CertificateSharingDetails { UserId = userId, CertificateId = certId };
+            var details = new CertificateSharingDetails { UserId = userId, CertificateId = certId, CertificateType = "TypeA", CourseName = "CourseName" };
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new GetCertificateSharingDetailsQueryResult { SharingDetails = details });
 

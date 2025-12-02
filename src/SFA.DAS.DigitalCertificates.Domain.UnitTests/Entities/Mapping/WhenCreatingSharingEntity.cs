@@ -15,7 +15,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
             var certificateType = "TestType";
+<<<<<<< HEAD
             var courseName = "CourseName";
+=======
+            var courseName = "courseName";
+>>>>>>> P2-2666-Get_sharing_details_endpoint
             var linkCode = Guid.NewGuid();
             var createdAt = DateTime.UtcNow;
             var expiry = createdAt.AddDays(1);

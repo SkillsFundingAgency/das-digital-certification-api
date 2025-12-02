@@ -25,6 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
                 CertificateType = "TypeA",
+                CourseName = "CourseName",
                 Sharings = new List<SharingDetail>()
             };
             var result = new GetCertificateSharingDetailsQueryResult { SharingDetails = details };
