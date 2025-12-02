@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Domain.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing
 {

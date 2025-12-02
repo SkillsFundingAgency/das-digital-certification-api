@@ -8,13 +8,11 @@
             SupportUlnNotFound = 1,
             UserLocked = 2
         }
-
         public enum CertificateType
         {
             Standard,
             Framework
         }
-
         public enum SharingStatus
         {
             Live = 0,
