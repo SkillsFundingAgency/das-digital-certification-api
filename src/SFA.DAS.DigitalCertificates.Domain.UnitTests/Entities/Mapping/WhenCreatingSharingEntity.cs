@@ -15,6 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
             var certificateType = "TestType";
+            var courseName = "CourseName";
             var linkCode = Guid.NewGuid();
             var createdAt = DateTime.UtcNow;
             var expiry = createdAt.AddDays(1);
@@ -26,6 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 UserId = userId,
                 CertificateId = certificateId,
                 CertificateType = certificateType,
+                CourseName = courseName,
                 LinkCode = linkCode,
                 CreatedAt = createdAt,
                 ExpiryTime = expiry,

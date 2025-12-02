@@ -19,7 +19,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 Id = id,
                 SharingId = sharingId,
                 AccessedAt = accessedAt,
-                Sharing = new Sharing { Id = sharingId, CertificateType = "TestType", Status = "Active" }
+                Sharing = new Sharing { Id = sharingId, CertificateType = "TestType", CourseName = "CourseName", Status = "Active" }
             };
 
             access.Id.Should().Be(id);

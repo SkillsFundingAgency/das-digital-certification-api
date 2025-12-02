@@ -41,7 +41,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 CertificateId = request.CertificateId,
-                CourseName= request.CourseName,
+                CourseName = request.CourseName,
                 CertificateType = request.CertificateType,
                 LinkCode = linkCode,
                 CreatedAt = now,
@@ -62,9 +62,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
                 SharingNumber = sharingNumber,
                 CreatedAt = sharing.CreatedAt,
                 LinkCode = sharing.LinkCode,
-                ExpiryTime = sharing.ExpiryTime,
-                SharingAccess = new(),
-                SharingEmails = new()
+                ExpiryTime = sharing.ExpiryTime
             };
         }
     }

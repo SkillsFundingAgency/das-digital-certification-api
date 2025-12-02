@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
@@ -27,9 +26,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
                 SharingNumber = 1,
                 CreatedAt = now,
                 LinkCode = linkCode,
-                ExpiryTime = expiry,
-                SharingAccess = new List<object>(),
-                SharingEmails = new List<object>()
+                ExpiryTime = expiry
             };
             response.UserId.Should().Be(userId);
             response.CertificateId.Should().Be(certificateId);
@@ -40,8 +37,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             response.CreatedAt.Should().Be(now);
             response.LinkCode.Should().Be(linkCode);
             response.ExpiryTime.Should().Be(expiry);
-            response.SharingAccess.Should().BeEmpty();
-            response.SharingEmails.Should().BeEmpty();
         }
     }
 }

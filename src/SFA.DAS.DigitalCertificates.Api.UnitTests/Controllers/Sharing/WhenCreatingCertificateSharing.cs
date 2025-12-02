@@ -51,12 +51,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 CertificateType = "Standard",
                 CourseName = "Test Course",
                 SharingId = sharingId,
-                SharingNumber =1,
+                SharingNumber = 1,
                 CreatedAt = now,
                 LinkCode = linkCode,
-                ExpiryTime = expiry,
-                SharingAccess = [],
-                SharingEmails = []
+                ExpiryTime = expiry
             };
             _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ReturnsAsync(response);
 
@@ -77,8 +75,6 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             returned.CreatedAt.Should().Be(now);
             returned.LinkCode.Should().Be(linkCode);
             returned.ExpiryTime.Should().Be(expiry);
-            returned.SharingAccess.Should().BeEmpty();
-            returned.SharingEmails.Should().BeEmpty();
         }
 
         [Test]

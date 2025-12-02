@@ -54,10 +54,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             result.CreatedAt.Should().Be(now);
             result.ExpiryTime.Should().Be(now.AddDays(_settings.CertificateSharingExpiryDays));
             result.SharingNumber.Should().Be(1);
-            result.SharingAccess.Should().NotBeNull();
-            result.SharingAccess.Should().BeEmpty();
-            result.SharingEmails.Should().NotBeNull();
-            result.SharingEmails.Should().BeEmpty();
         }
 
         [Test]

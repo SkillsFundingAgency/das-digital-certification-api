@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing
 {
@@ -14,7 +13,5 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
         public DateTime CreatedAt { get; set; }
         public Guid LinkCode { get; set; }
         public DateTime ExpiryTime { get; set; }
-        public List<object> SharingAccess { get; set; } = new();
-        public List<object> SharingEmails { get; set; } = new();
     }
 }

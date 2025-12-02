@@ -24,7 +24,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 EmailAddress = email,
                 EmailLinkCode = emailLinkCode,
                 SentTime = sentTime,
-                Sharing = new Sharing { Id = sharingId, CertificateType = "TestType", Status = "Active" },
+                Sharing = new Sharing { Id = sharingId, CertificateType = "TestType", CourseName = "CourseName", Status = "Active" },
                 SharingEmailAccesses = new List<SharingEmailAccess>()
             };
 

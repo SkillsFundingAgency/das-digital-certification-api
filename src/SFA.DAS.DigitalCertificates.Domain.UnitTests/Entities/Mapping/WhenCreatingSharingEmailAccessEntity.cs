@@ -19,7 +19,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 Id = id,
                 SharingEmailId = sharingEmailId,
                 AccessedAt = accessedAt,
-                SharingEmail = new SharingEmail { Id = sharingEmailId, EmailAddress = "test@example.com", EmailLinkCode = Guid.NewGuid(), SentTime = DateTime.UtcNow, Sharing = new Sharing { Id = Guid.NewGuid(), CertificateType = "TestType", Status = "Active" } }
+                SharingEmail = new SharingEmail { Id = sharingEmailId, EmailAddress = "test@example.com", EmailLinkCode = Guid.NewGuid(), SentTime = DateTime.UtcNow, Sharing = new Sharing { Id = Guid.NewGuid(), CertificateType = "TestType", CourseName = "CourseName", Status = "Active" } }
             };
 
             access.Id.Should().Be(id);
