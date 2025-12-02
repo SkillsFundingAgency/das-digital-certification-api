@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
@@ -50,6 +51,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve certificate sharing details for User {UserId} and Certificate {CertificateId}", user, certificateId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCertificateSharing([FromBody] CreateCertificateSharingCommand request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create certificate sharing for User {UserId} and Certificate {CertificateId}", request.UserId, request.CertificateId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create certificate sharing");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

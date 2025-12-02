@@ -9,6 +9,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public Guid UserId { get; set; }
         public Guid CertificateId { get; set; }
         public required string CertificateType { get; set; }
+        public required string CourseName { get; set; }
         public Guid LinkCode { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ExpiryTime { get; set; }

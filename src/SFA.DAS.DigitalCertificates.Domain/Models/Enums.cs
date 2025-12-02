@@ -8,5 +8,11 @@
             SupportUlnNotFound = 1,
             UserLocked = 2
         }
+
+        public enum CertificateType
+        {
+            Standard,
+            Framework
+        }
     }
 }
