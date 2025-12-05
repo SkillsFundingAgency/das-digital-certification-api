@@ -35,12 +35,6 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     Limit = limit
                 });
 
-                if (result.SharingDetails == null)
-                {
-                    _logger.LogWarning("User {UserId} not found", user);
-                    return BadRequest(new { error = $"User {user} unknown" });
-                }
-
                 return Ok(result.SharingDetails);
             }
             catch (ValidationException ex)

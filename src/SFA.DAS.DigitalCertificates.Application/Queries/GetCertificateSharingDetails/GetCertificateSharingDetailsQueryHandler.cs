@@ -11,27 +11,14 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingD
     public class GetCertificateSharingDetailsQueryHandler : IRequestHandler<GetCertificateSharingDetailsQuery, GetCertificateSharingDetailsQueryResult>
     {
         private readonly ISharingEntityContext _sharingContext;
-        private readonly IUserEntityContext _userContext;
 
-        public GetCertificateSharingDetailsQueryHandler(
-            ISharingEntityContext sharingContext,
-            IUserEntityContext userContext)
+        public GetCertificateSharingDetailsQueryHandler(ISharingEntityContext sharingContext)
         {
             _sharingContext = sharingContext;
-            _userContext = userContext;
         }
 
         public async Task<GetCertificateSharingDetailsQueryResult> Handle(GetCertificateSharingDetailsQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userContext.GetByUserId(request.UserId);
-            if (user == null)
-            {
-                return new GetCertificateSharingDetailsQueryResult
-                {
-                    SharingDetails = null
-                };
-            }
-
             var allSharings = await _sharingContext.GetAllSharings(request.UserId, request.CertificateId);
 
             var sharingNumberMap = allSharings
