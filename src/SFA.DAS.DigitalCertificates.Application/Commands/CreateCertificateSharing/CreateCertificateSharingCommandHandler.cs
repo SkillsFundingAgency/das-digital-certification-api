@@ -38,7 +38,6 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
 
             var sharing = new Sharing
             {
-                Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 CertificateId = request.CertificateId,
                 CourseName = request.CourseName,
