@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -30,19 +31,6 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         }
 
         [Test]
-        public async Task And_UserNotFound_Then_ReturnBadRequest()
-        {
-            var userId = Guid.NewGuid();
-            var certId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new GetCertificateSharingDetailsQueryResult { SharingDetails = null });
-
-            var result = await _controller.GetCertificateSharingDetails(userId, certId);
-
-            result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Test]
         public async Task And_ValidRequest_Then_ReturnOk()
         {
             var userId = Guid.NewGuid();
@@ -58,13 +46,35 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         }
 
         [Test]
+        public async Task And_NoSharingDetailsFound_Then_ReturnOkWithEmptyDetails()
+        {
+            var userId = Guid.NewGuid();
+            var certId = Guid.NewGuid();
+            var emptyDetails = new CertificateSharingDetails
+            {
+                UserId = userId,
+                CertificateId = certId,
+                CertificateType = string.Empty,
+                CourseName = string.Empty,
+                Sharings = new List<SharingDetail>()
+            };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetCertificateSharingDetailsQueryResult { SharingDetails = emptyDetails });
+
+            var result = await _controller.GetCertificateSharingDetails(userId, certId);
+
+            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(emptyDetails);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
         public async Task And_ValidationException_Then_ReturnBadRequestWithErrors()
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
             var validationException = new ValidationException("Validation failed");
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(validationException);
+                .ThrowsAsync(validationException);
 
             var result = await _controller.GetCertificateSharingDetails(userId, certId);
 
@@ -77,7 +87,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new Exception("Unexpected error"));
+                .ThrowsAsync(new Exception("Unexpected error"));
 
             var result = await _controller.GetCertificateSharingDetails(userId, certId);
 
