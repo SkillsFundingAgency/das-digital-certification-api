@@ -27,7 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
         }
 
         [Test]
-        public async Task And_NoSharings_Then_ReturnsEmptySharings()
+        public async Task And_NoSharings_Then_ReturnsNullSharingDetails()
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
@@ -36,8 +36,24 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId };
             var result = await _handler.Handle(query, CancellationToken.None);
 
-            result.SharingDetails.Should().NotBeNull();
-            result.SharingDetails!.Sharings.Should().BeEmpty();
+            result.SharingDetails.Should().BeNull();
+        }
+
+        [Test]
+        public async Task And_NoLiveSharings_Then_ReturnsNullSharingDetails()
+        {
+            var userId = Guid.NewGuid();
+            var certId = Guid.NewGuid();
+            var sharings = new List<Sharing>
+            {
+                new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = "TypeA", CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = DateTime.UtcNow.AddDays(-2), ExpiryTime = DateTime.UtcNow.AddDays(1), Status = "Deleted" }
+            };
+            _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
+
+            var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId };
+            var result = await _handler.Handle(query, CancellationToken.None);
+
+            result.SharingDetails.Should().BeNull();
         }
 
         [Test]
@@ -55,6 +71,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId };
             var result = await _handler.Handle(query, CancellationToken.None);
 
+            result.SharingDetails.Should().NotBeNull();
             result.SharingDetails!.Sharings.Should().HaveCount(1);
             result.SharingDetails!.Sharings.First().SharingId.Should().Be(sharings[0].Id);
         }
@@ -74,6 +91,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId, Limit = 1 };
             var result = await _handler.Handle(query, CancellationToken.None);
 
+            result.SharingDetails.Should().NotBeNull();
             result.SharingDetails!.Sharings.Should().HaveCount(1);
         }
     }
