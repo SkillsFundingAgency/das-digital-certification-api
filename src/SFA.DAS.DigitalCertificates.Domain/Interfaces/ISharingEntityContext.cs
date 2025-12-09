@@ -15,12 +15,21 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
         public async Task<List<Sharing>> GetAllSharings(Guid userId, Guid certificateId)
         {
             return await Entities
+                .AsNoTracking()
                 .Include(s => s.SharingAccesses)
                 .Include(s => s.SharingEmails!)
                 .ThenInclude(se => se.SharingEmailAccesses)
                 .Where(s => s.UserId == userId && s.CertificateId == certificateId)
                 .OrderBy(s => s.CreatedAt)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetSharingsCount(Guid userId, Guid certificateId)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Where(s => s.UserId == userId && s.CertificateId == certificateId)
+                .CountAsync();
         }
     }
 }

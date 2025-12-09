@@ -17,6 +17,6 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
 
         public User? User { get; set; }
         public ICollection<SharingAccess>? SharingAccesses { get; set; }
-        public ICollection<SharingEmail>? SharingEmails { get; set; } = new List<SharingEmail>();
+        public ICollection<SharingEmail>? SharingEmails { get; set; }
     }
 }

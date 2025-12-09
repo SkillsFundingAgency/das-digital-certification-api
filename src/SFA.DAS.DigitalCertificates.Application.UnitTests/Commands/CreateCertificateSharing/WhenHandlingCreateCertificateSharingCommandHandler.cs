@@ -35,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         {
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _sharingContextMock.Setup(x => x.GetAllSharings(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(new List<Sharing>());
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             var command = new CreateCertificateSharingCommand
             {
@@ -61,20 +61,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         {
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            var existingSharings = new List<Sharing>
-            {
-                new Sharing
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedAt = now.AddDays(-1),
-                    CertificateType = "Standard",
-                    CourseName = "Test course",
-                    Status = "Live",
-                    SharingAccesses = new List<SharingAccess>(),
-                    SharingEmails = new List<SharingEmail>()
-                }
-            };
-            _sharingContextMock.Setup(x => x.GetAllSharings(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(existingSharings);
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(1);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             var command = new CreateCertificateSharingCommand
             {
@@ -94,7 +81,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         {
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _sharingContextMock.Setup(x => x.GetAllSharings(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(new List<Sharing>());
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("DB error"));
             var command = new CreateCertificateSharingCommand
             {

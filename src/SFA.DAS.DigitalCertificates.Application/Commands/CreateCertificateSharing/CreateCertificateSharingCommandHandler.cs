@@ -33,8 +33,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
             var expiryTime = now.AddDays(expiryDays);
             var linkCode = Guid.NewGuid();
 
-            var allSharings = await _sharingContext.GetAllSharings(request.UserId, request.CertificateId);
-            var sharingNumber = allSharings.Count + 1;
+            var sharingsCount = await _sharingContext.GetSharingsCount(request.UserId, request.CertificateId);
+            var sharingNumber = sharingsCount + 1;
 
             var sharing = new Sharing
             {
