@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
@@ -45,6 +46,36 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve sharings for User {UserId} and Certificate {CertificateId}", user, certificateId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSharingById(Guid id, [FromQuery] int? limit = null)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSharingByIdQuery
+                {
+                    SharingId = id,
+                    Limit = limit
+                });
+
+                if (result.Sharing == null)
+                {
+                    return BadRequest(new { message = "Sharing not found" });
+                }
+
+                return Ok(result.Sharing);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve sharing by id {SharingId}", id);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve sharing by id {SharingId}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
