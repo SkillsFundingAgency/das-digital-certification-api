@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SFA.DAS.DigitalCertificates.Domain.Entities;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using SFA.DAS.DigitalCertificates.Domain.Entities;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
 {

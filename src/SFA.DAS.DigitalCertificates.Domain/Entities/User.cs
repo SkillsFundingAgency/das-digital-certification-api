@@ -12,7 +12,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public DateTime? LastLoginAt { get; set; }
         public DateTime? LockedAt { get; set; }
 
-        public UserAuthorisation? UserAuthorisation {  get; set; }
+        public UserAuthorisation? UserAuthorisation { get; set; }
 
         public IEnumerable<UserIdentity>? UserIdentities { get; set; }
     }

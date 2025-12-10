@@ -141,7 +141,7 @@ namespace SFA.DAS.DigitalCertificates.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "SFA.DAS.DigitalCertificates.Api v1");
                 c.RoutePrefix = string.Empty;
             });
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

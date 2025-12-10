@@ -1,7 +1,7 @@
-﻿using MediatR;
-using SFA.DAS.DigitalCertificates.Application.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MediatR;
+using SFA.DAS.DigitalCertificates.Application.Models;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
 {

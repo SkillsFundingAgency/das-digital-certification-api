@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 using Azure.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ using SFA.DAS.DigitalCertificates.Data.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.DigitalCertificates.Data
 {
@@ -20,9 +20,9 @@ namespace SFA.DAS.DigitalCertificates.Data
         private readonly ChainedTokenCredential? _chainedTokenCredentialProvider;
 
         public virtual DbSet<User> Users { get; set; }
-        
+
         DbSet<User> IEntityContext<User>.Entities => Users;
-        
+
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options)
             : base(options)
@@ -32,7 +32,7 @@ namespace SFA.DAS.DigitalCertificates.Data
 
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options,
-            ChainedTokenCredential chainedTokenCredentialProvider) 
+            ChainedTokenCredential chainedTokenCredentialProvider)
             : base(options)
         {
             _configuration = config?.Value;

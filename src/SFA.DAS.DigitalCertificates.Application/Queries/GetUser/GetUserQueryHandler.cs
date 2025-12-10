@@ -1,9 +1,9 @@
-﻿using MediatR;
-using SFA.DAS.DigitalCertificates.Domain.Entities;
-using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using SFA.DAS.DigitalCertificates.Domain.Entities;
+using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUser
 {

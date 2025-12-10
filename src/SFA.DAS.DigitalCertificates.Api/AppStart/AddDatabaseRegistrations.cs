@@ -1,11 +1,11 @@
-﻿using Azure.Identity;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
-using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.DigitalCertificates.Api.AppStart
 {
