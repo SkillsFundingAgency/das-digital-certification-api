@@ -2,11 +2,11 @@ using FluentValidation;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using System;
 
-namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 {
-    public class CreateCertificateSharingCommandValidator : AbstractValidator<CreateCertificateSharingCommand>
+    public class CreateSharingCommandValidator : AbstractValidator<CreateSharingCommand>
     {
-        public CreateCertificateSharingCommandValidator()
+        public CreateSharingCommandValidator()
         {
             RuleFor(x => x.UserId)
             .NotEmpty().WithMessage("UserId must not be empty");

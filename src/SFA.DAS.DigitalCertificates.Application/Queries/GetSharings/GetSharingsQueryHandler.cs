@@ -6,18 +6,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
 {
-    public class GetCertificateSharingDetailsQueryHandler : IRequestHandler<GetCertificateSharingDetailsQuery, GetCertificateSharingDetailsQueryResult>
+    public class GetSharingsQueryHandler : IRequestHandler<GetSharingsQuery, GetSharingsQueryResult>
     {
         private readonly ISharingEntityContext _sharingContext;
 
-        public GetCertificateSharingDetailsQueryHandler(ISharingEntityContext sharingContext)
+        public GetSharingsQueryHandler(ISharingEntityContext sharingContext)
         {
             _sharingContext = sharingContext;
         }
 
-        public async Task<GetCertificateSharingDetailsQueryResult> Handle(GetCertificateSharingDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<GetSharingsQueryResult> Handle(GetSharingsQuery request, CancellationToken cancellationToken)
         {
             var allSharings = await _sharingContext.GetAllSharings(request.UserId, request.CertificateId);
 
@@ -52,9 +52,9 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingD
                 }).ToList()
             }).ToList();
 
-            return new GetCertificateSharingDetailsQueryResult
+            return new GetSharingsQueryResult
             {
-                SharingDetails = new CertificateSharingDetails
+                SharingDetails = new CertificateSharings
                 {
                     UserId = request.UserId,
                     CertificateId = request.CertificateId,

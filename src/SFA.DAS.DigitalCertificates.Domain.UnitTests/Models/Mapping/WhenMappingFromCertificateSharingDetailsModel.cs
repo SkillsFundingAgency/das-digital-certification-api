@@ -29,7 +29,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
                 }
             };
 
-            var model = new CertificateSharingDetails
+            var model = new CertificateSharings
             {
                 UserId = userId,
                 CertificateId = certificateId,

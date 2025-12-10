@@ -1,8 +1,8 @@
 using System;
 
-namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 {
-    public class CreateCertificateSharingCommandResponse
+    public class CreateSharingCommandResponse
     {
         public Guid UserId { get; set; }
         public Guid CertificateId { get; set; }

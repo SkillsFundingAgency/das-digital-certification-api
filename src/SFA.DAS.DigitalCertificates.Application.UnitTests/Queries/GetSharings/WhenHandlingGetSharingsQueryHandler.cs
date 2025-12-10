@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertificateSharingDetails
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
 {
     [TestFixture]
-    public class WhenHandlingGetCertificateSharingDetailsQueryHandler
+    public class WhenHandlingGetSharingsQueryHandler
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
-        private GetCertificateSharingDetailsQueryHandler _handler = null!;
+        private GetSharingsQueryHandler _handler = null!;
 
         [SetUp]
         public void SetUp()
         {
             _sharingContextMock = new Mock<ISharingEntityContext>();
-            _handler = new GetCertificateSharingDetailsQueryHandler(_sharingContextMock.Object);
+            _handler = new GetSharingsQueryHandler(_sharingContextMock.Object);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             var certId = Guid.NewGuid();
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(new List<Sharing>());
 
-            var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId };
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId };
             var result = await _handler.Handle(query, CancellationToken.None);
 
             result.SharingDetails.Should().NotBeNull();
@@ -52,7 +52,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             };
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 
-            var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId };
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId };
             var result = await _handler.Handle(query, CancellationToken.None);
 
             result.SharingDetails!.Sharings.Should().HaveCount(1);
@@ -71,7 +71,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
             };
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 
-            var query = new GetCertificateSharingDetailsQuery { UserId = userId, CertificateId = certId, Limit = 1 };
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId, Limit = 1 };
             var result = await _handler.Handle(query, CancellationToken.None);
 
             result.SharingDetails!.Sharings.Should().HaveCount(1);

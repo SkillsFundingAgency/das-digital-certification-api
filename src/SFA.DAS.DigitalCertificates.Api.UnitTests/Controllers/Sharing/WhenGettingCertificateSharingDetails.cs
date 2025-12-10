@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
 {
-    public class WhenGettingCertificateSharingDetails
+    public class WhenGettingSharings
     {
         private Mock<IMediator> _mediatorMock = null!;
         private Mock<ILogger<SharingController>> _loggerMock = null!;
@@ -35,14 +35,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            var details = new CertificateSharingDetails { UserId = userId, CertificateId = certId, CertificateType = "TypeA", CourseName = "CourseName" };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new GetCertificateSharingDetailsQueryResult { SharingDetails = details });
+            var details = new CertificateSharings { UserId = userId, CertificateId = certId, CertificateType = "TypeA", CourseName = "CourseName" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = details });
 
-            var result = await _controller.GetCertificateSharingDetails(userId, certId);
+            var result = await _controller.GetSharings(userId, certId);
 
             result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(details);
-            _mediatorMock.Verify(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            var emptyDetails = new CertificateSharingDetails
+            var emptyDetails = new CertificateSharings
             {
                 UserId = userId,
                 CertificateId = certId,
@@ -58,13 +58,13 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 CourseName = string.Empty,
                 Sharings = new List<SharingDetail>()
             };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new GetCertificateSharingDetailsQueryResult { SharingDetails = emptyDetails });
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = emptyDetails });
 
-            var result = await _controller.GetCertificateSharingDetails(userId, certId);
+            var result = await _controller.GetSharings(userId, certId);
 
             result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(emptyDetails);
-            _mediatorMock.Verify(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -73,10 +73,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
             var validationException = new ValidationException("Validation failed");
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(validationException);
 
-            var result = await _controller.GetCertificateSharingDetails(userId, certId);
+            var result = await _controller.GetSharings(userId, certId);
 
             result.Should().BeOfType<BadRequestObjectResult>();
         }
@@ -86,10 +86,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetCertificateSharingDetailsQuery>(), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Unexpected error"));
 
-            var result = await _controller.GetCertificateSharingDetails(userId, certId);
+            var result = await _controller.GetSharings(userId, certId);
 
             result.Should().BeOfType<StatusCodeResult>().Which.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         }

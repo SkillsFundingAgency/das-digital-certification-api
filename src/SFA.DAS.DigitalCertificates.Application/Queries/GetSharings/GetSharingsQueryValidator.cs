@@ -1,11 +1,10 @@
 using FluentValidation;
-using System;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
 {
-    public class GetCertificateSharingDetailsQueryValidator : AbstractValidator<GetCertificateSharingDetailsQuery>
+    public class GetSharingsQueryValidator : AbstractValidator<GetSharingsQuery>
     {
-        public GetCertificateSharingDetailsQueryValidator()
+        public GetSharingsQueryValidator()
         {
             RuleFor(x => x.UserId)
                 .NotEmpty()

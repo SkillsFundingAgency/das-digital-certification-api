@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Models
 {
-    public class CertificateSharingDetails
+    public class CertificateSharings
     {
         public Guid UserId { get; set; }
         public Guid CertificateId { get; set; }

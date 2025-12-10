@@ -5,8 +5,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -24,11 +24,11 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCertificateSharingDetails([FromQuery] Guid user, [FromQuery] Guid certificateId, [FromQuery] int? limit = null)
+        public async Task<IActionResult> GetSharings([FromQuery] Guid user, [FromQuery] Guid certificateId, [FromQuery] int? limit = null)
         {
             try
             {
-                var result = await _mediator.Send(new GetCertificateSharingDetailsQuery
+                var result = await _mediator.Send(new GetSharingsQuery
                 {
                     UserId = user,
                     CertificateId = certificateId,
@@ -39,18 +39,18 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
             catch (ValidationException ex)
             {
-                _logger.LogError(ex, "Validation error attempting to retrieve certificate sharing details for User {UserId} and Certificate {CertificateId}", user, certificateId);
+                _logger.LogError(ex, "Validation error attempting to retrieve sharings for User {UserId} and Certificate {CertificateId}", user, certificateId);
                 return BadRequest(new { errors = ex.Errors });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error attempting to retrieve certificate sharing details for User {UserId} and Certificate {CertificateId}", user, certificateId);
+                _logger.LogError(ex, "Error attempting to retrieve sharings for User {UserId} and Certificate {CertificateId}", user, certificateId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCertificateSharing([FromBody] CreateCertificateSharingCommand request)
+        public async Task<IActionResult> CreateSharing([FromBody] CreateSharingCommand request)
         {
             try
             {
@@ -59,12 +59,12 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
             catch (ValidationException ex)
             {
-                _logger.LogError(ex, "Validation error attempting to create certificate sharing for User {UserId} and Certificate {CertificateId}", request.UserId, request.CertificateId);
+                _logger.LogError(ex, "Validation error attempting to create sharing for User {UserId} and Certificate {CertificateId}", request.UserId, request.CertificateId);
                 return BadRequest(new { errors = ex.Errors });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error attempting to create certificate sharing");
+                _logger.LogError(ex, "Error attempting to create sharing");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

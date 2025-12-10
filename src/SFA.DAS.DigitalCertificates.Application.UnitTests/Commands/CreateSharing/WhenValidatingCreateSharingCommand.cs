@@ -1,24 +1,24 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
-    public class WhenValidatingCreateCertificateSharingCommand
+    public class WhenValidatingCreateSharingCommand
     {
-        private CreateCertificateSharingCommandValidator _validator = null!;
+        private CreateSharingCommandValidator _validator = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new CreateCertificateSharingCommandValidator();
+            _validator = new CreateSharingCommandValidator();
         }
 
         [Test]
         public void And_AllFieldsAreCorrect_Then_CommandIsValid()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -34,7 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         [Test]
         public void And_UserIdIsEmpty_Then_ErrorReturned()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.Empty,
                 CertificateId = Guid.NewGuid(),
@@ -51,7 +51,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         [Test]
         public void And_CertificateIdIsEmpty_Then_ErrorReturned()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.Empty,
@@ -68,7 +68,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         [Test]
         public void And_CertificateTypeIsInvalid_Then_ErrorReturned()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -85,7 +85,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
         [Test]
         public void And_CourseNameIsEmpty_Then_ErrorReturned()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),

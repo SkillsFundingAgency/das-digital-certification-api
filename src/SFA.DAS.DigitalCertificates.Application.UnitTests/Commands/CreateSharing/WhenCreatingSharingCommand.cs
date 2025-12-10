@@ -1,18 +1,18 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
-    public class WhenCreatingCertificateSharingCommand
+    public class WhenCreatingSharingCommand
     {
         [Test]
         public void And_PropertiesAreSet_Then_CommandIsCorrect()
         {
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = userId,
                 CertificateId = certificateId,

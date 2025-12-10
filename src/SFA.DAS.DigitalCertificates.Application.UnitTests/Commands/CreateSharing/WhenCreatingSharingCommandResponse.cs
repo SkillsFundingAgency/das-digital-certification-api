@@ -1,11 +1,11 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
-    public class WhenCreatingCertificateSharingCommandResponse
+    public class WhenCreatingSharingCommandResponse
     {
         [Test]
         public void And_PropertiesAreSet_Then_ResponseIsCorrect()
@@ -16,7 +16,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             var linkCode = Guid.NewGuid();
             var now = DateTime.UtcNow;
             var expiry = now.AddDays(28);
-            var response = new CreateCertificateSharingCommandResponse
+            var response = new CreateSharingCommandResponse
             {
                 UserId = userId,
                 CertificateId = certificateId,

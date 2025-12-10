@@ -9,12 +9,12 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
 {
     [TestFixture]
-    public class WhenCreatingCertificateSharing
+    public class WhenCreatingSharing
     {
         private Mock<IMediator> _mediatorMock = null!;
         private Mock<ILogger<SharingController>> _loggerMock = null!;
@@ -37,14 +37,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var sharingId = Guid.NewGuid();
             var now = DateTime.UtcNow;
             var expiry = now.AddDays(28);
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = userId,
                 CertificateId = certificateId,
                 CertificateType = "Standard",
                 CourseName = "Test Course"
             };
-            var response = new CreateCertificateSharingCommandResponse
+            var response = new CreateSharingCommandResponse
             {
                 UserId = userId,
                 CertificateId = certificateId,
@@ -58,13 +58,13 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             };
             _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ReturnsAsync(response);
 
-            var result = await _controller.CreateCertificateSharing(command);
+            var result = await _controller.CreateSharing(command);
 
             _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
 
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
-            var returned = okResult!.Value as CreateCertificateSharingCommandResponse;
+            var returned = okResult!.Value as CreateSharingCommandResponse;
             returned.Should().NotBeNull();
             returned!.UserId.Should().Be(userId);
             returned.CertificateId.Should().Be(certificateId);
@@ -80,7 +80,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         [Test]
         public async Task And_ValidationException_Then_ReturnsBadRequest()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -90,7 +90,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new FluentValidation.ValidationException("Validation failed"));
 
-            var result = await _controller.CreateCertificateSharing(command);
+            var result = await _controller.CreateSharing(command);
 
             _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
 
@@ -101,7 +101,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         [Test]
         public async Task And_GeneralException_Then_ReturnsInternalServerError()
         {
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -111,7 +111,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new Exception("Unexpected error"));
 
-            var result = await _controller.CreateCertificateSharing(command);
+            var result = await _controller.CreateSharing(command);
 
             _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
 

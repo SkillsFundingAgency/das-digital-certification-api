@@ -1,23 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
-using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
-    public class WhenHandlingCreateCertificateSharingCommandHandler
+    public class WhenHandlingCreateSharingCommandHandler
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
         private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
-        private CreateCertificateSharingCommandHandler _sut = null!;
+        private CreateSharingCommandHandler _sut = null!;
         private ApplicationSettings _settings = null!;
 
         [SetUp]
@@ -27,7 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _settings = new ApplicationSettings { CertificateSharingExpiryDays = 14 };
             var options = Options.Create(_settings);
-            _sut = new CreateCertificateSharingCommandHandler(_sharingContextMock.Object, _dateTimeProviderMock.Object, options);
+            _sut = new CreateSharingCommandHandler(_sharingContextMock.Object, _dateTimeProviderMock.Object, options);
         }
 
         [Test]
@@ -37,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
             _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -63,7 +61,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
             _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(1);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -83,7 +81,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateCerti
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
             _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("DB error"));
-            var command = new CreateCertificateSharingCommand
+            var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),

@@ -1,18 +1,18 @@
 using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetCertificateSharingDetails;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertificateSharingDetails
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
 {
     [TestFixture]
-    public class WhenValidatingGetCertificateSharingDetailsQuery
+    public class WhenValidatingGetSharingsQuery
     {
         [Test]
         public void And_UserIdIsEmpty_Then_ValidationFails()
         {
-            var validator = new GetCertificateSharingDetailsQueryValidator();
-            var query = new GetCertificateSharingDetailsQuery { UserId = Guid.Empty, CertificateId = Guid.NewGuid() };
+            var validator = new GetSharingsQueryValidator();
+            var query = new GetSharingsQuery { UserId = Guid.Empty, CertificateId = Guid.NewGuid() };
             var result = validator.Validate(query);
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "UserId");
@@ -21,8 +21,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
         [Test]
         public void And_CertificateIdIsEmpty_Then_ValidationFails()
         {
-            var validator = new GetCertificateSharingDetailsQueryValidator();
-            var query = new GetCertificateSharingDetailsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.Empty };
+            var validator = new GetSharingsQueryValidator();
+            var query = new GetSharingsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.Empty };
             var result = validator.Validate(query);
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "CertificateId");
@@ -31,8 +31,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
         [Test]
         public void And_LimitIsZeroOrNegative_Then_ValidationFails()
         {
-            var validator = new GetCertificateSharingDetailsQueryValidator();
-            var query = new GetCertificateSharingDetailsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.NewGuid(), Limit = 0 };
+            var validator = new GetSharingsQueryValidator();
+            var query = new GetSharingsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.NewGuid(), Limit = 0 };
             var result = validator.Validate(query);
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Limit");
@@ -41,8 +41,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetCertifica
         [Test]
         public void And_ValidQuery_Then_ValidationSucceeds()
         {
-            var validator = new GetCertificateSharingDetailsQueryValidator();
-            var query = new GetCertificateSharingDetailsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.NewGuid(), Limit = 1 };
+            var validator = new GetSharingsQueryValidator();
+            var query = new GetSharingsQuery { UserId = Guid.NewGuid(), CertificateId = Guid.NewGuid(), Limit = 1 };
             var result = validator.Validate(query);
             result.IsValid.Should().BeTrue();
         }

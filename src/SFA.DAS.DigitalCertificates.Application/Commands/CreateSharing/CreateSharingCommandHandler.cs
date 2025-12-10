@@ -8,15 +8,15 @@ using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateSharing
+namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 {
-    public class CreateCertificateSharingCommandHandler : IRequestHandler<CreateCertificateSharingCommand, CreateCertificateSharingCommandResponse>
+    public class CreateSharingCommandHandler : IRequestHandler<CreateSharingCommand, CreateSharingCommandResponse>
     {
         private readonly ISharingEntityContext _sharingContext;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ApplicationSettings _settings;
 
-        public CreateCertificateSharingCommandHandler(
+        public CreateSharingCommandHandler(
         ISharingEntityContext sharingContext,
         IDateTimeProvider dateTimeProvider,
         IOptions<ApplicationSettings> settings)
@@ -26,7 +26,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
             _settings = settings.Value;
         }
 
-        public async Task<CreateCertificateSharingCommandResponse> Handle(CreateCertificateSharingCommand request, CancellationToken cancellationToken)
+        public async Task<CreateSharingCommandResponse> Handle(CreateSharingCommand request, CancellationToken cancellationToken)
         {
             var now = _dateTimeProvider.Now;
             var expiryDays = _settings.CertificateSharingExpiryDays;
@@ -51,7 +51,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateCertificateShar
             _sharingContext.Add(sharing);
             await _sharingContext.SaveChangesAsync(cancellationToken);
 
-            return new CreateCertificateSharingCommandResponse
+            return new CreateSharingCommandResponse
             {
                 UserId = request.UserId,
                 CertificateId = request.CertificateId,
