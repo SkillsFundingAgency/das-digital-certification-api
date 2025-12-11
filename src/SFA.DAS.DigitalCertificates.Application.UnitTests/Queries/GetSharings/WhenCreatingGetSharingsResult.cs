@@ -14,13 +14,19 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
         [Test]
         public void And_DefaultConstructor_Then_SharingDetailsIsNull()
         {
+            // Arrange
+
+            // Act
             var result = new GetSharingsQueryResult();
+
+            // Assert
             result.SharingDetails.Should().BeNull();
         }
 
         [Test]
         public void And_SharingDetailsIsSet_Then_PropertiesAreMapped()
         {
+            // Arrange
             var details = new CertificateSharings
             {
                 UserId = Guid.NewGuid(),
@@ -29,7 +35,11 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
                 CourseName = "CourseName",
                 Sharings = new List<SharingDetail>()
             };
+
+            // Act
             var result = new GetSharingsQueryResult { SharingDetails = details };
+
+            // Assert
             result.SharingDetails.Should().Be(details);
         }
     }
