@@ -4,6 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Domain.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
 {
@@ -24,7 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
-                CertificateType = "TypeA",
+                CertificateType = CertificateType.Standard,
                 CourseName = "CourseName",
                 Sharings = new List<SharingDetail>()
             };

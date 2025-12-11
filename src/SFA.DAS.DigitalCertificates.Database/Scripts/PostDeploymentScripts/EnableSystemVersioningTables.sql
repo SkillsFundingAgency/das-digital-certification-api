@@ -7,10 +7,30 @@
 */
 ALTER TABLE [dbo].[User]
 SET (
-    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserHistory])
+   SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserHistory])
 );
 
 ALTER TABLE [dbo].[UserAuthorisation]
 SET (
     SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserAuthorisationHistory])
+);
+
+ALTER TABLE [dbo].[Sharing]
+SET (
+    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[SharingHistory])
+);
+
+ALTER TABLE [dbo].[SharingAccess]
+SET (
+    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[SharingAccessHistory])
+);
+
+ALTER TABLE [dbo].[SharingEmail]
+SET (
+    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[SharingEmailHistory])
+);
+
+ALTER TABLE [dbo].[SharingEmailAccess]
+SET (
+    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[SharingEmailAccessHistory])
 );

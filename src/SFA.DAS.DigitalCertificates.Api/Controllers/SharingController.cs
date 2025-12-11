@@ -24,32 +24,6 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetSharings([FromQuery] Guid user, [FromQuery] Guid certificateId, [FromQuery] int? limit = null)
-        {
-            try
-            {
-                var result = await _mediator.Send(new GetSharingsQuery
-                {
-                    UserId = user,
-                    CertificateId = certificateId,
-                    Limit = limit
-                });
-
-                return Ok(result.SharingDetails);
-            }
-            catch (ValidationException ex)
-            {
-                _logger.LogError(ex, "Validation error attempting to retrieve sharings for User {UserId} and Certificate {CertificateId}", user, certificateId);
-                return BadRequest(new { errors = ex.Errors });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error attempting to retrieve sharings for User {UserId} and Certificate {CertificateId}", user, certificateId);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSharingById(Guid id, [FromQuery] int? limit = null)
         {

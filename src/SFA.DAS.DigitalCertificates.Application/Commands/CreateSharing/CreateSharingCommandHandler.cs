@@ -15,6 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
         private readonly ISharingEntityContext _sharingContext;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly ApplicationSettings _settings;
+        private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         public CreateSharingCommandHandler(
         ISharingEntityContext sharingContext,
@@ -28,41 +29,48 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 
         public async Task<CreateSharingCommandResponse> Handle(CreateSharingCommand request, CancellationToken cancellationToken)
         {
-            var now = _dateTimeProvider.Now;
-            var expiryDays = _settings.CertificateSharingExpiryDays;
-            var expiryTime = now.AddDays(expiryDays);
-            var linkCode = Guid.NewGuid();
-
-            var sharingsCount = await _sharingContext.GetSharingsCount(request.UserId, request.CertificateId);
-            var sharingNumber = sharingsCount + 1;
-
-            var sharing = new Sharing
+            await _semaphore.WaitAsync(cancellationToken);
+            try
             {
-                UserId = request.UserId,
-                CertificateId = request.CertificateId,
-                CourseName = request.CourseName,
-                CertificateType = request.CertificateType,
-                LinkCode = linkCode,
-                CreatedAt = now,
-                ExpiryTime = expiryTime,
-                Status = SharingStatus.Live.ToString()
-            };
+                var now = _dateTimeProvider.Now;
+                var expiryDays = _settings.CertificateSharingExpiryDays;
+                var expiryTime = now.AddDays(expiryDays);
+                var linkCode = Guid.NewGuid();
 
-            _sharingContext.Add(sharing);
-            await _sharingContext.SaveChangesAsync(cancellationToken);
+                var sharing = new Sharing
+                {
+                    UserId = request.UserId,
+                    CertificateId = request.CertificateId,
+                    CourseName = request.CourseName,
+                    CertificateType = request.CertificateType,
+                    LinkCode = linkCode,
+                    CreatedAt = now,
+                    ExpiryTime = expiryTime,
+                    Status = SharingStatus.Live
+                };
 
-            return new CreateSharingCommandResponse
+                _sharingContext.Add(sharing);
+                await _sharingContext.SaveChangesAsync(cancellationToken);
+
+                var sharingsCount = await _sharingContext.GetSharingsCount(request.UserId, request.CertificateId);
+
+                return new CreateSharingCommandResponse
+                {
+                    UserId = request.UserId,
+                    CertificateId = request.CertificateId,
+                    CertificateType = request.CertificateType,
+                    CourseName = request.CourseName,
+                    SharingId = sharing.Id,
+                    SharingNumber = sharingsCount,
+                    CreatedAt = sharing.CreatedAt,
+                    LinkCode = sharing.LinkCode,
+                    ExpiryTime = sharing.ExpiryTime
+                };
+            }
+            finally
             {
-                UserId = request.UserId,
-                CertificateId = request.CertificateId,
-                CertificateType = request.CertificateType,
-                CourseName = request.CourseName,
-                SharingId = sharing.Id,
-                SharingNumber = sharingNumber,
-                CreatedAt = sharing.CreatedAt,
-                LinkCode = sharing.LinkCode,
-                ExpiryTime = sharing.ExpiryTime
-            };
+                _semaphore.Release();
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             return await Entities
                 .AsNoTracking()
                 .Include(s => s.SharingAccesses)
-                .Include(s => s.SharingEmails!)
+                .Include(s => s.SharingEmails)
                 .ThenInclude(se => se.SharingEmailAccesses)
                 .Where(s => s.UserId == userId && s.CertificateId == certificateId)
                 .OrderBy(s => s.CreatedAt)

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using System;
 using System.Collections.Generic;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
 {
@@ -13,7 +14,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
         {
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
-            var certificateType = "TestType";
+            var certificateType = CertificateType.Standard;
             var courseName = "TestType";
             var sharings = new List<SharingDetail>
             {

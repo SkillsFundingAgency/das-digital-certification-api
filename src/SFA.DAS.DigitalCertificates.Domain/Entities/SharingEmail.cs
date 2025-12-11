@@ -11,7 +11,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public Guid EmailLinkCode { get; set; }
         public DateTime SentTime { get; set; }
 
-        public required Sharing Sharing { get; set; }
+        public Sharing? Sharing { get; set; }
         public ICollection<SharingEmailAccess>? SharingEmailAccesses { get; set; }
     }
 }

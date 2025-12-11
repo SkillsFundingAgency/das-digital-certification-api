@@ -75,7 +75,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 
             // Assert
             var statusCodeResult = result as StatusCodeResult;
-            
+
             statusCodeResult.Should().NotBeNull();
             statusCodeResult!.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         }

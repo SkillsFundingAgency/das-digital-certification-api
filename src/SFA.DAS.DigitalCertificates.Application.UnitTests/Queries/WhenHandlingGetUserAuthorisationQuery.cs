@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Behaviours;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Entities;

@@ -14,6 +14,15 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
                 .ToTable(nameof(Sharing))
                 .HasKey(x => x.Id);
 
+            builder.Property(s => s.CertificateType)
+               .HasConversion<string>()
+               .HasColumnName("CertificateType");
+
+            builder
+                .Property(s => s.Status)
+                .HasConversion<string>()
+                .HasColumnName("Status");
+
             builder
                 .HasOne(s => s.User)
                 .WithMany()

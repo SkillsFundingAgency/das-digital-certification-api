@@ -8,6 +8,7 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
@@ -29,22 +30,25 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
         }
 
         [Test]
-        public async Task And_NoExistingSharings_Then_CreatesSharingWithCorrectProperties()
+        public async Task And_NoPriorSharings_Then_CreatesSharingWithCorrectProperties()
         {
+            // Arrange
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(1);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
-                CertificateType = "Standard",
+                CertificateType = CertificateType.Standard,
                 CourseName = "Test Course"
             };
 
+            // Act
             var result = await _sut.Handle(command, CancellationToken.None);
 
+            // Assert
             result.UserId.Should().Be(command.UserId);
             result.CertificateId.Should().Be(command.CertificateId);
             result.CertificateType.Should().Be(command.CertificateType);
@@ -57,41 +61,65 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
         [Test]
         public async Task And_ExistingSharings_Then_IncrementsSharingNumberCorrectly()
         {
+            // Arrange
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(1);
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(2);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
-                CertificateType = "Standard",
+                CertificateType = CertificateType.Framework,
                 CourseName = "Test Course"
             };
 
+            // Act
             var result = await _sut.Handle(command, CancellationToken.None);
 
+            // Assert
             result.SharingNumber.Should().Be(2);
         }
 
         [Test]
         public void And_SaveChangesFails_Then_ThrowsException()
         {
+            // Arrange
             var now = DateTime.UtcNow;
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ReturnsAsync(0);
             _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("DB error"));
             var command = new CreateSharingCommand
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
-                CertificateType = "Standard",
+                CertificateType = CertificateType.Standard,
                 CourseName = "Test Course"
             };
 
+            // Act & Assert
             Func<Task> act = async () => await _sut.Handle(command, CancellationToken.None);
-
             act.Should().ThrowAsync<Exception>().WithMessage("DB error");
+        }
+
+        [Test]
+        public void And_GetSharingsCountFails_After_Save_Then_ThrowsException()
+        {
+            // Arrange
+            var now = DateTime.UtcNow;
+            _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
+            _sharingContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+            _sharingContextMock.Setup(x => x.GetSharingsCount(It.IsAny<Guid>(), It.IsAny<Guid>())).ThrowsAsync(new Exception("Count error"));
+            var command = new CreateSharingCommand
+            {
+                UserId = Guid.NewGuid(),
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = "Test Course"
+            };
+
+            // Act & Assert
+            Func<Task> act = async () => await _sut.Handle(command, CancellationToken.None);
+            act.Should().ThrowAsync<Exception>().WithMessage("Count error");
         }
     }
 }

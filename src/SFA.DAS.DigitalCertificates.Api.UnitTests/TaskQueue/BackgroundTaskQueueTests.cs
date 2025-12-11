@@ -1,12 +1,12 @@
-﻿using MediatR;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using FluentAssertions;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
 {

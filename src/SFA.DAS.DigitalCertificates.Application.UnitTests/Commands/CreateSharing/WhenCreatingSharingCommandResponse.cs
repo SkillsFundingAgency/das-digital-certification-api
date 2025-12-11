@@ -2,6 +2,7 @@ using System;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
 {
@@ -20,7 +21,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             {
                 UserId = userId,
                 CertificateId = certificateId,
-                CertificateType = "Standard",
+                CertificateType = CertificateType.Standard,
                 CourseName = "Test Course",
                 SharingId = sharingId,
                 SharingNumber = 1,
@@ -30,7 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             };
             response.UserId.Should().Be(userId);
             response.CertificateId.Should().Be(certificateId);
-            response.CertificateType.Should().Be("Standard");
+            response.CertificateType.Should().Be(CertificateType.Standard);
             response.CourseName.Should().Be("Test Course");
             response.SharingId.Should().Be(sharingId);
             response.SharingNumber.Should().Be(1);
