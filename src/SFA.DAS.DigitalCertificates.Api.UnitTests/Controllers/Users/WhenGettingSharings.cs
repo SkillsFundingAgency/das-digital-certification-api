@@ -58,7 +58,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         }
 
         [Test]
-        public async Task And_SharingDetailsWithEmptyList_Then_ReturnOkWithEmptyDetails()
+        public async Task And_NoSharingDetailsFound_Then_ReturnOkWithEmptyDetails()
         {
             // Arrange
             var userId = Guid.NewGuid();

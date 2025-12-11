@@ -30,7 +30,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
         }
 
         [Test]
-        public async Task And_NoExistingSharings_Then_CreatesSharingWithCorrectProperties()
+        public async Task And_NoPriorSharings_Then_CreatesSharingWithCorrectProperties()
         {
             // Arrange
             var now = DateTime.UtcNow;
