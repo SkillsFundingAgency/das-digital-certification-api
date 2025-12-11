@@ -10,6 +10,7 @@
         }
         public enum CertificateType
         {
+            Unknown,
             Standard,
             Framework
         }

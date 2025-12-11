@@ -8,6 +8,6 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public Guid SharingEmailId { get; set; }
         public DateTime AccessedAt { get; set; }
 
-        public required SharingEmail SharingEmail { get; set; }
+        public SharingEmail? SharingEmail { get; set; }
     }
 }

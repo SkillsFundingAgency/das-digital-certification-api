@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
 {
@@ -24,7 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 EmailAddress = email,
                 EmailLinkCode = emailLinkCode,
                 SentTime = sentTime,
-                Sharing = new Sharing { Id = sharingId, CertificateType = "TestType", CourseName = "CourseName", Status = "Active" },
+                Sharing = new Sharing { Id = sharingId, CertificateType = CertificateType.Standard, CourseName = "CourseName", Status = SharingStatus.Live },
                 SharingEmailAccesses = new List<SharingEmailAccess>()
             };
 

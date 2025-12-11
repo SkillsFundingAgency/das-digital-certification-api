@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
 {
@@ -14,13 +15,13 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
-            var certificateType = "TestType";
+            var certificateType = CertificateType.Standard;
             var courseName = "CourseName";
 
             var linkCode = Guid.NewGuid();
             var createdAt = DateTime.UtcNow;
             var expiry = createdAt.AddDays(1);
-            var status = "Active";
+            var status = SharingStatus.Live;
 
             var sharing = new Sharing
             {
