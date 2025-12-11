@@ -2,6 +2,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
 using SFA.DAS.DigitalCertificates.Domain.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingById
 {
@@ -11,11 +12,12 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
         [Test]
         public void Then_SetsPropertiesCorrectly()
         {
+            // Arrange
             var sharing = new CertificateSharing
             {
                 UserId = System.Guid.NewGuid(),
                 CertificateId = System.Guid.NewGuid(),
-                CertificateType = "Standard",
+                CertificateType = CertificateType.Standard,
                 CourseName = "Test Course",
                 SharingId = System.Guid.NewGuid(),
                 SharingNumber = 1,
@@ -24,11 +26,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
                 ExpiryTime = System.DateTime.UtcNow.AddDays(30)
             };
 
+            // Act
             var result = new GetSharingByIdQueryResult
             {
                 Sharing = sharing
             };
 
+            // Assert
             result.Sharing.Should().Be(sharing);
         }
     }

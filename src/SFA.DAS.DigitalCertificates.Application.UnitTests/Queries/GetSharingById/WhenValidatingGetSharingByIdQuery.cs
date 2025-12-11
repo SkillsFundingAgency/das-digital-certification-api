@@ -8,20 +8,24 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
     [TestFixture]
     public class WhenValidatingGetSharingByIdQuery
     {
-        private GetSharingByIdQueryValidator _validator = null!;
+        private GetSharingByIdQueryValidator _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new GetSharingByIdQueryValidator();
+            _sut = new GetSharingByIdQueryValidator();
         }
 
         [Test]
         public void And_SharingIdIsEmpty_Then_ValidationFails()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.Empty };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(x => x.PropertyName == nameof(GetSharingByIdQuery.SharingId));
         }
@@ -29,18 +33,26 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
         [Test]
         public void And_SharingIdIsValid_Then_ValidationPasses()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.NewGuid() };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeTrue();
         }
 
         [Test]
         public void And_LimitIsZero_Then_ValidationFails()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.NewGuid(), Limit = 0 };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(x => x.PropertyName == nameof(GetSharingByIdQuery.Limit));
         }
@@ -48,9 +60,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
         [Test]
         public void And_LimitIsNegative_Then_ValidationFails()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.NewGuid(), Limit = -1 };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(x => x.PropertyName == nameof(GetSharingByIdQuery.Limit));
         }
@@ -58,18 +74,26 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
         [Test]
         public void And_LimitIsPositive_Then_ValidationPasses()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.NewGuid(), Limit = 10 };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeTrue();
         }
 
         [Test]
         public void And_LimitIsNull_Then_ValidationPasses()
         {
+            // Arrange
             var query = new GetSharingByIdQuery { SharingId = Guid.NewGuid(), Limit = null };
-            var result = _validator.Validate(query);
 
+            // Act
+            var result = _sut.Validate(query);
+
+            // Assert
             result.IsValid.Should().BeTrue();
         }
     }

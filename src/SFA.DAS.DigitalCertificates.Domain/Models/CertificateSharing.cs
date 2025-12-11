@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Models
 {
@@ -7,7 +8,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
     {
         public Guid UserId { get; set; }
         public Guid CertificateId { get; set; }
-        public required string CertificateType { get; set; }
+        public CertificateType CertificateType { get; set; }
         public required string CourseName { get; set; }
         public Guid SharingId { get; set; }
         public int SharingNumber { get; set; }

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
