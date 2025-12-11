@@ -98,11 +98,6 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     Limit = limit
                 });
 
-                if (result.SharingDetails == null)
-                {
-                    return NotFound();
-                }
-
                 return Ok(result.SharingDetails);
             }
             catch (ValidationException ex)

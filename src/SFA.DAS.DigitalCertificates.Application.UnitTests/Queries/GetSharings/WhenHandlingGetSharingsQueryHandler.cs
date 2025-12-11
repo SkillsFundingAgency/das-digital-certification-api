@@ -27,7 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
         }
 
         [Test]
-        public async Task And_NoSharings_Then_ReturnsSharingDetailsAsNull()
+        public async Task And_NoSharings_Then_ReturnsEmptySharingDetails()
         {
             // Arrange
             var userId = Guid.NewGuid();
@@ -39,7 +39,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            result.SharingDetails.Should().BeNull();
+            result.SharingDetails.Should().NotBeNull();
+            result.SharingDetails!.Sharings.Should().BeEmpty();
+            result.SharingDetails.CertificateType.Should().Be(CertificateType.Unknown);
+            result.SharingDetails.CourseName.Should().Be(string.Empty);
         }
 
         [Test]
@@ -79,7 +82,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 
             // Act
-            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId, Limit = 1 };
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId, Limit =1 };
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert

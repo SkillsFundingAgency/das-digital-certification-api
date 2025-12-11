@@ -39,6 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var sharingId = Guid.NewGuid();
             var now = DateTime.UtcNow;
             var expiry = now.AddDays(28);
+
             var command = new CreateSharingCommand
             {
                 UserId = userId,
@@ -46,6 +47,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 CertificateType = CertificateType.Standard,
                 CourseName = "Test Course"
             };
+
             var response = new CreateSharingCommandResponse
             {
                 UserId = userId,
@@ -58,7 +60,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 LinkCode = linkCode,
                 ExpiryTime = expiry
             };
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ReturnsAsync(response);
+
+            _mediatorMock
+                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(response);
 
             // Act
             var result = await _sut.CreateSharing(command);
@@ -68,8 +73,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
 
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
+
             var returned = okResult!.Value as CreateSharingCommandResponse;
             returned.Should().NotBeNull();
+
             returned!.UserId.Should().Be(userId);
             returned.CertificateId.Should().Be(certificateId);
             returned.CertificateType.Should().Be(CertificateType.Standard);
@@ -92,7 +99,9 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 CertificateType = CertificateType.Framework,
                 CourseName = "Test Course"
             };
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+
+            _mediatorMock
+                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new FluentValidation.ValidationException("Validation failed"));
 
             // Act
@@ -116,7 +125,9 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
                 CertificateType = CertificateType.Standard,
                 CourseName = "Test Course"
             };
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+
+            _mediatorMock
+                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act

@@ -44,8 +44,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 CertificateType = CertificateType.Standard,
                 CourseName = "CourseName"
             };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
-                        .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = details });
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = details });
 
             // Act
             var result = await _sut.GetSharings(userId, certId);
@@ -69,8 +71,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 CourseName = string.Empty,
                 Sharings = new List<SharingDetail>()
             };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
-                        .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = emptyDetails });
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = emptyDetails });
 
             // Act
             var result = await _sut.GetSharings(userId, certId);
@@ -81,19 +85,29 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         }
 
         [Test]
-        public async Task And_NoLiveSharingsExist_Then_ReturnNotFound()
+        public async Task And_NoLiveSharingsExist_Then_ReturnOkWithEmptyDetails()
         {
             // Arrange
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
-                        .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = null });
+            var emptyDetails = new CertificateSharings
+            {
+                UserId = userId,
+                CertificateId = certId,
+                CertificateType = CertificateType.Unknown,
+                CourseName = string.Empty,
+                Sharings = new List<SharingDetail>()
+            };
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new GetSharingsQueryResult { SharingDetails = emptyDetails });
 
             // Act
             var result = await _sut.GetSharings(userId, certId);
 
             // Assert
-            result.Should().BeOfType<NotFoundResult>();
+            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(emptyDetails);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -104,8 +118,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
             var validationException = new ValidationException("Validation failed");
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
-                        .ThrowsAsync(validationException);
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(validationException);
 
             // Act
             var result = await _sut.GetSharings(userId, certId);
@@ -120,14 +136,17 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             // Arrange
             var userId = Guid.NewGuid();
             var certId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
-                        .ThrowsAsync(new Exception("Unexpected error"));
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
             var result = await _sut.GetSharings(userId, certId);
 
             // Assert
-            result.Should().BeOfType<StatusCodeResult>().Which.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+            result.Should().BeOfType<StatusCodeResult>()
+                  .Which.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
         }
     }
 }

@@ -31,16 +31,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
                 .Take(request.Limit ?? int.MaxValue)
                 .ToList();
 
-            if (!liveSharings.Any())
-            {
-                return new GetSharingsQueryResult
-                {
-                    SharingDetails = null
-                };
-            }
-
-            var certificateType = liveSharings.First().CertificateType;
-            var courseName = liveSharings.First().CourseName;
+            var certificateType = liveSharings.FirstOrDefault()?.CertificateType ?? CertificateType.Unknown;
+            var courseName = liveSharings.FirstOrDefault()?.CourseName ?? string.Empty;
 
             var sharingDetails = liveSharings.Select(s => new SharingDetail
             {
