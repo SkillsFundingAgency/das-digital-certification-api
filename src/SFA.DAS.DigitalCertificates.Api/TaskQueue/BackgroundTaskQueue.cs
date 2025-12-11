@@ -1,9 +1,9 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace SFA.DAS.DigitalCertificates.Api.TaskQueue
 {
@@ -13,7 +13,7 @@ namespace SFA.DAS.DigitalCertificates.Api.TaskQueue
         private readonly SemaphoreSlim _signal = new(0);
 
         public void QueueBackgroundRequest(IBaseRequest? request, string requestName, Action<object?, TimeSpan, ILogger<TaskQueueHostedService>> response)
-        {            
+        {
             _requests.Enqueue((request, requestName, response));
             _signal.Release();
         }

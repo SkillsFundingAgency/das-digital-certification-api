@@ -1,4 +1,5 @@
-﻿using AutoFixture;
+﻿using System;
+using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Kernel;
 using AutoFixture.NUnit3;
@@ -8,7 +9,6 @@ using Microsoft.Extensions.Options;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests
 {
@@ -105,7 +105,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests
                 var contextOptions = new DbContextOptionsBuilder<DigitalCertificatesDataContext>()
                     .UseSqlite(connection)
                     .Options;
-                
+
                 return contextOptions;
             }
 

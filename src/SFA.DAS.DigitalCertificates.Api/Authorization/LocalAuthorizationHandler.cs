@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SFA.DAS.DigitalCertificates.Api.Authorization
 {
