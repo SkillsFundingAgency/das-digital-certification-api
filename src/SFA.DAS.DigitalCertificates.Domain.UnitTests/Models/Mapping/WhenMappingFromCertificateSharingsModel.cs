@@ -7,11 +7,12 @@ using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
 {
-    public class WhenMappingFromCertificateSharingDetailsModel
+    public class WhenMappingFromCertificateSharingsModel
     {
         [Test]
         public void ThenTheFieldsAreCorrectlyMapped()
         {
+            // Arrange
             var userId = Guid.NewGuid();
             var certificateId = Guid.NewGuid();
             var certificateType = CertificateType.Standard;
@@ -30,6 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
                 }
             };
 
+            // Act
             var model = new CertificateSharings
             {
                 UserId = userId,
@@ -39,6 +41,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
                 Sharings = sharings
             };
 
+            // Assert
             model.UserId.Should().Be(userId);
             model.CertificateId.Should().Be(certificateId);
             model.CertificateType.Should().Be(certificateType);
