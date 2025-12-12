@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Diagnostics.CodeAnalysis;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
@@ -6,7 +7,6 @@ using SFA.DAS.DigitalCertificates.Application.Behaviours;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.DigitalCertificates.Api.AppStart
 {
@@ -19,7 +19,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
 
             services.AddValidatorsFromAssemblyContaining<GetUserQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            
+
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 

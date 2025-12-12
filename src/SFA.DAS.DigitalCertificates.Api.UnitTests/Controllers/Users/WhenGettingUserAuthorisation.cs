@@ -10,68 +10,64 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
-using SFA.DAS.DigitalCertificates.Application.Models;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
-    public class WhenCreatingOrUpdatingUser
+    public class WhenGettingUserAuthorisation
     {
         [Test, MoqAutoData]
-        public async Task And_CommandIsSuccessful_Then_ReturnOk(
-            CreateOrUpdateUserRequest request,
-            CreateOrUpdateUserCommandResponse commandResponse,
+        public async Task And_QueryIsSuccessful_Then_ReturnOk(
+            Guid userId,
+            GetUserAuthorisationQueryResult queryResult,
             [Frozen] Mock<IMediator> mediator,
             [Greedy] UsersController controller)
         {
             // Arrange
             mediator
-                .Setup(m => m.Send(It.Is<CreateOrUpdateUserCommand>(c =>
-                        c.GovUkIdentifier == request.GovUkIdentifier &&
-                        c.EmailAddress == request.EmailAddress),
-                    It.IsAny<CancellationToken>()))
-                .ReturnsAsync(commandResponse);
+                .Setup(m => m.Send(It.Is<GetUserAuthorisationQuery>(q => q.UserId == userId), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(queryResult);
 
             // Act
-            var result = await controller.CreateOrUpdateUser(request);
+            var result = await controller.GetUserAuthorisation(userId);
 
             // Assert
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(commandResponse);
+            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(queryResult);
         }
 
         [Test, MoqAutoData]
         public async Task And_ValidationFails_Then_ReturnBadRequestWithErrors(
-            CreateOrUpdateUserRequest request,
+            Guid userId,
             ValidationException validationException,
             [Frozen] Mock<IMediator> mediator,
             [Greedy] UsersController controller)
         {
             // Arrange
             mediator
-                .Setup(m => m.Send(It.IsAny<CreateOrUpdateUserCommand>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<GetUserAuthorisationQuery>(), It.IsAny<CancellationToken>()))
                 .Throws(validationException);
 
             // Act
-            var result = await controller.CreateOrUpdateUser(request);
+            var result = await controller.GetUserAuthorisation(userId);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>().Which.Value.Should().BeEquivalentTo(new { errors = validationException.Errors });
         }
 
         [Test, MoqAutoData]
-        public async Task And_CommandThrowsException_Then_Return500Result(
-            CreateOrUpdateUserRequest request,
+        public async Task And_QueryThrowsException_Then_Return500Result(
+            Guid userId,
             [Frozen] Mock<IMediator> mediator,
             [Greedy] UsersController controller)
         {
             // Arrange
             mediator
-                .Setup(m => m.Send(It.IsAny<CreateOrUpdateUserCommand>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<GetUserAuthorisationQuery>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception());
 
             // Act
-            var result = await controller.CreateOrUpdateUser(request);
+            var result = await controller.GetUserAuthorisation(userId);
 
             // Assert
             var statusCodeResult = result as StatusCodeResult;

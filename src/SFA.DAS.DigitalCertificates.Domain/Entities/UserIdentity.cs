@@ -12,5 +12,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
 
         public DateTime? ValidSince { get; set; }
         public DateTime? ValidUntil { get; set; }
+
+        public User? User { get; set; }
     }
 }

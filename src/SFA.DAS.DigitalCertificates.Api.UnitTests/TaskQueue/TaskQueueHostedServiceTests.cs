@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
-using Moq;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SFA.DAS.DigitalCertificates.Api.TaskQueue;
+using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Moq;
+using NUnit.Framework;
+using SFA.DAS.DigitalCertificates.Api.TaskQueue;
 
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
@@ -20,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
         private Mock<ILogger<TaskQueueHostedService>> _loggerMock = null!;
         private Mock<IServiceProvider> _serviceProviderMock = null!;
         private Mock<IServiceScopeFactory> _serviceScopeFactoryMock = null!;
-        private Mock<IServiceScope> _serviceScopeMock = null!; 
+        private Mock<IServiceScope> _serviceScopeMock = null!;
         private Mock<IMediator> _mediatorMock = null!;
 
         [SetUp]
@@ -44,7 +44,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
             _serviceScopeMock
                 .Setup(x => x.ServiceProvider)
                 .Returns(_serviceProviderMock.Object);
-            
+
             _serviceProviderMock
                 .Setup(x => x.GetService(typeof(IMediator)))
                 .Returns(_mediatorMock.Object);
@@ -68,7 +68,8 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
 
             _backgroundTaskQueueMock
                 .Setup(x => x.DequeueAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync((mockRequest, "TestRequest", (response, duration, logger) => { }))
+                .ReturnsAsync((mockRequest, "TestRequest", (response, duration, logger) => { }
+            ))
                 .Callback(() => cancellationTokenSource.Cancel());
 
             // Act

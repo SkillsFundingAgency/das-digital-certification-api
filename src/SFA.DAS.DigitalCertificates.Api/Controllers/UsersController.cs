@@ -1,12 +1,14 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
-using System;
-using System.Threading.Tasks;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -39,7 +41,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve user for {GovUkIdentifier}", govUkIdentifier);
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -59,7 +61,27 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create or update user.");
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("{userId}/authorisation")]
+        public async Task<IActionResult> GetUserAuthorisation(Guid userId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserAuthorisationQuery { UserId = userId });
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve user authorisation for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve user authorisation for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
     }

@@ -1,4 +1,7 @@
-﻿using AutoFixture.NUnit3;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoFixture.NUnit3;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
@@ -9,13 +12,10 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
 {
-    public class WhenQueryingUser
+    public class WhenHandlingGetUserQuery
     {
         [Test, AutoMoqData]
         public async Task And_User_IsFound_ByGovUkIdentifier_ThenUserIsReturned(
@@ -65,7 +65,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
 
         [TestCase(null)]
         [TestCase("")]
-        public async Task GetUserQueryValidator_Throws_When_GovUkIdentifier_IsNull(string govUkIdentifier)
+        public async Task And_GetUserQueryValidator_Throws_When_GovUkIdentifier_IsNull(string govUkIdentifier)
         {
             var validator = new GetUserQueryValidator();
             var query = new GetUserQuery { GovUkIdentifier = govUkIdentifier };
@@ -77,13 +77,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
         }
 
         [Test]
-        public async Task Sending_Query_With_Null_Id_Throws_ValidationException()
+        public async Task And_Sending_Query_With_Null_Id_Throws_ValidationException()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserQuery>());
             services.AddValidatorsFromAssemblyContaining<GetUserQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped<IUserEntityContext, DigitalCertificatesDataContext>(); // your testable/in-memory registration
+            services.AddScoped<IUserEntityContext, DigitalCertificatesDataContext>();
 
             using var sp = services.BuildServiceProvider();
             var mediator = sp.GetRequiredService<IMediator>();

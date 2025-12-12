@@ -20,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
             result!.EmailAddress.Should().Be(source.EmailAddress);
             result!.PhoneNumber.Should().Be(source.PhoneNumber);
             result!.LastLoginAt.Should().Be(source.LastLoginAt);
-            result!.LockedAt.Should().Be(source.LockedAt);
+            result!.IsLocked.Should().Be(source.IsLocked);
         }
     }
 }

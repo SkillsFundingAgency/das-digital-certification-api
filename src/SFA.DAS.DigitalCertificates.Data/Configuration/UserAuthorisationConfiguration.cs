@@ -6,16 +6,12 @@ using SFA.DAS.DigitalCertificates.Domain.Entities;
 namespace SFA.DAS.DigitalCertificates.Data.Configuration
 {
     [ExcludeFromCodeCoverage]
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserAuthorisationConfiguration : IEntityTypeConfiguration<UserAuthorisation>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserAuthorisation> builder)
         {
-            builder.ToTable(nameof(User))
+            builder.ToTable(nameof(UserAuthorisation))
                 .HasKey(x => x.Id);
-
-            builder.HasOne(e => e.UserAuthorisation)
-                .WithOne(u => u.User)
-                .HasForeignKey<UserAuthorisation>(a => a.UserId);
         }
     }
 }

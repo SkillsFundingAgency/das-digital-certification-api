@@ -5,7 +5,7 @@
     [EmailAddress] VARCHAR(100) NOT NULL,
     [PhoneNumber] VARCHAR(20) NULL,
     [LastLoginAt] DATETIME2 NULL,
-    [LockedAt] DATETIME2 NULL,
+    [IsLocked] BIT NOT NULL CONSTRAINT [DF_User_IsLocked] DEFAULT (0),
     [ValidFrom] DATETIME2 (0) GENERATED ALWAYS AS ROW START,
     [ValidTo] DATETIME2 (0) GENERATED ALWAYS AS ROW END,
     PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo)
