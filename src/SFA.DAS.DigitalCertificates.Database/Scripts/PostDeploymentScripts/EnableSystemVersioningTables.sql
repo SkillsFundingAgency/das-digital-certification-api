@@ -7,7 +7,7 @@
 */
 ALTER TABLE [dbo].[User]
 SET (
-   SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserHistory])
+    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserHistory])
 );
 
 ALTER TABLE [dbo].[UserAuthorisation]
