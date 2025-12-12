@@ -15,9 +15,9 @@ IF EXISTS (
     AND t.temporal_type = 2
 )
 BEGIN
-  ALTER TABLE [dbo].[User]
+    ALTER TABLE [dbo].[User]
     SET (
- SYSTEM_VERSIONING = OFF
+    SYSTEM_VERSIONING = OFF
     );
 END
 
