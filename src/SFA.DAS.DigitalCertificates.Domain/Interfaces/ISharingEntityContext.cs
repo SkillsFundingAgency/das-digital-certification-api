@@ -12,6 +12,14 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
+        public async Task<Sharing?> GetSharingById(Guid sharingId)
+            => await Entities
+                .AsNoTracking()
+                .Include(s => s.SharingAccesses)
+                .Include(s => s.SharingEmails!)
+                .ThenInclude(se => se.SharingEmailAccesses)
+                .FirstOrDefaultAsync(s => s.Id == sharingId);
+
         public async Task<List<Sharing>> GetAllSharings(Guid userId, Guid certificateId)
         {
             return await Entities
@@ -30,6 +38,15 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .AsNoTracking()
                 .Where(s => s.UserId == userId && s.CertificateId == certificateId)
                 .CountAsync();
+        }
+
+        public async Task<List<Sharing>> GetAllSharingsBasic(Guid userId, Guid certificateId)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Where(s => s.UserId == userId && s.CertificateId == certificateId)
+                .OrderBy(s => s.CreatedAt)
+                .ToListAsync();
         }
     }
 }
