@@ -13,15 +13,18 @@ namespace SFA.DAS.DigitalCertificates.Data
 {
     [ExcludeFromCodeCoverage]
     public class DigitalCertificatesDataContext : DbContext,
-        IUserEntityContext
+        IUserEntityContext,
+        ISharingEntityContext
     {
         private const string AzureResource = "https://database.windows.net/";
         private readonly ApplicationSettings? _configuration;
         private readonly ChainedTokenCredential? _chainedTokenCredentialProvider;
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Sharing> Sharings { get; set; }
 
         DbSet<User> IEntityContext<User>.Entities => Users;
+        DbSet<Sharing> IEntityContext<Sharing>.Entities => Sharings;
 
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options)
@@ -60,7 +63,11 @@ namespace SFA.DAS.DigitalCertificates.Data
             modelBuilder
                 .ApplyConfiguration(new UserConfiguration())
                 .ApplyConfiguration(new UserAuthorisationConfiguration())
-                .ApplyConfiguration(new UserIdentityConfiguration());
+                .ApplyConfiguration(new UserIdentityConfiguration())
+                .ApplyConfiguration(new SharingConfiguration())
+                .ApplyConfiguration(new SharingAccessConfiguration())
+                .ApplyConfiguration(new SharingEmailConfiguration())
+                .ApplyConfiguration(new SharingEmailAccessConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
