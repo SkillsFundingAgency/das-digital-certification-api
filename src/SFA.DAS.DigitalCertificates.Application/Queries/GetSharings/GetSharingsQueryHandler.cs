@@ -1,6 +1,7 @@
 using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.DigitalCertificates.Domain.Models;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
     public class GetSharingsQueryHandler : IRequestHandler<GetSharingsQuery, GetSharingsQueryResult>
     {
         private readonly ISharingEntityContext _sharingContext;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public GetSharingsQueryHandler(ISharingEntityContext sharingContext)
+        public GetSharingsQueryHandler(ISharingEntityContext sharingContext, IDateTimeProvider dateTimeProvider)
         {
             _sharingContext = sharingContext;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<GetSharingsQueryResult> Handle(GetSharingsQuery request, CancellationToken cancellationToken)
@@ -25,8 +28,10 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
                 .Select((sharing, index) => new { sharing.Id, Number = index + 1 })
                 .ToDictionary(x => x.Id, x => x.Number);
 
+            var now = _dateTimeProvider.Now;
+
             var liveSharings = allSharings
-                .Where(s => s.Status == SharingStatus.Live)
+                .Where(s => s.Status == SharingStatus.Live && s.ExpiryTime > now)
                 .OrderByDescending(s => s.CreatedAt)
                 .Take(request.Limit ?? int.MaxValue)
                 .ToList();
