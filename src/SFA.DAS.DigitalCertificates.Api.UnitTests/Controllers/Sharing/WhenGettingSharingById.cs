@@ -107,7 +107,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         }
 
         [Test]
-        public async Task And_SharingNotFound_Then_ReturnBadRequest()
+        public async Task And_SharingNotFound_Then_ReturnNotFound()
         {
             // Arrange
             var sharingId = Guid.NewGuid();
@@ -121,7 +121,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var result = await _sut.GetSharingById(sharingId);
 
             // Assert
-            result.Should().BeOfType<BadRequestObjectResult>();
+            result.Should().BeOfType<NotFoundResult>();
 
             _mediatorMock.Verify(
                 x => x.Send(It.Is<GetSharingByIdQuery>(q => q.SharingId == sharingId), It.IsAny<CancellationToken>()),

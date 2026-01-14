@@ -36,7 +36,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
 
                 if (result.Sharing == null)
                 {
-                    return BadRequest(new { message = "Sharing not found" });
+                    return NotFound();
                 }
 
                 return Ok(result.Sharing);
