@@ -1,6 +1,7 @@
 using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.DigitalCertificates.Domain.Models;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
                 .ToDictionary(x => x.Id, x => x.Number);
 
             var liveSharings = allSharings
-                .Where(s => s.Status == SharingStatus.Live)
+                .Where(s => s.Status == SharingStatus.Live && s.ExpiryTime > DateTime.UtcNow)
                 .OrderByDescending(s => s.CreatedAt)
                 .Take(request.Limit ?? int.MaxValue)
                 .ToList();
