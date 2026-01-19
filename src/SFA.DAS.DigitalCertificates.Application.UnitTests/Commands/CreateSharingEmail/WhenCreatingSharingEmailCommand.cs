@@ -5,7 +5,7 @@ using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharingEmail
 {
-    public class WhenUsingCreateSharingEmailCommand
+    public class WhenCreatingSharingEmailCommand
     {
         [Test]
         public void Command_Should_Allow_Property_Assignment()
