@@ -17,11 +17,11 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             var appSettings = configuration.GetSection("ApplicationSettings").Get<ApplicationSettings>();
             if (configuration.IsLocalAcceptanceOrDev())
             {
-                services.AddDbContext<DigitalCertificatesDataContext>(options => options.UseSqlServer(appSettings?.DbConnectionString).EnableSensitiveDataLogging(), ServiceLifetime.Transient);
+                services.AddDbContext<DigitalCertificatesDataContext>(options => options.UseSqlServer(appSettings?.DbConnectionString).EnableSensitiveDataLogging(), ServiceLifetime.Scoped);
             }
             else if (configuration.IsIntegrationTests())
             {
-                services.AddDbContext<DigitalCertificatesDataContext>(options => options.UseSqlServer("Server=localhost;Database=SFA.DAS.DigitalCertificates.IntegrationTests.Database;Trusted_Connection=True;MultipleActiveResultSets=true").EnableSensitiveDataLogging(), ServiceLifetime.Transient);
+                services.AddDbContext<DigitalCertificatesDataContext>(options => options.UseSqlServer("Server=localhost;Database=SFA.DAS.DigitalCertificates.IntegrationTests.Database;Trusted_Connection=True;MultipleActiveResultSets=true").EnableSensitiveDataLogging(), ServiceLifetime.Scoped);
             }
             else
             {
@@ -31,7 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
                     new VisualStudioCodeCredential(),
                     new VisualStudioCredential())
             );
-                services.AddDbContext<DigitalCertificatesDataContext>(ServiceLifetime.Transient);
+                services.AddDbContext<DigitalCertificatesDataContext>(ServiceLifetime.Scoped);
             }
 
             services.AddTransient(provider => new Lazy<DigitalCertificatesDataContext>(() => provider.GetRequiredService<DigitalCertificatesDataContext>()));
