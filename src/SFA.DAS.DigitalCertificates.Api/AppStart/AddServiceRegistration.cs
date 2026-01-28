@@ -27,6 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
 
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<ISharingEmailEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
         }
     }
 }

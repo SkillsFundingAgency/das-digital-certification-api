@@ -14,7 +14,8 @@ namespace SFA.DAS.DigitalCertificates.Data
     [ExcludeFromCodeCoverage]
     public class DigitalCertificatesDataContext : DbContext,
         IUserEntityContext,
-        ISharingEntityContext
+        ISharingEntityContext,
+        ISharingEmailEntityContext
     {
         private const string AzureResource = "https://database.windows.net/";
         private readonly ApplicationSettings? _configuration;
@@ -22,9 +23,11 @@ namespace SFA.DAS.DigitalCertificates.Data
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Sharing> Sharings { get; set; }
+        public virtual DbSet<SharingEmail> SharingEmails { get; set; }
 
         DbSet<User> IEntityContext<User>.Entities => Users;
         DbSet<Sharing> IEntityContext<Sharing>.Entities => Sharings;
+        DbSet<SharingEmail> IEntityContext<SharingEmail>.Entities => SharingEmails;
 
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options)
