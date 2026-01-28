@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -7,6 +7,7 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharingEmail
@@ -15,7 +16,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
         private Mock<ISharingEmailEntityContext> _sharingEmailContextMock = null!;
-        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
+        private Mock<IDateTimeHelper> _dateTimeHelperMock = null!;
         private CreateSharingEmailCommandHandler _sut = null!;
 
         [SetUp]
@@ -23,9 +24,9 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
         {
             _sharingContextMock = new Mock<ISharingEntityContext>();
             _sharingEmailContextMock = new Mock<ISharingEmailEntityContext>();
-            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            _dateTimeHelperMock = new Mock<IDateTimeHelper>();
 
-            _sut = new CreateSharingEmailCommandHandler(_sharingContextMock.Object, _sharingEmailContextMock.Object, _dateTimeProviderMock.Object);
+            _sut = new CreateSharingEmailCommandHandler(_sharingContextMock.Object, _sharingEmailContextMock.Object, _dateTimeHelperMock.Object);
         }
 
         [Test]
@@ -52,7 +53,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             var sharing = new Sharing { Id = sharingId, CourseName = "Test Course", ExpiryTime = expiry };
             var now = DateTime.UtcNow;
             _sharingContextMock.Setup(x => x.GetSharingById(sharingId)).ReturnsAsync(sharing);
-            _dateTimeProviderMock.Setup(d => d.Now).Returns(now);
+            _dateTimeHelperMock.Setup(d => d.Now).Returns(now);
 
             _sharingEmailContextMock
                 .Setup(x => x.Add(It.IsAny<SharingEmail>()))

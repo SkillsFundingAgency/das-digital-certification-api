@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,17 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         public async Task<Sharing?> GetSharingById(Guid sharingId)
-            => await Entities
+            => await GetSharingById(sharingId, DateTime.UtcNow);
+
+        public async Task<Sharing?> GetSharingById(Guid sharingId, DateTime now)
+        {
+            return await Entities
                 .AsNoTracking()
                 .Include(s => s.SharingAccesses)
                 .Include(s => s.SharingEmails!)
                 .ThenInclude(se => se.SharingEmailAccesses)
-                .FirstOrDefaultAsync(s => s.Id == sharingId);
+                .FirstOrDefaultAsync(s => s.Id == sharingId && s.Status != Enums.SharingStatus.Deleted && s.ExpiryTime > now);
+        }
 
         public async Task<List<Sharing>> GetAllSharings(Guid userId, Guid certificateId)
         {
