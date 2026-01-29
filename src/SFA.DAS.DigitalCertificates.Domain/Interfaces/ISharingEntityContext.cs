@@ -51,5 +51,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .OrderBy(s => s.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<Sharing?> GetSharingByIdTracked(Guid sharingId)
+        {
+            return await Entities
+                .FirstOrDefaultAsync(s => s.Id == sharingId);
+        }
     }
 }
