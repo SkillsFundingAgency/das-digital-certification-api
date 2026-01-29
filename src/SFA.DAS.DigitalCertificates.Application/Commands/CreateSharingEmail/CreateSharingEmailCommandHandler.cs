@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail
 {
@@ -12,21 +11,21 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail
     {
         private readonly ISharingEntityContext _sharingContext;
         private readonly ISharingEmailEntityContext _sharingEmailContext;
-        private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
         public CreateSharingEmailCommandHandler(
             ISharingEntityContext sharingContext,
             ISharingEmailEntityContext sharingEmailContext,
-            IDateTimeHelper dateTimeHelper)
+            IDateTimeProvider dateTimeProvider)
         {
             _sharingContext = sharingContext;
             _sharingEmailContext = sharingEmailContext;
-            _dateTimeHelper = dateTimeHelper;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<CreateSharingEmailCommandResponse?> Handle(CreateSharingEmailCommand request, CancellationToken cancellationToken)
         {
-            var now = _dateTimeHelper.Now;
+            var now = _dateTimeProvider.Now;
 
             var sharing = await _sharingContext.GetSharingById(request.SharingId, now);
             if (sharing == null)

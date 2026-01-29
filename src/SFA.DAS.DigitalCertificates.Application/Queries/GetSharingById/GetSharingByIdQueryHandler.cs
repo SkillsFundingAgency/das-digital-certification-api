@@ -10,15 +10,19 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById
     public class GetSharingByIdQueryHandler : IRequestHandler<GetSharingByIdQuery, GetSharingByIdQueryResult>
     {
         private readonly ISharingEntityContext _sharingContext;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public GetSharingByIdQueryHandler(ISharingEntityContext sharingContext)
+        public GetSharingByIdQueryHandler(ISharingEntityContext sharingContext, IDateTimeProvider dateTimeProvider)
         {
             _sharingContext = sharingContext;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<GetSharingByIdQueryResult> Handle(GetSharingByIdQuery request, CancellationToken cancellationToken)
         {
-            var sharing = await _sharingContext.GetSharingById(request.SharingId);
+            var now = _dateTimeProvider.Now;
+
+            var sharing = await _sharingContext.GetSharingById(request.SharingId, now);
 
             if (sharing == null)
             {

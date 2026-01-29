@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
 using SFA.DAS.DigitalCertificates.Application.Behaviours;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
@@ -23,7 +22,6 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
 
             services.AddScoped<IDateTimeProvider, DateTimeProvider>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-            services.AddScoped<IDateTimeHelper, UtcTimeProvider>();
 
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());

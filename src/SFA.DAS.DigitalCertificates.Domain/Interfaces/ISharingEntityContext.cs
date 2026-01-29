@@ -13,9 +13,6 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
-        public async Task<Sharing?> GetSharingById(Guid sharingId)
-            => await GetSharingById(sharingId, DateTime.UtcNow);
-
         public async Task<Sharing?> GetSharingById(Guid sharingId, DateTime now)
         {
             return await Entities
