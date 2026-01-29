@@ -7,26 +7,24 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
 {
-    [TestFixture]
     public class WhenHandlingGetSharingsQueryHandler
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
-        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
+        private Mock<IDateTimeHelper> _dateTimeProviderMock = null!;
         private GetSharingsQueryHandler _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _sharingContextMock = new Mock<ISharingEntityContext>();
-            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
-            _dateTimeProviderMock.Setup(d => d.Now).Returns(DateTime.UtcNow);
-
+            _dateTimeProviderMock = new Mock<IDateTimeHelper>();
             _sut = new GetSharingsQueryHandler(_sharingContextMock.Object, _dateTimeProviderMock.Object);
         }
 

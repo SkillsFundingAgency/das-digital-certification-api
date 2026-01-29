@@ -6,7 +6,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Application.Models;
-using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 
 namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
 {
@@ -14,11 +14,11 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
     {
         [Test, AutoData]
         public void Then_Command_Is_Valid_When_All_Fields_Are_Correct(
-            [Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+            [Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             // Arrange
             var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
-            mockDateTimeProvider.Setup(x => x.Now).Returns(now);
+            mockDateTimeHelper.Setup(x => x.Now).Returns(now);
 
             var command = new CreateOrUpdateUserCommand
             {
@@ -28,7 +28,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = now.AddYears(-25)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
 
             // Act
             var result = validator.TestValidate(command);
@@ -38,7 +38,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
         }
 
         [Test, AutoData]
-        public void Then_Error_If_GovUkIdentifier_Is_Empty([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Error_If_GovUkIdentifier_Is_Empty([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var command = new CreateOrUpdateUserCommand
             {
@@ -48,7 +48,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = DateTime.UtcNow.AddYears(-20)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(c => c.GovUkIdentifier)
@@ -56,7 +56,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
         }
 
         [Test, AutoData]
-        public void Then_Error_If_EmailAddress_Is_Empty([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Error_If_EmailAddress_Is_Empty([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var command = new CreateOrUpdateUserCommand
             {
@@ -66,7 +66,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = DateTime.UtcNow.AddYears(-20)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(c => c.EmailAddress)
@@ -74,7 +74,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
         }
 
         [Test, AutoData]
-        public void Then_Error_If_Names_List_Is_Empty([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Error_If_Names_List_Is_Empty([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var command = new CreateOrUpdateUserCommand
             {
@@ -84,7 +84,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = DateTime.UtcNow.AddYears(-20)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(c => c.Names)
@@ -92,7 +92,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
         }
 
         [Test, AutoData]
-        public void Then_Valid_If_Names_Is_Null([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Valid_If_Names_Is_Null([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var command = new CreateOrUpdateUserCommand
             {
@@ -102,17 +102,17 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = DateTime.UtcNow.AddYears(-30)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldNotHaveValidationErrorFor(c => c.Names);
         }
 
         [Test, AutoData]
-        public void Then_Error_If_DateOfBirth_Is_In_The_Future([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Error_If_DateOfBirth_Is_In_The_Future([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
-            mockDateTimeProvider.Setup(x => x.Now).Returns(now);
+            mockDateTimeHelper.Setup(x => x.Now).Returns(now);
 
             var command = new CreateOrUpdateUserCommand
             {
@@ -122,7 +122,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = now.AddDays(1)
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(c => c.DateOfBirth)
@@ -130,10 +130,10 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
         }
 
         [Test, AutoData]
-        public void Then_Valid_If_DateOfBirth_Is_Null([Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
+        public void Then_Valid_If_DateOfBirth_Is_Null([Frozen] Mock<IDateTimeHelper> mockDateTimeHelper)
         {
             var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
-            mockDateTimeProvider.Setup(x => x.Now).Returns(now);
+            mockDateTimeHelper.Setup(x => x.Now).Returns(now);
 
             var command = new CreateOrUpdateUserCommand
             {
@@ -143,7 +143,7 @@ namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
                 DateOfBirth = null
             };
 
-            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeProvider.Object);
+            var validator = new CreateOrUpdateUserCommandValidator(mockDateTimeHelper.Object);
             var result = validator.TestValidate(command);
 
             result.ShouldNotHaveValidationErrorFor(c => c.DateOfBirth);

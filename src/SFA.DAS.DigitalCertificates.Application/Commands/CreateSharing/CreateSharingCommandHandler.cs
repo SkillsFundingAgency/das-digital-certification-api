@@ -1,11 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Options;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
@@ -13,17 +14,17 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
     public class CreateSharingCommandHandler : IRequestHandler<CreateSharingCommand, CreateSharingCommandResponse>
     {
         private readonly ISharingEntityContext _sharingContext;
-        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IDateTimeHelper _dateTimeHelper;
         private readonly ApplicationSettings _settings;
         private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         public CreateSharingCommandHandler(
         ISharingEntityContext sharingContext,
-        IDateTimeProvider dateTimeProvider,
+        IDateTimeHelper dateTimeHelper,
         IOptions<ApplicationSettings> settings)
         {
             _sharingContext = sharingContext;
-            _dateTimeProvider = dateTimeProvider;
+            _dateTimeHelper = dateTimeHelper;
             _settings = settings.Value;
         }
 
@@ -32,7 +33,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
             await _semaphore.WaitAsync(cancellationToken);
             try
             {
-                var now = _dateTimeProvider.Now;
+                var now = _dateTimeHelper.Now;
                 var expiryDays = _settings.CertificateSharingExpiryDays;
                 var expiryTime = now.AddDays(expiryDays);
                 var linkCode = Guid.NewGuid();
