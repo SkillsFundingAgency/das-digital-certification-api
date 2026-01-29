@@ -56,8 +56,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             var expiry = DateTime.UtcNow.AddDays(1);
             var sharing = new Sharing { Id = sharingId, CourseName = "Test Course", ExpiryTime = expiry };
             var now = DateTime.UtcNow;
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync(sharing);
             _dateTimeProviderMock.Setup(d => d.Now).Returns(now);
+            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, now)).ReturnsAsync(sharing);
 
             _sharingEmailContextMock
                 .Setup(x => x.Add(It.IsAny<SharingEmail>()))
