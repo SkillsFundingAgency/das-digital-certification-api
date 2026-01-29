@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
+using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
 {
     public class CreateOrUpdateUserCommandValidator : AbstractValidator<CreateOrUpdateUserCommand>
     {
-        public CreateOrUpdateUserCommandValidator(IDateTimeHelper dateTimeHelper)
+        public CreateOrUpdateUserCommandValidator(IDateTimeProvider dateTimeProvider)
         {
             RuleFor(x => x.GovUkIdentifier)
                 .NotEmpty()
@@ -20,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
                 .WithMessage("Names must have at least one entry if provided");
 
             RuleFor(x => x.DateOfBirth)
-                .Must(dob => dob == null || dob < dateTimeHelper.Now)
+                .Must(dob => dob == null || dob < dateTimeProvider.Now)
                 .WithMessage("DateOfBirth cannot be in the future");
         }
     }

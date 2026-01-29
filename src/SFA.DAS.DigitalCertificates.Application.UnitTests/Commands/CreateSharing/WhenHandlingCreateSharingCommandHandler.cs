@@ -8,7 +8,6 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateSharing
@@ -16,7 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
     public class WhenHandlingCreateSharingCommandHandler
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
-        private Mock<IDateTimeHelper> _dateTimeProviderMock = null!;
+        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
         private CreateSharingCommandHandler _sut = null!;
         private ApplicationSettings _settings = null!;
 
@@ -24,7 +23,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
         public void SetUp()
         {
             _sharingContextMock = new Mock<ISharingEntityContext>();
-            _dateTimeProviderMock = new Mock<IDateTimeHelper>();
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _settings = new ApplicationSettings { CertificateSharingExpiryDays = 14 };
             var options = Options.Create(_settings);
             _sut = new CreateSharingCommandHandler(_sharingContextMock.Object, _dateTimeProviderMock.Object, options);

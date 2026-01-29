@@ -6,9 +6,9 @@ using AutoFixture.NUnit3;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
+using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests
 {
@@ -28,7 +28,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests
     [AttributeUsage(AttributeTargets.Method)]
     public class AutoMoqDataAttribute : AutoDataAttribute
     {
-        public static IDateTimeHelper? DateTimeHelper { get; set; }
+        public static IDateTimeProvider? DateTimeProvider { get; set; }
 
         public AutoMoqDataAttribute()
             : base(AutofixtureExtensions.DigitalCertificatesFixture)

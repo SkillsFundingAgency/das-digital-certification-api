@@ -10,7 +10,6 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
@@ -27,7 +26,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
         [Test, MoqAutoData]
         public async Task And_UserDoesNotExist_Then_AddsUserAndSavesChanges(
             CreateOrUpdateUserCommand command,
-            [Frozen] Mock<IDateTimeHelper> dateTimeProvider,
+            [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
             [Frozen] Mock<IUserEntityContext> userEntityContext)
         {
             // Arrange
@@ -61,7 +60,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
         [Test, MoqAutoData]
         public async Task And_UserExists_Then_UpdatesEmailPhoneAndLastLogin(
             CreateOrUpdateUserCommand command,
-            [Frozen] Mock<IDateTimeHelper> dateTimeProvider,
+            [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
             [Frozen] Mock<IUserEntityContext> userEntityContext)
         {
             // Arrange

@@ -1,22 +1,21 @@
-﻿using MediatR;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
 {
     public class CreateOrUpdateUserCommandHandler : IRequestHandler<CreateOrUpdateUserCommand, CreateOrUpdateUserCommandResponse>
     {
-        private readonly IDateTimeHelper _dateTimeHelper;
+        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IUserEntityContext _userEntityContext;
 
         public CreateOrUpdateUserCommandHandler(
-            IDateTimeHelper dateTimeHelper,
+            IDateTimeProvider dateTimeProvider,
             IUserEntityContext userEntityContext)
         {
-            _dateTimeHelper = dateTimeHelper;
+            _dateTimeProvider = dateTimeProvider;
             _userEntityContext = userEntityContext;
         }
 
@@ -40,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
             }
 
             user.PhoneNumber = command.PhoneNumber;
-            user.LastLoginAt = _dateTimeHelper.Now;
+            user.LastLoginAt = _dateTimeProvider.Now;
 
             await _userEntityContext.SaveChangesAsync(cancellationToken);
 

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SFA.DAS.DigitalCertificates.Application.Extensions;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using System.Linq;
@@ -11,19 +10,15 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById
     public class GetSharingByIdQueryHandler : IRequestHandler<GetSharingByIdQuery, GetSharingByIdQueryResult>
     {
         private readonly ISharingEntityContext _sharingContext;
-        private readonly IDateTimeHelper _dateTimeHelper;
 
-        public GetSharingByIdQueryHandler(ISharingEntityContext sharingContext, IDateTimeHelper dateTimeHelper)
+        public GetSharingByIdQueryHandler(ISharingEntityContext sharingContext)
         {
             _sharingContext = sharingContext;
-            _dateTimeHelper = dateTimeHelper;
         }
 
         public async Task<GetSharingByIdQueryResult> Handle(GetSharingByIdQuery request, CancellationToken cancellationToken)
         {
-            var now = _dateTimeHelper.Now;
-
-            var sharing = await _sharingContext.GetSharingById(request.SharingId, now);
+            var sharing = await _sharingContext.GetSharingById(request.SharingId);
 
             if (sharing == null)
             {
