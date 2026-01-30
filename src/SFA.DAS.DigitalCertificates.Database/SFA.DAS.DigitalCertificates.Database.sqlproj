@@ -60,18 +60,10 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables\" />
-    <Folder Include="Security" />
-    <Folder Include="Security\Roles" />
-    <Folder Include="Security\Roles\DatabaseRoles" />
-    <Folder Include="Security\Schemas" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\PostDeploymentScripts" />
     <Folder Include="Scripts\PostDeploymentScripts\LookupData" />
     <Folder Include="Scripts\PreDeploymentScripts" />
-    <Folder Include="Views" />
-    <Folder Include="Programmability" />
-    <Folder Include="Programmability\Functions" />
-    <Folder Include="Programmability\StoredProcedures" />
     <Folder Include="Scripts\PostDeploymentScripts\Patches" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +74,14 @@
     <Build Include="Tables\ActionType.sql" />
     <Build Include="Tables\UserAuthorisation.sql" />
     <Build Include="Tables\UserAuthorisationHistory.sql" />
+    <Build Include="Tables\Sharing.sql" />
+    <Build Include="Tables\SharingEmail.sql" />
+    <Build Include="Tables\SharingEmailAccess.sql" />
+    <Build Include="Tables\SharingAccess.sql" />
+    <Build Include="Tables\SharingHistory.sql" />
+    <Build Include="Tables\SharingAccessHistory.sql" />
+    <Build Include="Tables\SharingEmailAccessHistory.sql" />
+    <Build Include="Tables\SharingEmailHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

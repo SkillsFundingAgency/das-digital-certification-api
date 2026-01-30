@@ -7,5 +7,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Configuration
         public AzureActiveDirectoryConfiguration? AzureAd { get; set; }
 
         public string? DbConnectionString { get; set; }
+
+        public int CertificateSharingExpiryDays { get; set; } = 28;
     }
 }

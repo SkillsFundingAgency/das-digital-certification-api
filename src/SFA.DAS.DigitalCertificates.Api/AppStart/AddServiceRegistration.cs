@@ -24,6 +24,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
         }
     }
 }

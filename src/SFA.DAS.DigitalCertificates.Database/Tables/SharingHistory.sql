@@ -1,0 +1,14 @@
+CREATE TABLE [dbo].[SharingHistory]
+(
+    [Id] UNIQUEIDENTIFIER NOT NULL,
+    [UserId] UNIQUEIDENTIFIER NOT NULL,
+    [CertificateId] UNIQUEIDENTIFIER NOT NULL,
+    [CertificateType] VARCHAR(20) NOT NULL,
+    [CourseName] VARCHAR(1000) NOT NULL,
+    [LinkCode] UNIQUEIDENTIFIER NOT NULL,
+    [CreatedAt] DATETIME2 NOT NULL,
+    [ExpiryTime] DATETIME2 NOT NULL,
+    [Status] VARCHAR(20) NOT NULL,
+    [ValidFrom] DATETIME2 (0) NOT NULL,
+    [ValidTo] DATETIME2 (0) NOT NULL
+)

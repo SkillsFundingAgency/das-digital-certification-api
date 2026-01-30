@@ -8,5 +8,16 @@
             SupportUlnNotFound = 1,
             UserLocked = 2
         }
+        public enum CertificateType
+        {
+            Unknown,
+            Standard,
+            Framework
+        }
+        public enum SharingStatus
+        {
+            Live = 0,
+            Deleted = 1
+        }
     }
 }
