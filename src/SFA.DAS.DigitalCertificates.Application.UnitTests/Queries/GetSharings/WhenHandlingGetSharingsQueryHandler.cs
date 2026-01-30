@@ -17,13 +17,17 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
     public class WhenHandlingGetSharingsQueryHandler
     {
         private Mock<ISharingEntityContext> _sharingContextMock = null!;
+        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
         private GetSharingsQueryHandler _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _sharingContextMock = new Mock<ISharingEntityContext>();
-            _sut = new GetSharingsQueryHandler(_sharingContextMock.Object);
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            _dateTimeProviderMock.Setup(d => d.Now).Returns(DateTime.UtcNow);
+
+            _sut = new GetSharingsQueryHandler(_sharingContextMock.Object, _dateTimeProviderMock.Object);
         }
 
         [Test]
@@ -69,6 +73,32 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
         }
 
         [Test]
+        public async Task And_ExpiredSharings_Are_Excluded()
+        {
+            // Arrange
+            var now = DateTime.UtcNow;
+            _dateTimeProviderMock.Setup(d => d.Now).Returns(now);
+
+            var userId = Guid.NewGuid();
+            var certId = Guid.NewGuid();
+
+            var expired = new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = CertificateType.Standard, CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = now.AddDays(-10), ExpiryTime = now.AddDays(-1), Status = SharingStatus.Live };
+            var live = new Sharing { Id = Guid.NewGuid(), UserId = userId, CertificateId = certId, CertificateType = CertificateType.Standard, CourseName = "CourseName", LinkCode = Guid.NewGuid(), CreatedAt = now.AddDays(-2), ExpiryTime = now.AddDays(1), Status = SharingStatus.Live };
+
+            var sharings = new List<Sharing> { expired, live };
+            _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
+
+            // Act
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId };
+            var result = await _sut.Handle(query, CancellationToken.None);
+
+            // Assert
+            result.SharingDetails.Should().NotBeNull();
+            result.SharingDetails!.Sharings.Should().HaveCount(1);
+            result.SharingDetails!.Sharings.First().SharingId.Should().Be(live.Id);
+        }
+
+        [Test]
         public async Task And_LimitIsApplied_Then_ReturnsLimitedSharings()
         {
             // Arrange
@@ -82,7 +112,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharings
             _sharingContextMock.Setup(x => x.GetAllSharings(userId, certId)).ReturnsAsync(sharings);
 
             // Act
-            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId, Limit =1 };
+            var query = new GetSharingsQuery { UserId = userId, CertificateId = certId, Limit = 1 };
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
