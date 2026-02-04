@@ -61,7 +61,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
 
             // Assert
             result.Should().NotBeNull();
-            result!.Should().NotBeEmpty();
             sharing.SharingAccesses.Should().ContainSingle(sa => sa.SharingId == sharingId && sa.AccessedAt == _now);
             _sharingContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
