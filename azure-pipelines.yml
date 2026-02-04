@@ -76,6 +76,7 @@ stages:
   variables:
   - group: DevTest Management Resources
   - group: TEST DevTest Shared Resources
+  - group: TEST das-digital-certification-api
   jobs:
   - template: pipeline-templates/job/deploy.yml
     parameters:
