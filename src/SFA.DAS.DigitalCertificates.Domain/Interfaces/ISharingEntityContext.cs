@@ -23,6 +23,16 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .FirstOrDefaultAsync(s => s.Id == sharingId && s.Status != Enums.SharingStatus.Deleted && s.ExpiryTime > now);
         }
 
+        public async Task<Sharing?> GetSharingByLinkCode(Guid linkCode, DateTime now)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Include(s => s.SharingAccesses)
+                .Include(s => s.SharingEmails!)
+                .ThenInclude(se => se.SharingEmailAccesses)
+                .FirstOrDefaultAsync(s => s.LinkCode == linkCode && s.Status != Enums.SharingStatus.Deleted && s.ExpiryTime > now);
+        }
+
         public async Task<List<Sharing>> GetAllSharings(Guid userId, Guid certificateId)
         {
             return await Entities
