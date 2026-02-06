@@ -7,6 +7,7 @@ using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
 using SFA.DAS.DigitalCertificates.Application.Commands.DeleteSharing;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByLinkCode;
 using System;
 using System.Threading.Tasks;
 
@@ -23,6 +24,30 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet("linkcode/{linkCode}")]
+        public async Task<IActionResult> GetSharingByLinkCode(Guid linkCode)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSharingByLinkCodeQuery
+                {
+                    LinkCode = linkCode
+                });
+
+                if (result?.Sharing == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result.Sharing);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve sharing by link code {LinkCode}", linkCode);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet("{id}")]
