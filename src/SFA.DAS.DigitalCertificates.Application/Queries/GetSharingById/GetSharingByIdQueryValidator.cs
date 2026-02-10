@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById
 {

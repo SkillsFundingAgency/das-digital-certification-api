@@ -1,4 +1,4 @@
-using SFA.DAS.DigitalCertificates.Domain.Models;
+﻿using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetSharings
 {

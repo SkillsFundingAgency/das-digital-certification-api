@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[SharingAccessHistory]
+﻿CREATE TABLE [dbo].[SharingAccessHistory]
 (
     [Id] UNIQUEIDENTIFIER NOT NULL,
     [SharingId] UNIQUEIDENTIFIER NOT NULL,

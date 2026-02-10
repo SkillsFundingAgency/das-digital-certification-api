@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
@@ -69,6 +70,33 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create sharing");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("{id}/email")]
+        public async Task<IActionResult> CreateSharingEmail(Guid id, [FromBody] CreateSharingEmailCommand request)
+        {
+            try
+            {
+                request.SharingId = id;
+                var result = await _mediator.Send(request);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create sharing email for Sharing {SharingId}", id);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create sharing email for Sharing {SharingId}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

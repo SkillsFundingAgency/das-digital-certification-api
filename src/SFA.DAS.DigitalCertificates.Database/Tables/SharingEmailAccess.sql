@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[SharingEmailAccess]
+﻿CREATE TABLE [dbo].[SharingEmailAccess]
 (
     [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [SharingEmailId] UNIQUEIDENTIFIER NOT NULL,
