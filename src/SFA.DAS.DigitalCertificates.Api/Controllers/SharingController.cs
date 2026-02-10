@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -20,6 +21,36 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSharingById(Guid id, [FromQuery] int? limit = null)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSharingByIdQuery
+                {
+                    SharingId = id,
+                    Limit = limit
+                });
+
+                if (result.Sharing == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result.Sharing);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve sharing by id {SharingId}", id);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve sharing by id {SharingId}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost]
