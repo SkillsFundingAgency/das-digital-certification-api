@@ -1,13 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
+using SFA.DAS.DigitalCertificates.Application.Commands.DeleteSharing;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
+using System;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -89,7 +90,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
 
                 return Ok(result);
             }
-            catch (FluentValidation.ValidationException ex)
+            catch (ValidationException ex)
             {
                 _logger.LogError(ex, "Validation error attempting to create sharing email for Sharing {SharingId}", id);
                 return BadRequest(new { errors = ex.Errors });
@@ -97,6 +98,35 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create sharing email for Sharing {SharingId}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSharing(Guid id)
+        {
+            try
+            {
+                var result = await _mediator.Send(new DeleteSharingCommand
+                {
+                    SharingId = id
+                });
+
+                if (result == null)
+                {
+                    return BadRequest();
+                }
+
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to delete sharing {SharingId}", id);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to delete sharing {SharingId}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
