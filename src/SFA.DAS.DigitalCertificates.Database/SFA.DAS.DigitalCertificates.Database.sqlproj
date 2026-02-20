@@ -82,6 +82,10 @@
     <Build Include="Tables\SharingAccessHistory.sql" />
     <Build Include="Tables\SharingEmailAccessHistory.sql" />
     <Build Include="Tables\SharingEmailHistory.sql" />
+    <Build Include="Tables\UserActions.sql" />
+    <Build Include="Tables\UserActionsHistory.sql" />
+    <Build Include="Tables\AdminActions.sql" />
+    <Build Include="Tables\AdminActionsHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
