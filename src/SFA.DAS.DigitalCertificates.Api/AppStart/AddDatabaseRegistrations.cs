@@ -34,7 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
                 services.AddDbContext<DigitalCertificatesDataContext>(ServiceLifetime.Scoped);
             }
 
-            services.AddTransient(provider => new Lazy<DigitalCertificatesDataContext>(() => provider.GetRequiredService<DigitalCertificatesDataContext>()));
+            services.AddScoped(provider => new Lazy<DigitalCertificatesDataContext>(() => provider.GetRequiredService<DigitalCertificatesDataContext>()));
         }
     }
 }
