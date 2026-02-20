@@ -50,7 +50,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         }
 
         [Test]
-        public async Task And_ResultIsNull_Then_ReturnsBadRequest()
+        public async Task And_ResultIsNull_Then_ReturnsNotFound()
         {
             // Arrange
             var sharingId = Guid.NewGuid();
@@ -65,7 +65,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             // Assert
             _mediatorMock.Verify(m => m.Send(It.Is<DeleteSharingCommand>(c => c.SharingId == sharingId), It.IsAny<CancellationToken>()), Times.Once);
 
-            result.Should().BeOfType<BadRequestResult>();
+            result.Should().BeOfType<NotFoundResult>();
         }
 
         [Test]

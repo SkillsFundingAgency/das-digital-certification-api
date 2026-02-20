@@ -28,16 +28,11 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.DeleteSharing
 
             var now = _dateTimeProvider.Now;
 
-            if (sharing.Status == SharingStatus.Deleted || sharing.ExpiryTime <= now)
+            if (sharing.Status != SharingStatus.Deleted && sharing.ExpiryTime > now)
             {
-                return new DeleteSharingCommandResponse
-                {
-                    SharingId = sharing.Id
-                };
+                sharing.Status = SharingStatus.Deleted;
+                await _sharingContext.SaveChangesAsync(cancellationToken);
             }
-
-            sharing.Status = SharingStatus.Deleted;
-            await _sharingContext.SaveChangesAsync(cancellationToken);
 
             return new DeleteSharingCommandResponse
             {

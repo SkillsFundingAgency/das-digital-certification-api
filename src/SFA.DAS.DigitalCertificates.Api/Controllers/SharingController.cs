@@ -114,7 +114,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
 
                 if (result == null)
                 {
-                    return BadRequest();
+                    return NotFound();
                 }
 
                 return NoContent();
