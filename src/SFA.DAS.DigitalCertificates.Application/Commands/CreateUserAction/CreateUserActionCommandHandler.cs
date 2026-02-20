@@ -6,7 +6,6 @@ using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using System;
-using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
 {
