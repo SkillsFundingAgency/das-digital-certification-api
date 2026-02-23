@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingAccess;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmailAccess;
 using SFA.DAS.DigitalCertificates.Application.Commands.DeleteSharing;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByEmailLinkCode;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByLinkCode;
 using System;
 using System.Threading.Tasks;
@@ -24,6 +27,35 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         {
             _mediator = mediator;
             _logger = logger;
+        }
+
+        [HttpGet("emaillinkcode/{emailLinkCode}")]
+        public async Task<IActionResult> GetSharingByEmailLinkCode(Guid emailLinkCode)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSharingByEmailLinkCodeQuery
+                {
+                    EmailLinkCode = emailLinkCode
+                });
+
+                if (result?.SharingEmail == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result.SharingEmail);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve sharing email by link code {EmailLinkCode}", emailLinkCode);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve sharing email by link code {EmailLinkCode}", emailLinkCode);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet("linkcode/{linkCode}")]
@@ -123,6 +155,58 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create sharing email for Sharing {SharingId}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("sharingaccess")]
+        public async Task<IActionResult> CreateSharingAccess([FromBody] CreateSharingAccessCommand request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+
+                if (result == null)
+                {
+                    return BadRequest();
+               }
+
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create sharing access for Sharing {SharingId}", request.SharingId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create sharing access for Sharing {SharingId}", request.SharingId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("sharingemailaccess")]
+        public async Task<IActionResult> CreateSharingEmailAccess([FromBody] CreateSharingEmailAccessCommand request)
+        {
+            try
+            {
+                var result = await _mediator.Send(request);
+
+                if (result == null)
+                {
+                    return BadRequest();
+                }
+
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create sharing email access for SharingEmail {SharingEmailId}", request.SharingEmailId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create sharing email access for SharingEmail {SharingEmailId}", request.SharingEmailId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

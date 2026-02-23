@@ -13,21 +13,21 @@ using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByEmailLinkCode;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 
-namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.SharingEmail
+namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
 {
     [TestFixture]
     public class WhenGettingSharingByEmailLinkCode
     {
         private Mock<IMediator> _mediatorMock = null!;
-        private Mock<ILogger<SharingEmailController>> _loggerMock = null!;
-        private SharingEmailController _sut = null!;
+        private Mock<ILogger<SharingController>> _loggerMock = null!;
+        private SharingController _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _mediatorMock = new Mock<IMediator>();
-            _loggerMock = new Mock<ILogger<SharingEmailController>>();
-            _sut = new SharingEmailController(_mediatorMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<SharingController>>();
+            _sut = new SharingController(_mediatorMock.Object, _loggerMock.Object);
         }
 
         [Test]
