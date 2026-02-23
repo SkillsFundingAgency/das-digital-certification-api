@@ -18,15 +18,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
     public class WhenCreatingSharingEmailAccess
     {
         private Mock<IMediator> _mediatorMock = null!;
-        private Mock<ILogger<SharingEmailAccessController>> _loggerMock = null!;
-        private SharingEmailAccessController _sut = null!;
+        private Mock<ILogger<SharingController>> _loggerMock = null!;
+        private SharingController _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _mediatorMock = new Mock<IMediator>();
-            _loggerMock = new Mock<ILogger<SharingEmailAccessController>>();
-            _sut = new SharingEmailAccessController(_mediatorMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<SharingController>>();
+            _sut = new SharingController(_mediatorMock.Object, _loggerMock.Object);
         }
 
         [Test]
