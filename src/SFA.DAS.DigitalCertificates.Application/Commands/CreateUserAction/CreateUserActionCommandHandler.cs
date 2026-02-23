@@ -54,13 +54,13 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
                     CertificateType = request.CertificateType,
                     CourseName = request.CourseName,
                     ActionTime = now,
-                    
+
                 };
 
                 _userActionsContext.Add(userAction);
                 await _userActionsContext.SaveChangesAsync(cancellationToken);
 
-                var hashedActionCode = _encodingService.Encode(userAction.Id, EncodingType.AccountId);
+                var hashedActionCode = _encodingService.Encode(userAction.Id, EncodingType.ShortCode);
                 userAction.ActionCode = hashedActionCode;
 
                 await _userActionsContext.SaveChangesAsync(cancellationToken);
@@ -76,6 +76,6 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
             }
         }
 
-        
+
     }
 }

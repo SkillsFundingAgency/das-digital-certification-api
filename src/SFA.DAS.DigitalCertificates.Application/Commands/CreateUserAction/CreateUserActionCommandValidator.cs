@@ -14,8 +14,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
             When(x => x.ActionType == ActionType.Reprint || x.ActionType == ActionType.Help, () =>
             {
                 RuleFor(x => x.CertificateId).NotNull();
+                RuleFor(x => x.CertificateType).NotNull();
                 RuleFor(x => x.CertificateType)
-                    .NotNull()
                     .Must(type => type == CertificateType.Standard || type == CertificateType.Framework)
                     .WithMessage("CertificateType must be either Standard or Framework")
                     .When(x => x.CertificateType.HasValue);

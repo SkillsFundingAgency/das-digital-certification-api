@@ -46,7 +46,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
 
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
             _userActionsContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.AccountId)).Returns(expectedCode);
+            _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.ShortCode)).Returns(expectedCode);
 
             var command = new CreateUserActionCommand
             {
@@ -136,7 +136,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
 
             _dateTimeProviderMock.Setup(x => x.Now).Returns(DateTime.UtcNow);
             _userActionsContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.AccountId)).Returns(newCode);
+            _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.ShortCode)).Returns(newCode);
 
             var command = new CreateUserActionCommand
             {
