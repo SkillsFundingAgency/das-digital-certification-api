@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using MediatR;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
