@@ -60,7 +60,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
                 _userActionsContext.Add(userAction);
                 await _userActionsContext.SaveChangesAsync(cancellationToken);
 
-                var hashedActionCode = _encodingService.Encode(userAction.Id, EncodingType.ShortCode);
+                var hashedActionCode = _encodingService.Encode(userAction.Id, EncodingType.SupportReference);
                 userAction.ActionCode = hashedActionCode;
 
                 await _userActionsContext.SaveChangesAsync(cancellationToken);
