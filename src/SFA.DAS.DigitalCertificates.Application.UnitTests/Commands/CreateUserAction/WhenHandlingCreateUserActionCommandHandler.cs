@@ -4,32 +4,29 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using SFA.DAS.DigitalCertificates.Data;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.Encoding;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
+using System.Linq;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserAction
 {
     public class WhenHandlingCreateUserActionCommandHandler
     {
-        private Mock<IUserActionsEntityContext> _userActionsContextMock = null!;
         private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
         private Mock<IEncodingService> _encodingServiceMock = null!;
-        private CreateUserActionCommandHandler _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _userActionsContextMock = new Mock<IUserActionsEntityContext>();
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _encodingServiceMock = new Mock<IEncodingService>();
-            _sut = new CreateUserActionCommandHandler(
-                _userActionsContextMock.Object,
-                _dateTimeProviderMock.Object,
-                _encodingServiceMock.Object);
         }
 
         [Test]
@@ -40,13 +37,22 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             var now = DateTime.UtcNow;
             var expectedCode = "ACTION123";
 
-            _userActionsContextMock
-                .Setup(x => x.GetMostRecentActionAsync(userId, ActionType.Contact, null))
-                .ReturnsAsync((UserActions?)null);
+            using var connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+            var options = new DbContextOptionsBuilder<DigitalCertificatesDataContext>()
+                .UseSqlite(connection)
+                .Options;
+
+            await using var dbContext = new DigitalCertificatesDataContext(null, options);
+            dbContext.Database.EnsureCreated();
+
+            dbContext.Users.Add(new User { Id = userId, GovUkIdentifier = "GOV123", EmailAddress = "test@example.com" });
+            await dbContext.SaveChangesAsync();
 
             _dateTimeProviderMock.Setup(x => x.Now).Returns(now);
-            _userActionsContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
             _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.SupportReference)).Returns(expectedCode);
+
+            var sut = new CreateUserActionCommandHandler(dbContext, _dateTimeProviderMock.Object, _encodingServiceMock.Object);
 
             var command = new CreateUserActionCommand
             {
@@ -57,11 +63,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             };
 
             // Act
-            var result = await _sut.Handle(command, CancellationToken.None);
+            var result = await sut.Handle(command, CancellationToken.None);
 
             // Assert
             result.ActionCode.Should().Be(expectedCode);
-            _userActionsContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Exactly(2));
+            var saved = await dbContext.UserActions.FirstOrDefaultAsync();
+            saved.Should().NotBeNull();
+            saved!.ActionCode.Should().Be(expectedCode);
         }
 
         [Test]
@@ -83,27 +91,48 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
                 AdminActions = new List<AdminActions>()
             };
 
-            _userActionsContextMock
-                .Setup(x => x.GetMostRecentActionAsync(userId, ActionType.Reprint, It.IsAny<Guid?>()))
-                .ReturnsAsync(existing);
+            using var connection2 = new SqliteConnection("DataSource=:memory:");
+            connection2.Open();
+            var options2 = new DbContextOptionsBuilder<DigitalCertificatesDataContext>()
+                .UseSqlite(connection2)
+                .Options;
 
-            var command = new CreateUserActionCommand
+            await using (var dbContext = new DigitalCertificatesDataContext(null, options2))
             {
-                UserId = userId,
-                ActionType = ActionType.Reprint,
-                FamilyName = "Smith",
-                GivenNames = "John",
-                CertificateId = Guid.NewGuid(),
-                CertificateType = CertificateType.Standard,
-                CourseName = "Test Course"
-            };
+                dbContext.Database.EnsureCreated();
 
-            // Act
-            var result = await _sut.Handle(command, CancellationToken.None);
+                dbContext.Users.Add(new User { Id = userId, GovUkIdentifier = "GOV123", EmailAddress = "test@example.com" });
+                await dbContext.SaveChangesAsync();
 
-            // Assert
-            result.ActionCode.Should().Be(existingCode);
-            _userActionsContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+                var certificateId = Guid.NewGuid();
+
+                existing.UserId = userId;
+                existing.ActionType = ActionType.Reprint;
+                existing.CertificateId = certificateId;
+                dbContext.UserActions.Add(existing);
+                await dbContext.SaveChangesAsync();
+
+                var sut = new CreateUserActionCommandHandler(dbContext, _dateTimeProviderMock.Object, _encodingServiceMock.Object);
+
+                var command = new CreateUserActionCommand
+                {
+                    UserId = userId,
+                    ActionType = ActionType.Reprint,
+                    FamilyName = "Smith",
+                    GivenNames = "John",
+                    CertificateId = certificateId,
+                    CertificateType = CertificateType.Standard,
+                    CourseName = "Test Course"
+                };
+
+                // Act
+                var result = await sut.Handle(command, CancellationToken.None);
+
+                // Assert
+                result.ActionCode.Should().Be(existingCode);
+                var count = await dbContext.UserActions.CountAsync();
+                count.Should().Be(1);
+            }
         }
 
         [Test]
@@ -130,31 +159,51 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
                 }
             };
 
-            _userActionsContextMock
-                .Setup(x => x.GetMostRecentActionAsync(userId, ActionType.Help, certificateId))
-                .ReturnsAsync(existing);
+            using var connection3 = new SqliteConnection("DataSource=:memory:");
+            connection3.Open();
+            var options3 = new DbContextOptionsBuilder<DigitalCertificatesDataContext>()
+                .UseSqlite(connection3)
+                .Options;
 
-            _dateTimeProviderMock.Setup(x => x.Now).Returns(DateTime.UtcNow);
-            _userActionsContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-            _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.SupportReference)).Returns(newCode);
-
-            var command = new CreateUserActionCommand
+            await using (var dbContext = new DigitalCertificatesDataContext(null, options3))
             {
-                UserId = userId,
-                ActionType = ActionType.Help,
-                FamilyName = "Smith",
-                GivenNames = "John",
-                CertificateId = certificateId,
-                CertificateType = CertificateType.Standard,
-                CourseName = "Test Course"
-            };
+                dbContext.Database.EnsureCreated();
 
-            // Act
-            var result = await _sut.Handle(command, CancellationToken.None);
+                dbContext.Users.Add(new User { Id = userId, GovUkIdentifier = "GOV123", EmailAddress = "test@example.com" });
+                await dbContext.SaveChangesAsync();
 
-            // Assert
-            result.ActionCode.Should().Be(newCode);
-            _userActionsContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Exactly(2));
+                existing.UserId = userId;
+                existing.ActionType = ActionType.Help;
+                existing.CertificateId = certificateId;
+                dbContext.UserActions.Add(existing);
+                await dbContext.SaveChangesAsync();
+
+                _dateTimeProviderMock.Setup(x => x.Now).Returns(DateTime.UtcNow);
+                _encodingServiceMock.Setup(x => x.Encode(It.IsAny<long>(), EncodingType.SupportReference)).Returns(newCode);
+
+                var sut = new CreateUserActionCommandHandler(dbContext, _dateTimeProviderMock.Object, _encodingServiceMock.Object);
+
+                var command = new CreateUserActionCommand
+                {
+                    UserId = userId,
+                    ActionType = ActionType.Help,
+                    FamilyName = "Smith",
+                    GivenNames = "John",
+                    CertificateId = certificateId,
+                    CertificateType = CertificateType.Standard,
+                    CourseName = "Test Course"
+                };
+
+                // Act
+                var result = await sut.Handle(command, CancellationToken.None);
+
+                // Assert
+                result.ActionCode.Should().Be(newCode);
+                var count = await dbContext.UserActions.CountAsync();
+                count.Should().Be(2);
+                var saved = await dbContext.UserActions.OrderByDescending(u => u.Id).FirstAsync();
+                saved.ActionCode.Should().Be(newCode);
+            }
         }
     }
 }
