@@ -29,7 +29,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("emaillinkcode/{emailLinkCode}")]
+        [HttpGet("sharingemail/emaillinkcode/{emailLinkCode}")]
         public async Task<IActionResult> GetSharingByEmailLinkCode(Guid emailLinkCode)
         {
             try
