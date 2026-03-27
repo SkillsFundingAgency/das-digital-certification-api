@@ -11,6 +11,7 @@ using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -83,6 +84,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve user authorisation for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("{userId}/identity")]
+        public async Task<IActionResult> GetUserIdentity(Guid userId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserIdentityQuery { UserId = userId });
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve user identity for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve user identity for {UserId}", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
