@@ -4,7 +4,7 @@
     [UserId] UNIQUEIDENTIFIER NOT NULL,
     [Uln] BIGINT NULL,
     [FamilyName] VARCHAR(255) NOT NULL,
-    [DateOfBirth] DATETIME2 NOT NULL,
+    [DateOfBirth] DATE NOT NULL,
     [CertificateType] VARCHAR(20) NOT NULL,
     [CourseCode] VARCHAR(255) NOT NULL,
     [CourseName] VARCHAR(1000) NOT NULL,
