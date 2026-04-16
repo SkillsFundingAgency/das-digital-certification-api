@@ -147,7 +147,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
 
                 return Ok(result);
             }
-            catch (FluentValidation.ValidationException ex)
+            catch (ValidationException ex)
             {
                 _logger.LogError(ex, "Validation error attempting to create sharing email for Sharing {SharingId}", id);
                 return BadRequest(new { errors = ex.Errors });
@@ -223,10 +223,15 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
 
                 if (result == null)
                 {
-                    return BadRequest();
+                    return NotFound();
                 }
 
                 return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to delete sharing {SharingId}", id);
+                return BadRequest(new { errors = ex.Errors });
             }
             catch (Exception ex)
             {

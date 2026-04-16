@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using MediatR;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -49,7 +50,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         }
 
         [Test]
-        public async Task And_ResultIsNull_Then_ReturnsBadRequest()
+        public async Task And_ResultIsNull_Then_ReturnsNotFound()
         {
             // Arrange
             var sharingId = Guid.NewGuid();
@@ -64,7 +65,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             // Assert
             _mediatorMock.Verify(m => m.Send(It.Is<DeleteSharingCommand>(c => c.SharingId == sharingId), It.IsAny<CancellationToken>()), Times.Once);
 
-            result.Should().BeOfType<BadRequestResult>();
+            result.Should().BeOfType<NotFoundResult>();
         }
 
         [Test]
@@ -86,6 +87,25 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             result.Should().BeOfType<StatusCodeResult>();
             var status = (StatusCodeResult)result;
             status.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
+        }
+
+        [Test]
+        public async Task And_ValidationException_Then_ReturnsBadRequest()
+        {
+            // Arrange
+            var sharingId = Guid.NewGuid();
+
+            _mediatorMock
+                .Setup(m => m.Send(It.IsAny<DeleteSharingCommand>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new ValidationException("Validation failed"));
+
+            // Act
+            var result = await _sut.DeleteSharing(sharingId);
+
+            // Assert
+            _mediatorMock.Verify(m => m.Send(It.Is<DeleteSharingCommand>(c => c.SharingId == sharingId), It.IsAny<CancellationToken>()), Times.Once);
+
+            result.Should().BeOfType<BadRequestObjectResult>();
         }
     }
 }
