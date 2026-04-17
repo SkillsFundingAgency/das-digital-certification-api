@@ -12,10 +12,10 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/emaillinkcode/{{SharingEmailLinkCode}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/emaillinkcode/{{SharingEmailLinkCode}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -37,10 +37,10 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/linkcode/{{SharingLinkCode}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/linkcode/{{SharingLinkCode}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -62,10 +62,10 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -86,10 +86,10 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{DeletedSharingId}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{DeletedSharingId}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -119,10 +119,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -151,10 +151,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}/email",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}/email",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -185,10 +185,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingaccess",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingaccess",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -218,10 +218,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingemailaccess",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingemailaccess",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -254,10 +254,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -287,10 +287,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/identity",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/identity",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -323,10 +323,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/authorisation",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/authorisation",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -360,10 +360,10 @@
           }
         },
         "url": {
-          "raw": "https://{{Envionment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/sharings?certificateId={{StandardCertificateId}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/sharings?certificateId={{StandardCertificateId}}",
           "protocol": "https",
           "host": [
-            "{{Envionment}}-digital-certification-api",
+            "{{Environment}}-digital-certification-api",
             "apprenticeships",
             "education",
             "gov",
@@ -422,7 +422,7 @@
   ],
   "variable": [
     {
-      "key": "Envionment",
+      "key": "Environment",
       "value": "pp"
     },
     {
