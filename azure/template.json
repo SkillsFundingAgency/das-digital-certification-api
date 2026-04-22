@@ -212,10 +212,10 @@
                                     "name": "ConfigurationStorageConnectionString",
                                     "value": "[parameters('configurationStorageConnectionString')]"
                                 },
-                                {
-                                    "name": "ConfigNames",
-                                    "value": "SFA.DAS.DigitalCertificates.Api"
-                                },
+                              {
+                                "name": "ConfigNames",
+                                "value": "SFA.DAS.DigitalCertificates.Api,SFA.DAS.Encoding"
+                              },
                                 {
                                     "name": "Version",
                                     "value": "1.0"
