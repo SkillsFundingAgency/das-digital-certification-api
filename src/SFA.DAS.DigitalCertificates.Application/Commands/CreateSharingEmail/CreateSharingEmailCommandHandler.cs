@@ -27,7 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail
         {
             var now = _dateTimeProvider.Now;
 
-            var sharing = await _sharingContext.GetSharingById(request.SharingId, now);
+            var sharing = await _sharingContext.GetActiveSharingById(request.SharingId, now);
             if (sharing == null)
             {
                 return null;
