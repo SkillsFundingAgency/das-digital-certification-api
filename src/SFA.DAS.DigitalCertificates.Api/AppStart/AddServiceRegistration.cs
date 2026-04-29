@@ -27,6 +27,7 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<IUserMatchEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<IUserAuthorisationEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IUserIdentityEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEmailEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<IUserActionsEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());

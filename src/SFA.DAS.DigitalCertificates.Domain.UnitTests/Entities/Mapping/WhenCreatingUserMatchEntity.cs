@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
 {
@@ -15,11 +16,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             var uln = 9999999999L;
             var familyName = "Smith";
             var dob = new DateTime(1985, 5, 5);
-            var certificateType = "TypeA";
+            var certificateType = CertificateType.Standard;
             var courseCode = "C123";
             var courseName = "Course Name";
             var courseLevel = 3;
-            var dateAwarded = DateTime.UtcNow.AddDays(-365);
+            var dateAwarded = DateTime.UtcNow.AddDays(-365).Year;
             var providerName = "Provider Ltd";
             var ukprn = 123456;
 
