@@ -24,7 +24,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
-                CourseLevel = 2,
+                CourseLevel = "2",
                 DateAwarded = dateAwarded,
                 ProviderName = "Test Provider",
                 Ukprn = 123456,
@@ -39,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             command.CertificateType.Should().Be(CertificateType.Standard);
             command.CourseCode.Should().Be("C123");
             command.CourseName.Should().Be("Test Course");
-            command.CourseLevel.Should().Be(2);
+            command.CourseLevel.Should().Be("2");
             command.DateAwarded.Should().Be(dateAwarded);
             command.ProviderName.Should().Be("Test Provider");
             command.Ukprn.Should().Be(123456);

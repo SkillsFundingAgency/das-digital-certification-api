@@ -8,7 +8,7 @@
     [CertificateType] VARCHAR(20) NULL,
     [CourseCode] VARCHAR(255) NULL,
     [CourseName] VARCHAR(1000) NULL,
-    [CourseLevel] INT NULL,
+    [CourseLevel] VARCHAR(20) NULL,
     [DateAwarded] INT NULL,
     [ProviderName] VARCHAR(255) NULL,
     [Ukprn] INT NULL,

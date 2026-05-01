@@ -18,6 +18,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             => await Entities
                 .FirstOrDefaultAsync(er => er.GovUkIdentifier == govUkIdentifer);
 
+        public async Task<User?> GetWithIdentities(string govUkIdentifer)
+            => await Entities
+                .Include(u => u.UserIdentities)
+                .FirstOrDefaultAsync(er => er.GovUkIdentifier == govUkIdentifer);
+
         public async Task<User?> GetByUserId(Guid userId)
             => await Entities
                 .FirstOrDefaultAsync(er => er.Id == userId);

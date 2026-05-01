@@ -19,7 +19,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             var certificateType = CertificateType.Standard;
             var courseCode = "C123";
             var courseName = "Course Name";
-            var courseLevel = 3;
+            var courseLevel = "3";
             var dateAwarded = DateTime.UtcNow.AddDays(-365).Year;
             var providerName = "Provider Ltd";
             var ukprn = 123456;

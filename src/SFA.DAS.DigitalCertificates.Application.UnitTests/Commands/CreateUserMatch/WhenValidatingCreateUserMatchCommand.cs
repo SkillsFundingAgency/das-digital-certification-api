@@ -28,7 +28,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
-                CourseLevel = 2,
+                CourseLevel = "2",
                 DateAwarded = 2020,
                 ProviderName = "Provider",
                 Ukprn = 123456,

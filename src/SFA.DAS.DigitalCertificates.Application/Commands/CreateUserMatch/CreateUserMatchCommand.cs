@@ -13,7 +13,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
         public CertificateType? CertificateType { get; set; }
         public string? CourseCode { get; set; }
         public string? CourseName { get; set; }
-        public int? CourseLevel { get; set; }
+        public string? CourseLevel { get; set; }
         public int? DateAwarded { get; set; }
         public string? ProviderName { get; set; }
         public int? Ukprn { get; set; }
