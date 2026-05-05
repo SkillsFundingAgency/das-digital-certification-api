@@ -9,16 +9,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
     public class WhenCreatingGetUserActionsQuery
     {
         [Test]
-        public void And_DefaultValues_Then_PropertiesAreNullOrDefault()
-        {
-            // Act
-            var query = new GetUserActionsQuery();
-
-            // Assert
-            query.UserId.Should().Be(Guid.Empty);
-        }
-
-        [Test]
         public void And_PropertiesSet_Then_ValuesAreMapped()
         {
             // Arrange

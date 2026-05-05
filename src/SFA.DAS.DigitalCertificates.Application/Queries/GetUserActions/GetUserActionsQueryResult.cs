@@ -16,8 +16,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions
         public ActionType ActionType { get; set; }
         public DateTime ActionTime { get; set; }
         public UserActionStatus ActionStatus { get; set; } = UserActionStatus.New;
-        public string FamilyName { get; set; } = string.Empty;
-        public string GivenNames { get; set; } = string.Empty;
+        public required string FamilyName { get; set; }
+        public required string GivenNames { get; set; }
         public Guid? CertificateId { get; set; }
         public CertificateType? CertificateType { get; set; }
         public string? CourseName { get; set; }
@@ -27,8 +27,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions
 
     public class AdminActionDetail
     {
-        public string Username { get; set; } = string.Empty;
+        public required string Username { get; set; }
         public DateTime ActionTime { get; set; }
-        public string Action { get; set; } = string.Empty;
+        public required string Action { get; set; }
     }
 }

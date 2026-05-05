@@ -117,7 +117,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             ua.ActionStatus.Should().Be(UserActionStatus.Viewed);
             ua.AdminActions.Should().NotBeNull();
             ua.AdminActions!.Should().HaveCount(2);
-            // Admin actions should be ordered descending by ActionTime
             ua.AdminActions.First().Username.Should().Be("admin2");
             ua.AdminActions.Last().Username.Should().Be("admin1");
             _userActionsContextMock.Verify(x => x.GetByUserIdAsync(userId, It.IsAny<CancellationToken>()), Times.Once);
