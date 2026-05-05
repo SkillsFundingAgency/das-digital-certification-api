@@ -96,3 +96,33 @@ BEGIN
     );
 END
 
+IF EXISTS (
+    SELECT 1
+    FROM sys.tables t
+    JOIN sys.schemas s ON t.schema_id = s.schema_id
+    WHERE t.name = 'UserActions'
+    AND s.name = 'dbo'
+    AND t.temporal_type = 2
+)
+BEGIN
+    ALTER TABLE [dbo].[UserActions]
+    SET (
+        SYSTEM_VERSIONING = OFF
+    );
+END
+
+IF EXISTS (
+    SELECT 1
+    FROM sys.tables t
+    JOIN sys.schemas s ON t.schema_id = s.schema_id
+    WHERE t.name = 'AdminActions'
+    AND s.name = 'dbo'
+    AND t.temporal_type = 2
+)
+BEGIN
+    ALTER TABLE [dbo].[AdminActions]
+    SET (
+        SYSTEM_VERSIONING = OFF
+    );
+END
+

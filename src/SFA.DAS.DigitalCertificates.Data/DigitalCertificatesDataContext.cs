@@ -15,7 +15,9 @@ namespace SFA.DAS.DigitalCertificates.Data
     public class DigitalCertificatesDataContext : DbContext,
         IUserEntityContext,
         ISharingEntityContext,
-        ISharingEmailEntityContext
+        ISharingEmailEntityContext,
+        IUserActionsEntityContext,
+        IAdminActionsEntityContext
     {
         private const string AzureResource = "https://database.windows.net/";
         private readonly ApplicationSettings? _configuration;
@@ -24,10 +26,14 @@ namespace SFA.DAS.DigitalCertificates.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Sharing> Sharings { get; set; }
         public virtual DbSet<SharingEmail> SharingEmails { get; set; }
+        public virtual DbSet<UserActions> UserActions { get; set; }
+        public virtual DbSet<AdminActions> AdminActions { get; set; }
 
         DbSet<User> IEntityContext<User>.Entities => Users;
         DbSet<Sharing> IEntityContext<Sharing>.Entities => Sharings;
         DbSet<SharingEmail> IEntityContext<SharingEmail>.Entities => SharingEmails;
+        DbSet<UserActions> IEntityContext<UserActions>.Entities => UserActions;
+        DbSet<AdminActions> IEntityContext<AdminActions>.Entities => AdminActions;       
 
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options)
@@ -70,7 +76,9 @@ namespace SFA.DAS.DigitalCertificates.Data
                 .ApplyConfiguration(new SharingConfiguration())
                 .ApplyConfiguration(new SharingAccessConfiguration())
                 .ApplyConfiguration(new SharingEmailConfiguration())
-                .ApplyConfiguration(new SharingEmailAccessConfiguration());
+                .ApplyConfiguration(new SharingEmailAccessConfiguration())
+                .ApplyConfiguration(new UserActionsConfiguration())
+                .ApplyConfiguration(new AdminActionsConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
