@@ -21,5 +21,15 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .OrderByDescending(ua => ua.Id)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<System.Collections.Generic.List<UserActions>> GetByUserIdAsync(Guid userId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Include(ua => ua.AdminActions)
+                .Where(ua => ua.UserId == userId)
+                .OrderByDescending(ua => ua.ActionTime)
+                .ToListAsync(cancellationToken);
+        }
     }
 }
