@@ -1,11 +1,11 @@
 ﻿using System;
+using MediatR;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Domain.Entities
+namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
 {
-    public class UserMatch
+    public class CreateUserMatchCommand : IRequest<Unit>
     {
-        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public long? Uln { get; set; }
         public required string FamilyName { get; set; }
@@ -19,7 +19,5 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public int? Ukprn { get; set; }
         public bool IsMatched { get; set; }
         public bool IsFailed { get; set; }
-
-        public User? User { get; set; }
     }
 }

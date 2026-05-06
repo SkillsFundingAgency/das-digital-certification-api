@@ -23,5 +23,19 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .Distinct()
                 .ToListAsync();
         }
+
+        public async Task<UserAuthorisation?> GetByUlnAsync(long uln, CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.ULN == uln, cancellationToken);
+        }
+
+        public async Task<UserAuthorisation?> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.UserId == userId, cancellationToken);
+        }
     }
 }
