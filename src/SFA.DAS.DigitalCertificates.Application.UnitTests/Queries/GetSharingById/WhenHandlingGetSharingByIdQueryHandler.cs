@@ -35,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
         {
             // Arrange
             var sharingId = Guid.NewGuid();
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync((Sharing?)null);
+            _sharingContextMock.Setup(x => x.GetActiveSharingById(sharingId, _now)).ReturnsAsync((Sharing?)null);
 
             var query = new GetSharingByIdQuery { SharingId = sharingId };
 
@@ -76,7 +76,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
                 sharing
             };
 
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync(sharing);
+            _sharingContextMock.Setup(x => x.GetActiveSharingById(sharingId, _now)).ReturnsAsync(sharing);
             _sharingContextMock.Setup(x => x.GetAllSharingsBasic(userId, certificateId)).ReturnsAsync(allSharingsForUser);
 
             var query = new GetSharingByIdQuery { SharingId = sharingId };
@@ -142,7 +142,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
                 }
             };
 
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync(sharing);
+            _sharingContextMock.Setup(x => x.GetActiveSharingById(sharingId, _now)).ReturnsAsync(sharing);
             _sharingContextMock.Setup(x => x.GetAllSharingsBasic(userId, certificateId)).ReturnsAsync(new List<Sharing> { sharing });
 
             var query = new GetSharingByIdQuery { SharingId = sharingId };
@@ -190,7 +190,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
                 }
             };
 
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync(sharing);
+            _sharingContextMock.Setup(x => x.GetActiveSharingById(sharingId, _now)).ReturnsAsync(sharing);
             _sharingContextMock.Setup(x => x.GetAllSharingsBasic(userId, certificateId)).ReturnsAsync(new List<Sharing> { sharing });
 
             var query = new GetSharingByIdQuery { SharingId = sharingId, Limit = limit };
@@ -231,7 +231,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetSharingBy
                 }
             };
 
-            _sharingContextMock.Setup(x => x.GetSharingById(sharingId, _now)).ReturnsAsync(sharing);
+            _sharingContextMock.Setup(x => x.GetActiveSharingById(sharingId, _now)).ReturnsAsync(sharing);
             _sharingContextMock.Setup(x => x.GetAllSharingsBasic(userId, certificateId)).ReturnsAsync(new List<Sharing> { sharing });
 
             var query = new GetSharingByIdQuery { SharingId = sharingId };
