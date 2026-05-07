@@ -31,6 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             // Arrange
             var userId = Guid.NewGuid();
+            var user = new User { Id = userId, GovUkIdentifier = "GOV123", EmailAddress = "test@example.com", IsLocked = false };
             var command = new CreateUserMatchCommand
             {
                 UserId = userId,
@@ -49,6 +50,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             };
 
             _userContextMock
+                .Setup(x => x.GetByUserId(userId))
+                .ReturnsAsync(user);
+
+            _userContextMock
                 .Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(1);
 
@@ -64,7 +69,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 Times.Once);
 
             _userContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
-            _userContextMock.Verify(x => x.GetByUserId(It.IsAny<Guid>()), Times.Never);
+            _userContextMock.Verify(x => x.GetByUserId(userId), Times.Once);
+            user.IsLocked.Should().BeFalse();
         }
 
         [Test]
@@ -112,6 +118,41 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             _userContextMock.Verify(x => x.GetByUserId(userId), Times.Once);
             _userContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
             user.IsLocked.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task And_UserDoesNotExist_Then_NoMatchCreated_And_NoSaveCalled()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var command = new CreateUserMatchCommand
+            {
+                UserId = userId,
+                Uln = 1234567890,
+                FamilyName = "NoUser",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                CertificateType = CertificateType.Standard,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                CourseLevel = "2",
+                DateAwarded = 2020,
+                ProviderName = "Provider",
+                Ukprn = 123456,
+                IsMatched = false,
+                IsFailed = false
+            };
+
+            _userContextMock
+                .Setup(x => x.GetByUserId(userId))
+                .ReturnsAsync((User?)null);
+
+            // Act
+            await _sut.Handle(command, CancellationToken.None);
+
+            // Assert
+            _userMatchContextMock.Verify(x => x.Add(It.IsAny<UserMatch>()), Times.Never);
+            _userContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+            _userContextMock.Verify(x => x.GetByUserId(userId), Times.Once);
         }
 
     }

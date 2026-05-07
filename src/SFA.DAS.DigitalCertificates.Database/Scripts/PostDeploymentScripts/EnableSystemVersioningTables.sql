@@ -44,13 +44,3 @@ ALTER TABLE [dbo].[AdminActions]
 SET (
     SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[AdminActionsHistory])
 );
-
-ALTER TABLE [dbo].[UserMatch]
-SET (
-    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserMatchHistory])
-);
-
-ALTER TABLE [dbo].[UserIdentity]
-SET (
-    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserIdentityHistory])
-);

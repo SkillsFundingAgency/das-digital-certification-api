@@ -265,6 +265,29 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         }
 
         [Test]
+        public void And_UserIdMissing_Then_ErrorReturned()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990,1,1),
+                CertificateType = CertificateType.Standard,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = 1,
+                IsMatched = true,
+                IsFailed = false
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "UserId");
+        }
+
+        [Test]
         public void And_IsMatchedAndIsFailed_BothTrue_Then_ErrorReturned()
         {
             var command = new CreateUserMatchCommand

@@ -7,6 +7,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
     {
         public CreateUserMatchCommandValidator()
         {
+            RuleFor(x => x.UserId).NotEmpty();
             RuleFor(x => x.FamilyName).NotEmpty();
             RuleFor(x => x.DateOfBirth).NotEmpty();
 

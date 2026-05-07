@@ -6,6 +6,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisati
     {
         public CreateUserAuthorisationCommandValidator()
         {
+            RuleFor(x => x.UserId).NotEmpty();
             RuleFor(x => x.Uln).GreaterThan(0);
         }
     }

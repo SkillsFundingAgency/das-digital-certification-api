@@ -14,12 +14,9 @@
     [Ukprn] INT NULL,
     [IsMatched] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsMatched] DEFAULT (0),
     [IsFailed] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsFailed] DEFAULT (0),
-    [ValidFrom] DATETIME2 (0) GENERATED ALWAYS AS ROW START,
-    [ValidTo] DATETIME2 (0) GENERATED ALWAYS AS ROW END,
-    PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo),
     CONSTRAINT FK_UserMatch_User FOREIGN KEY ([UserId]) REFERENCES [dbo].[User]([Id])
-)
-WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserMatchHistory]));
+);
+GO
 GO
 
 CREATE INDEX IX_UserMatch_UserId ON [dbo].[UserMatch]([UserId]);

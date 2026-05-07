@@ -19,6 +19,12 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
 
         public async Task<Unit> Handle(CreateUserMatchCommand request, CancellationToken cancellationToken)
         {
+            var user = await _userContext.GetByUserId(request.UserId);
+            if (user == null)
+            {
+                return Unit.Value;
+            }
+
             var entity = new UserMatch
             {
                 UserId = request.UserId,
@@ -38,13 +44,9 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
 
             _matchContext.Add(entity);
 
-            if (request.IsFailed)
+            if (request.IsFailed && !user.IsLocked)
             {
-                var user = await _userContext.GetByUserId(request.UserId);
-                if (user != null && !user.IsLocked)
-                {
-                    user.IsLocked = true;
-                }
+                user.IsLocked = true;
             }
 
             await _userContext.SaveChangesAsync(cancellationToken);

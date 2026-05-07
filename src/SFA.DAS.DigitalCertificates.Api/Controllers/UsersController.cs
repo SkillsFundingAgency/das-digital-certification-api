@@ -164,7 +164,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserActionsQuery { UserId = userId });
-                return Ok(new { useractions = result.UserActions });
+                return Ok(new { userActions = result.UserActions });
             }
             catch (ValidationException ex)
             {

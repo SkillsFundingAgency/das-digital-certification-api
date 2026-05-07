@@ -51,7 +51,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var ok = result.Should().BeOfType<OkObjectResult>().Which;
             ok.Value.Should().NotBeNull();
 
-            var useractionsProp = ok.Value.GetType().GetProperty("useractions");
+            var useractionsProp = ok.Value.GetType().GetProperty("userActions");
             useractionsProp.Should().NotBeNull();
             var value = useractionsProp.GetValue(ok.Value) as IEnumerable<UserActionDetail>;
             value.Should().BeEquivalentTo(actions);

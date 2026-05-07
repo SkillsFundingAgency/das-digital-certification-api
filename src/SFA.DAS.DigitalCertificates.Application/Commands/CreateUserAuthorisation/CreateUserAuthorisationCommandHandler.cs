@@ -44,22 +44,22 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisati
                 throw new ValidationException(failures);
             }
 
+            if (user.UserAuthorisation != null)
+            {
+                var failures = new List<ValidationFailure>
+                {
+                    new ValidationFailure(nameof(request.UserId), "User already has an authorisation")
+                };
+
+                throw new ValidationException(failures);
+            }
+
             var existingUln = await _authContext.GetByUlnAsync(request.Uln, cancellationToken);
             if (existingUln != null)
             {
                 var failures = new List<ValidationFailure>
                 {
                     new ValidationFailure(nameof(request.Uln), "ULN already authorised for another user")
-                };
-
-                throw new ValidationException(failures);
-            }
-
-            if (user.UserAuthorisation != null)
-            {
-                var failures = new List<ValidationFailure>
-                {
-                    new ValidationFailure(nameof(request.UserId), "User already has an authorisation")
                 };
 
                 throw new ValidationException(failures);

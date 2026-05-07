@@ -43,5 +43,20 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Uln");
         }
+
+        [Test]
+        public void And_UserIdEmpty_Then_ErrorReturned()
+        {
+            var command = new CreateUserAuthorisationCommand
+            {
+                UserId = default,
+                Uln = 1234567890
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "UserId");
+        }
     }
 }
