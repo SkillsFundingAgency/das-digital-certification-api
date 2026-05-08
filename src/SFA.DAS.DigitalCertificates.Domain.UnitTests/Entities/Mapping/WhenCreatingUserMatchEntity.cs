@@ -35,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 CourseCode = courseCode,
                 CourseName = courseName,
                 CourseLevel = courseLevel,
-                DateAwarded = dateAwarded,
+                YearAwarded = dateAwarded,
                 ProviderName = providerName,
                 Ukprn = ukprn,
                 IsMatched = true,
@@ -51,7 +51,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             match.CourseCode.Should().Be(courseCode);
             match.CourseName.Should().Be(courseName);
             match.CourseLevel.Should().Be(courseLevel);
-            match.DateAwarded.Should().Be(dateAwarded);
+            match.YearAwarded.Should().Be(dateAwarded);
             match.ProviderName.Should().Be(providerName);
             match.Ukprn.Should().Be(ukprn);
             match.IsMatched.Should().BeTrue();
