@@ -11,6 +11,10 @@ using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -87,6 +91,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
+        [HttpGet("{userId}/identity")]
+        public async Task<IActionResult> GetUserIdentity(Guid userId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserIdentityQuery { UserId = userId });
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve user identity for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve user identity for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpGet("{userId}/sharings")]
         public async Task<IActionResult> GetSharings(Guid userId, [FromQuery] Guid certificateId, [FromQuery] int? limit = null)
         {
@@ -130,6 +154,68 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create user action for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("{userId}/actions")]
+        public async Task<IActionResult> GetUserActions(Guid userId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserActionsQuery { UserId = userId });
+                return Ok(new { userActions = result.UserActions });
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve user actions for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve user actions for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("{userId}/match")]
+        public async Task<IActionResult> CreateUserMatch(Guid userId, [FromBody] CreateUserMatchCommand request)
+        {
+            try
+            {
+                request.UserId = userId;
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create user match for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create user match for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("{userId}/authorise")]
+        public async Task<IActionResult> CreateUserAuthorisation(Guid userId, [FromBody] CreateUserAuthorisationCommand request)
+        {
+            try
+            {
+                request.UserId = userId;
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to authorise user for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to authorise user for {UserId}", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
