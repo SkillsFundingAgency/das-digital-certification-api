@@ -86,6 +86,8 @@
     <Build Include="Tables\UserActionsHistory.sql" />
     <Build Include="Tables\AdminActions.sql" />
     <Build Include="Tables\AdminActionsHistory.sql" />
+    <Build Include="Tables\UserIdentity.sql" />
+    <Build Include="Tables\UserMatch.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
