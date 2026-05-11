@@ -27,6 +27,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             => await Entities
                 .FirstOrDefaultAsync(er => er.Id == userId);
 
+        public async Task<User?> GetWithIdentitiesByUserId(Guid userId)
+            => await Entities
+                .Include(u => u.UserIdentities)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
         public async Task<UserAuthorisation?> GetUserAuthorisationByUserId(Guid userId)
         {
             var user = await Entities

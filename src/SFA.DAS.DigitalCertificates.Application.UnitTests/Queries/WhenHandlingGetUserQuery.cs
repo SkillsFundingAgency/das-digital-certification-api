@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
@@ -90,6 +92,55 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
 
             var act = async () => await mediator.Send(new GetUserQuery { GovUkIdentifier = null! });
             await act.Should().ThrowAsync<ValidationException>();
+        }
+
+        [Test, AutoMoqData]
+        public async Task And_User_Has_Identities_Then_DateOfBirth_And_Names_Returned(
+            string govUkIdentifier,
+            [Frozen(Matching.ImplementedInterfaces)] DigitalCertificatesDataContext context)
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+
+            var identity = new UserIdentity
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                FamilyName = "Smith",
+                GivenNames = "John|J",
+                DateOfBirth = new DateTime(1970, 1, 1),
+                ValidSince = new DateTime(2020, 1, 1),
+                ValidUntil = new DateTime(2021, 1, 1)
+            };
+
+            var user = new User
+            {
+                Id = userId,
+                GovUkIdentifier = govUkIdentifier,
+                EmailAddress = "test@test.com",
+                UserIdentities = new List<UserIdentity> { identity }
+            };
+
+            context.Add(user);
+            await context.SaveChangesAsync();
+
+            var query = new GetUserQuery() { GovUkIdentifier = govUkIdentifier };
+            var handler = new GetUserQueryHandler(context);
+
+            // Act
+            var result = await handler.Handle(query, CancellationToken.None);
+
+            // Assert
+            result.User.Should().NotBeNull();
+            result.User!.DateOfBirth.Should().Be(identity.DateOfBirth);
+            result.User.Names.Should().NotBeNull();
+            result.User.Names.Should().HaveCount(1);
+
+            var nr = result.User.Names.First();
+            nr.FamilyName.Should().Be(identity.FamilyName);
+            nr.GivenNames.Should().Be(identity.GivenNames);
+            nr.ValidSince.Should().Be(identity.ValidSince);
+            nr.ValidUntil.Should().Be(identity.ValidUntil);
         }
     }
 }
