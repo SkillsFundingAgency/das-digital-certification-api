@@ -43,7 +43,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
                 {
                     Id = userId,
                     GovUkIdentifier = govUkIdentifier,
-                    EmailAddress = "test@test.com"
+                    EmailAddress = "test@test.com",
+                    Names = Enumerable.Empty<Domain.Models.NameRecord>()
                 }
             };
 
