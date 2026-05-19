@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SFA.DAS.DigitalCertificates.Domain.Models
 {
@@ -10,6 +12,8 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
         public string? PhoneNumber { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public bool IsLocked { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public IEnumerable<NameRecord>? Names { get; set; }
 
         public static implicit operator User?(Entities.User? source)
         {
@@ -18,6 +22,19 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
                 return null;
             }
 
+            var dob = source.UserIdentities?.OrderByDescending(i => i.ValidSince).FirstOrDefault()?.DateOfBirth;
+
+            var names = source.UserIdentities?
+                .Select(i => new NameRecord
+                {
+                    ValidSince = i.ValidSince,
+                    ValidUntil = i.ValidUntil,
+                    FamilyName = i.FamilyName,
+                    GivenNames = i.GivenNames
+                })
+                .OrderByDescending(n => n.ValidSince)
+                .ToList();
+
             return new User
             {
                 Id = source.Id,
@@ -25,7 +42,9 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
                 EmailAddress = source.EmailAddress,
                 PhoneNumber = source.PhoneNumber,
                 LastLoginAt = source.LastLoginAt,
-                IsLocked = source.IsLocked
+                IsLocked = source.IsLocked,
+                DateOfBirth = dob,
+                Names = names
             };
         }
     }

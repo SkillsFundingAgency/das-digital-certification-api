@@ -35,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
                 CourseCode = request.CourseCode,
                 CourseName = request.CourseName,
                 CourseLevel = request.CourseLevel,
-                DateAwarded = request.DateAwarded,
+                YearAwarded = request.YearAwarded,
                 ProviderName = request.ProviderName,
                 Ukprn = request.Ukprn,
                 IsMatched = request.IsMatched,

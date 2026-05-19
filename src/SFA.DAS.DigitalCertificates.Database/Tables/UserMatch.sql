@@ -9,7 +9,7 @@
     [CourseCode] VARCHAR(255) NULL,
     [CourseName] VARCHAR(1000) NULL,
     [CourseLevel] VARCHAR(20) NULL,
-    [DateAwarded] INT NULL,
+    [YearAwarded] INT NULL,
     [ProviderName] VARCHAR(255) NULL,
     [Ukprn] INT NULL,
     [IsMatched] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsMatched] DEFAULT (0),

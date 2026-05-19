@@ -29,7 +29,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 CourseCode = "C123",
                 CourseName = "Test Course",
                 CourseLevel = "2",
-                DateAwarded = 2020,
+                YearAwarded = 2020,
                 ProviderName = "Provider",
                 Ukprn = 123456,
                 IsMatched = true,

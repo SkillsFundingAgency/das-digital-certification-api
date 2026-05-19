@@ -18,10 +18,10 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUser
 
         public async Task<GetUserQueryResult> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            User? user = request.GovUkIdentifier != null ? await _userContext.Get(request.GovUkIdentifier) : null;
+            User? user = request.GovUkIdentifier != null ? await _userContext.GetWithIdentities(request.GovUkIdentifier) : null;
             if (user == null && Guid.TryParse(request.GovUkIdentifier, out Guid userId))
             {
-                user = await _userContext.GetByUserId(userId);
+                user = await _userContext.GetWithIdentitiesByUserId(userId);
             }
 
             return new GetUserQueryResult
