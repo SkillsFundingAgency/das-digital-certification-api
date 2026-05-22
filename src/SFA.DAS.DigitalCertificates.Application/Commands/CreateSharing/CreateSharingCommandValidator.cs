@@ -18,7 +18,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
             .WithMessage("CertificateType must be either Standard or Framework");
 
             RuleFor(x => x.CourseName)
-            .NotEmpty().WithMessage("CourseName must not be empty");
+            .NotEmpty().WithMessage("CourseName must not be empty")
+            .Matches(@"^[^<>]*$").WithMessage("CourseName contains invalid characters.");
         }
     }
 }
