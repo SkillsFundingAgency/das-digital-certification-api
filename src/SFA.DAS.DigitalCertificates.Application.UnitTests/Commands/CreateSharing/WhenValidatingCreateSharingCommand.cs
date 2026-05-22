@@ -134,5 +134,25 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "CourseName");
         }
+
+        [Test]
+        public void And_CourseNameContainsInvalidCharacters_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateSharingCommand
+            {
+                UserId = Guid.NewGuid(),
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = "Test Course <invalid>"
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "CourseName");
+        }
     }
 }
