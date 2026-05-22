@@ -15,19 +15,34 @@ namespace SFA.DAS.DigitalCertificates.Data
     public class DigitalCertificatesDataContext : DbContext,
         IUserEntityContext,
         ISharingEntityContext,
-        ISharingEmailEntityContext
+        ISharingEmailEntityContext,
+        IUserActionsEntityContext,
+        IAdminActionsEntityContext,
+        IUserMatchEntityContext,
+        IUserAuthorisationEntityContext,
+        IUserIdentityEntityContext
     {
         private const string AzureResource = "https://database.windows.net/";
         private readonly ApplicationSettings? _configuration;
         private readonly ChainedTokenCredential? _chainedTokenCredentialProvider;
 
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserMatch> UserMatches { get; set; }
+        public virtual DbSet<UserAuthorisation> UserAuthorisations { get; set; }
+        public virtual DbSet<UserIdentity> UserIdentities { get; set; }
         public virtual DbSet<Sharing> Sharings { get; set; }
         public virtual DbSet<SharingEmail> SharingEmails { get; set; }
+        public virtual DbSet<UserActions> UserActions { get; set; }
+        public virtual DbSet<AdminActions> AdminActions { get; set; }
 
         DbSet<User> IEntityContext<User>.Entities => Users;
+        DbSet<UserMatch> IEntityContext<UserMatch>.Entities => UserMatches;
+        DbSet<UserAuthorisation> IEntityContext<UserAuthorisation>.Entities => UserAuthorisations;
+        DbSet<UserIdentity> IEntityContext<UserIdentity>.Entities => UserIdentities;
         DbSet<Sharing> IEntityContext<Sharing>.Entities => Sharings;
         DbSet<SharingEmail> IEntityContext<SharingEmail>.Entities => SharingEmails;
+        DbSet<UserActions> IEntityContext<UserActions>.Entities => UserActions;
+        DbSet<AdminActions> IEntityContext<AdminActions>.Entities => AdminActions;
 
         public DigitalCertificatesDataContext(IOptions<ApplicationSettings>? config,
             DbContextOptions<DigitalCertificatesDataContext> options)
@@ -65,12 +80,15 @@ namespace SFA.DAS.DigitalCertificates.Data
         {
             modelBuilder
                 .ApplyConfiguration(new UserConfiguration())
+                .ApplyConfiguration(new UserMatchConfiguration())
                 .ApplyConfiguration(new UserAuthorisationConfiguration())
                 .ApplyConfiguration(new UserIdentityConfiguration())
                 .ApplyConfiguration(new SharingConfiguration())
                 .ApplyConfiguration(new SharingAccessConfiguration())
                 .ApplyConfiguration(new SharingEmailConfiguration())
-                .ApplyConfiguration(new SharingEmailAccessConfiguration());
+                .ApplyConfiguration(new SharingEmailAccessConfiguration())
+                .ApplyConfiguration(new UserActionsConfiguration())
+                .ApplyConfiguration(new AdminActionsConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

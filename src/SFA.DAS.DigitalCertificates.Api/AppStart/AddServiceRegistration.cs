@@ -6,6 +6,7 @@ using SFA.DAS.DigitalCertificates.Application.Behaviours;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Data;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using SFA.DAS.Encoding;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.DigitalCertificates.Api.AppStart
@@ -24,8 +25,14 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
             services.AddScoped<IUserEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IUserMatchEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IUserAuthorisationEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IUserIdentityEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
             services.AddScoped<ISharingEmailEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IUserActionsEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddScoped<IAdminActionsEntityContext>(s => s.GetRequiredService<DigitalCertificatesDataContext>());
+            services.AddSingleton<IEncodingService, EncodingService>();
         }
     }
 }
