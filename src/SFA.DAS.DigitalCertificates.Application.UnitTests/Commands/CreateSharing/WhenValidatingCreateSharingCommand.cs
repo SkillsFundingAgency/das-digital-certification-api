@@ -135,8 +135,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             result.Errors.Should().Contain(e => e.PropertyName == "CourseName");
         }
 
-        [Test]
-        public void And_CourseNameContainsInvalidCharacters_Then_ErrorReturned()
+        [TestCase("Test Course <")]
+        [TestCase("Test Course >")]
+        [TestCase("<Test Course>")]
+        public void And_CourseNameContainsInvalidCharacters_Then_ErrorReturned(string courseName)
         {
             // Arrange
             var command = new CreateSharingCommand
@@ -144,7 +146,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
                 CertificateType = CertificateType.Standard,
-                CourseName = "Test Course <invalid>"
+                CourseName = courseName
             };
 
             // Act
