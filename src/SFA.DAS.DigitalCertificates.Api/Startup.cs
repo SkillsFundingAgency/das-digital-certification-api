@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +12,10 @@ using SFA.DAS.DigitalCertificates.Api.AppStart;
 using SFA.DAS.DigitalCertificates.Api.Authentication;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace SFA.DAS.DigitalCertificates.Api
 {
@@ -49,7 +50,10 @@ namespace SFA.DAS.DigitalCertificates.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOpenTelemetryRegistration(Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]!);
-
+            services.AddHsts(options =>
+            {
+                options.MaxAge = TimeSpan.FromDays(90);
+            });
             var applicationSettingsSection = Configuration.GetSection(nameof(ApplicationSettings));
             var applicationSettings = applicationSettingsSection.Get<ApplicationSettings>();
 
@@ -132,6 +136,7 @@ namespace SFA.DAS.DigitalCertificates.Api
             }
             else
             {
+                // HSTS configured to 90 days in ConfigureServices.
                 app.UseHsts();
             }
 
