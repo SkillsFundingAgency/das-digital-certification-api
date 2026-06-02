@@ -31,6 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions
                     ActionCode = ua.ActionCode,
                     FamilyName = ua.FamilyName,
                     GivenNames = ua.GivenNames,
+                    Uln = ua.User?.UserAuthorisation?.ULN,
                     CertificateId = ua.CertificateId,
                     CertificateType = ua.CertificateType,
                     CourseName = ua.CourseName,
