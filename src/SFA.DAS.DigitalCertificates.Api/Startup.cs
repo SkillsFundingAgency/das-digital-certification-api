@@ -10,6 +10,7 @@ using SFA.DAS.Api.Common.AppStart;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DigitalCertificates.Api.AppStart;
 using SFA.DAS.DigitalCertificates.Api.Authentication;
+using SFA.DAS.DigitalCertificates.Api.Configuration;
 using SFA.DAS.DigitalCertificates.Api.TaskQueue;
 using SFA.DAS.DigitalCertificates.Domain.Configuration;
 using System;
@@ -38,6 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Api
                 options.StorageConnectionString = configuration?["ConfigurationStorageConnectionString"];
                 options.EnvironmentName = configuration?["EnvironmentName"];
                 options.PreFixConfigurationKeys = false;
+                options.ConfigurationKeysRawJsonResult = new[] { ConfigurationKeys.EncodingConfig };
             });
 #if DEBUG
             config.AddJsonFile($"appsettings.Development.json", optional: true);
@@ -125,6 +127,7 @@ namespace SFA.DAS.DigitalCertificates.Api
                     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 });
 
+            services.AddEncodingConfiguration(Configuration);
             services.AddServices();
         }
 

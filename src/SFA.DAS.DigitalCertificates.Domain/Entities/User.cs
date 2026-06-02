@@ -15,5 +15,6 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public UserAuthorisation? UserAuthorisation { get; set; }
 
         public IEnumerable<UserIdentity>? UserIdentities { get; set; }
+        public IEnumerable<UserMatch>? UserMatches { get; set; }
     }
 }

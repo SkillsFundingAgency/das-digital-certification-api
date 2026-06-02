@@ -18,9 +18,19 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             => await Entities
                 .FirstOrDefaultAsync(er => er.GovUkIdentifier == govUkIdentifer);
 
+        public async Task<User?> GetWithIdentities(string govUkIdentifer)
+            => await Entities
+                .Include(u => u.UserIdentities)
+                .FirstOrDefaultAsync(er => er.GovUkIdentifier == govUkIdentifer);
+
         public async Task<User?> GetByUserId(Guid userId)
             => await Entities
                 .FirstOrDefaultAsync(er => er.Id == userId);
+
+        public async Task<User?> GetWithIdentitiesByUserId(Guid userId)
+            => await Entities
+                .Include(u => u.UserIdentities)
+                .FirstOrDefaultAsync(u => u.Id == userId);
 
         public async Task<UserAuthorisation?> GetUserAuthorisationByUserId(Guid userId)
         {
@@ -30,5 +40,11 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
 
             return user?.UserAuthorisation;
         }
+
+        public async Task<User?> GetWithIdentitiesAndAuthorisation(Guid userId)
+            => await Entities
+                .Include(u => u.UserIdentities)
+                .Include(u => u.UserAuthorisation)
+                .FirstOrDefaultAsync(u => u.Id == userId);
     }
 }

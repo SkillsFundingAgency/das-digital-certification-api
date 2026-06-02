@@ -9,7 +9,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public required string FamilyName { get; set; }
         public required string GivenNames { get; set; }
         public DateTime DateOfBirth { get; set; }
-
+        
         public DateTime? ValidSince { get; set; }
         public DateTime? ValidUntil { get; set; }
 

@@ -4,9 +4,11 @@
     {
         public enum ActionType
         {
-            Reprint = 0,
-            SupportUlnNotFound = 1,
-            UserLocked = 2
+            Reprint = 1,
+            Help = 2,
+            Contact = 3,
+            NotMatched = 4,
+            NotFound = 5,
         }
         public enum CertificateType
         {
@@ -18,6 +20,16 @@
         {
             Live = 0,
             Deleted = 1
+        }
+        public enum UserActionStatus
+        {
+            New,
+            Viewed
+        }
+        public enum AdminActionType
+        {
+            Viewed,
+            Unlocked
         }
     }
 }

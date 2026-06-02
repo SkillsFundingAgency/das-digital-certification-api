@@ -1,0 +1,469 @@
+{
+  "info": {
+    "_postman_id": "9165cab9-95f2-4b67-b7c8-beabd9e3472d",
+    "name": "DigitalCertificate Inner API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1033522"
+  },
+  "item": [
+    {
+      "name": "GetSharingByEmailLinkCode",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/emaillinkcode/{{SharingEmailLinkCode}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "emaillinkcode",
+            "{{SharingEmailLinkCode}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetSharingByLinkCode",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/linkcode/{{SharingLinkCode}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "linkcode",
+            "{{SharingLinkCode}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetSharingById",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "{{SharingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteSharing",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{DeletedSharingId}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "{{DeletedSharingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateSharing",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"certificateId\": \"{{StandardCertificateId}}\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseName\": \"Software tester\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateSharingEmail",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"sharingId\": \"5b644dd1-ef80-4997-db8f-08de964ecd42\",\r\n  \"emailAddress\": \"abc@education.gov.uk\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/{{SharingId}}/email",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "{{SharingId}}",
+            "email"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateSharingAccess",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"sharingId\": \"{{SharingId}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingaccess",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "sharingaccess"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateSharingEmailAccess",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"sharingEmailId\": \"{{SharingEmailId}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingemailaccess",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "sharing",
+            "sharingemailaccess"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetUser",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateOrUpdateUser",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"govUkIdentifier\": \"{{GovUkIdentifier}}\",\r\n  \"emailAddress\": \"abc@education.gov.uk\",\r\n  \"phoneNumber\": \"07880360143\",\r\n  \"names\": [\r\n    {\r\n      \"validSince\": \"2026-04-14T10:16:40.331Z\",\r\n      \"validUntil\": \"2026-04-14T10:16:40.331Z\",\r\n      \"familyName\": \"John\",\r\n      \"givenNames\": \"Smith\"\r\n    }\r\n  ],\r\n  \"dateOfBirth\": \"2026-04-14T10:16:40.331Z\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/identity",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "identity"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetUserAuthorisation",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/authorisation",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "authorisation"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetSharings",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/sharings?certificateId={{StandardCertificateId}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "sharings"
+          ],
+          "query": [
+            {
+              "key": "certificateId",
+              "value": "{{StandardCertificateId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "Environment",
+      "value": "pp"
+    },
+    {
+      "key": "UserId",
+      "value": "7501D794-8A92-4082-8638-08DE9C5E1CAE"
+    },
+    {
+      "key": "GovUkIdentifier",
+      "value": "2EE4AB72-11B3-4B6F-BBC7-A5BE968652FB"
+    },
+    {
+      "key": "StandardCertificateId",
+      "value": "127FED64-57D9-4279-AE59-69532DA4B1AF"
+    },
+    {
+      "key": "FrameworkLearnerId",
+      "value": "F6971FFE-85FC-413E-B365-017706D71AE3"
+    },
+    {
+      "key": "SharingId",
+      "value": "de70ce4c-0306-42a4-c9a5-08de9c6eee18",
+      "description": "Obtained from CreateSharing sharingId"
+    },
+    {
+      "key": "SharingLinkCode",
+      "value": "d8097c71-3823-4878-9955-6e59f2fdca8d",
+      "description": "Obtained from GetSharingById linkCode"
+    },
+    {
+      "key": "SharingEmailId",
+      "value": "f9ec450c-5e41-480a-0c7c-08de9c6efdb3",
+      "description": "Obtained from CreateSharingEmail id"
+    },
+    {
+      "key": "SharingEmailLinkCode",
+      "value": "0e79e92e-94b4-46ab-8f06-3f30bca6512b",
+      "description": "Obtained from GetSharingById sharingEmails emailLinkCode"
+    },
+    {
+      "key": "DeletedSharingId",
+      "value": "7766BE5D-260A-4A5A-CF67-08DE9C6D078D"
+    }
+  ]
+}

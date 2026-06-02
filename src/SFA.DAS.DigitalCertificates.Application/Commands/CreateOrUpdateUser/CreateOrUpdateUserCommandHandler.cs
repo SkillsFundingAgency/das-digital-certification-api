@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
@@ -10,18 +11,21 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
     {
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IUserEntityContext _userEntityContext;
+        private readonly IUserIdentityEntityContext _userIdentityEntityContext;
 
         public CreateOrUpdateUserCommandHandler(
             IDateTimeProvider dateTimeProvider,
-            IUserEntityContext userEntityContext)
+            IUserEntityContext userEntityContext,
+            IUserIdentityEntityContext userIdentityEntityContext)
         {
             _dateTimeProvider = dateTimeProvider;
             _userEntityContext = userEntityContext;
+            _userIdentityEntityContext = userIdentityEntityContext;
         }
 
         public async Task<CreateOrUpdateUserCommandResponse> Handle(CreateOrUpdateUserCommand command, CancellationToken cancellationToken)
         {
-            User? user = await _userEntityContext.Get(command.GovUkIdentifier);
+            User? user = await _userEntityContext.GetWithIdentities(command.GovUkIdentifier);
 
             if (user == null)
             {
@@ -40,6 +44,29 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
 
             user.PhoneNumber = command.PhoneNumber;
             user.LastLoginAt = _dateTimeProvider.Now;
+
+            if (command.Names != null && command.Names.Count > 0)
+            {
+                if (user.UserIdentities != null)
+                {
+                    _userIdentityEntityContext.RemoveRange(user.UserIdentities);
+                }
+
+                foreach (var name in command.Names)
+                {
+                    var identity = new UserIdentity
+                    {
+                        User = user,
+                        FamilyName = name.FamilyName,
+                        GivenNames = name.GivenNames,
+                        DateOfBirth = command.DateOfBirth ?? default,
+                        ValidSince = name.ValidSince,
+                        ValidUntil = name.ValidUntil
+                    };
+
+                    _userIdentityEntityContext.Add(identity);
+                }
+            }
 
             await _userEntityContext.SaveChangesAsync(cancellationToken);
 
