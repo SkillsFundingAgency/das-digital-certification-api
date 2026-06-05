@@ -16,7 +16,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             // Arrange
             var actions = new List<UserActionDetail>
             {
-                new UserActionDetail { Id = 1, UserId = Guid.NewGuid(), ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow }
+                new UserActionDetail { Id = 1, UserId = Guid.NewGuid(), ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow, Uln = 12345678 }
             };
 
             // Act

@@ -27,6 +27,8 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             return await Entities
                 .AsNoTracking()
                 .Include(ua => ua.AdminActions)
+                .Include(ua => ua.User)
+                    .ThenInclude(u => u!.UserAuthorisation)
                 .Where(ua => ua.UserId == userId)
                 .OrderByDescending(ua => ua.ActionTime)
                 .ToListAsync(cancellationToken);
