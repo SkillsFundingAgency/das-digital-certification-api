@@ -45,5 +45,12 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .OrderByDescending(ua => ua.ActionTime)
                 .FirstOrDefaultAsync(cancellationToken);
         }
+
+        public async Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .AnyAsync(ua => ua.Id == id, cancellationToken);
+        }
     }
 }

@@ -16,6 +16,7 @@ using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -155,6 +156,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create user action for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("adminactions")]
+        public async Task<IActionResult> CreateAdminAction([FromBody] CreateAdminActionCommand request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create admin action.");
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create admin action.");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
