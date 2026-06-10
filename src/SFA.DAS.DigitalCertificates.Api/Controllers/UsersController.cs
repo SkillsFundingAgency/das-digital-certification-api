@@ -15,6 +15,8 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
+using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -158,6 +160,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
+        [HttpPost("adminactions")]
+        public async Task<IActionResult> CreateAdminAction([FromBody] CreateAdminActionCommand request)
+        {
+            try
+            {
+                await _mediator.Send(request);
+                return NoContent();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to create admin action.");
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to create admin action.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpGet("{userId}/actions")]
         public async Task<IActionResult> GetUserActions(Guid userId)
         {
@@ -174,6 +196,31 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to retrieve user actions for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("useractions/{code}")]
+        public async Task<IActionResult> GetUserActionByCode(string code)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserActionByCodeQuery { ActionCode = code });
+                if (result.UserAction == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result.UserAction);
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to retrieve user action for {ActionCode}", code);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to retrieve user action for {ActionCode}", code);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

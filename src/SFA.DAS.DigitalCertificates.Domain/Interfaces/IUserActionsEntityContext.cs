@@ -22,7 +22,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<System.Collections.Generic.List<UserActions>> GetByUserIdAsync(Guid userId, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<System.Collections.Generic.List<UserActions>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             return await Entities
                 .AsNoTracking()
@@ -32,6 +32,25 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
                 .Where(ua => ua.UserId == userId)
                 .OrderByDescending(ua => ua.ActionTime)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<UserActions?> GetByActionCodeAsync(string actionCode, CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Include(ua => ua.AdminActions)
+                .Include(ua => ua.User)
+                    .ThenInclude(u => u!.UserAuthorisation)
+                .Where(ua => ua.ActionCode == actionCode)
+                .OrderByDescending(ua => ua.ActionTime)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default)
+        {
+            return await Entities
+                .AsNoTracking()
+                .AnyAsync(ua => ua.Id == id, cancellationToken);
         }
     }
 }
