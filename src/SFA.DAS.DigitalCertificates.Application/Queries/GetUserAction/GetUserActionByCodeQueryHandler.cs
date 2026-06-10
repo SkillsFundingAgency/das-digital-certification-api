@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
 {
@@ -43,7 +43,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
                 {
                     Username = a.Username,
                     ActionTime = a.ActionTime,
-                    Action = a.Action.ToString()
+                    Action = a.Action
                 }).ToList(),
                 ActionStatus = (ua.AdminActions != null && ua.AdminActions.Any()) ? UserActionStatus.Viewed : UserActionStatus.New
             };

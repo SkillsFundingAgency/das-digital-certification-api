@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserAction
