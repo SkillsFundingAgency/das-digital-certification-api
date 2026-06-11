@@ -20,8 +20,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="OpenTelemetry.Api" Version="1.16.0" />
         <PackageReference Include="SFA.DAS.ApiContracts.Build" Version="17.1.192" />
         <PackageReference Include="SFA.DAS.Apim.Shared" Version="17.1.189" />
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.9" />
     </ItemGroup>
 
     <ItemGroup>
