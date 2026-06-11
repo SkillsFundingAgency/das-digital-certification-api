@@ -59,26 +59,31 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
                 _serviceProviderMock.Object);
         }
 
-        //[Test]
-        //public async Task ExecuteAsync_DequeuesAndExecutesTasks()
-        //{
-        //    // Arrange
-        //    using var cancellationTokenSource = new CancellationTokenSource();
-        //    var mockRequest = new Mock<IBaseRequest>().Object;
+        [Test]
+        public async Task ExecuteAsync_DequeuesAndExecutesTasks()
+        {
+           // Arrange
+           using var cancellationTokenSource = new CancellationTokenSource();
+           var mockRequest = new Mock<IBaseRequest>().Object;
+           var taskExecuted = new TaskCompletionSource<object?>();
 
-        //    _backgroundTaskQueueMock
-        //        .Setup(x => x.DequeueAsync(It.IsAny<CancellationToken>()))
-        //        .ReturnsAsync((mockRequest, "TestRequest", (response, duration, logger) => { }
-        //    ))
-        //        .Callback(() => cancellationTokenSource.Cancel());
+           _backgroundTaskQueueMock
+               .Setup(x => x.DequeueAsync(It.IsAny<CancellationToken>()))
+               .ReturnsAsync((mockRequest, "TestRequest", (response, duration, logger) =>
+               {
+                   taskExecuted.SetResult(response);
+               }
+           ))
+               .Callback(() => cancellationTokenSource.Cancel());
 
-        //    // Act
-        //    await _service.StartAsync(cancellationTokenSource.Token);
+           // Act
+           await _service.StartAsync(cancellationTokenSource.Token);
+           await taskExecuted.Task;
 
-        //    // Assert
-        //    _mediatorMock.Verify(x => x.Send(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Once);
-        //    _serviceScopeFactoryMock.Verify(x => x.CreateScope(), Times.Once);
-        //}
+           // Assert
+           _mediatorMock.As<ISender>().Verify(x => x.Send(It.IsAny<IBaseRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+           _serviceScopeFactoryMock.Verify(x => x.CreateScope(), Times.Once);
+        }
 
         [Test]
         public async Task ExecuteAsync_HandlesExceptionsGracefully()
