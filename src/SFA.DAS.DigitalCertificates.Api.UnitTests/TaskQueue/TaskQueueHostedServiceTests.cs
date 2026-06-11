@@ -76,7 +76,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.TaskQueue
             await _service.StartAsync(cancellationTokenSource.Token);
 
             // Assert
-            _mediatorMock.Verify(x => x.Send(It.IsAny<IBaseRequest>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(x => x.Send(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Once);
             _serviceScopeFactoryMock.Verify(x => x.CreateScope(), Times.Once);
         }
 

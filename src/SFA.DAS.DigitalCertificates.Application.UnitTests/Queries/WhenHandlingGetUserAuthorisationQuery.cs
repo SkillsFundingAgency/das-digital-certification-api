@@ -79,6 +79,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
         public async Task And_Sending_Query_With_Empty_Id_Throws_ValidationException()
         {
             IServiceCollection services = new ServiceCollection();
+            services.AddLogging();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserAuthorisationQuery>());
             services.AddValidatorsFromAssemblyContaining<GetUserAuthorisationQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
