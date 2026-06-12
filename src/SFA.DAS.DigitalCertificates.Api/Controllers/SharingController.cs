@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingAccess;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
@@ -30,6 +31,10 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("sharingemail/emaillinkcode/{emailLinkCode}")]
+        [ProducesResponseType(typeof(CertificateSharingEmailLinkSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSharingByEmailLinkCode(Guid emailLinkCode)
         {
             try
@@ -59,6 +64,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("linkcode/{linkCode}")]
+        [ProducesResponseType(typeof(CertificateSharingLinkSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSharingByLinkCode(Guid linkCode)
         {
             try
@@ -83,6 +91,10 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CertificateSharing), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSharingById(Guid id, [FromQuery] int? limit = null)
         {
             try
@@ -113,6 +125,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(CreateSharingCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSharing([FromBody] CreateSharingCommand request)
         {
             try
@@ -133,6 +148,10 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("{id}/email")]
+        [ProducesResponseType(typeof(CreateSharingEmailCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSharingEmail(Guid id, [FromBody] CreateSharingEmailCommand request)
         {
             try
@@ -160,6 +179,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("sharingaccess")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSharingAccess([FromBody] CreateSharingAccessCommand request)
         {
             try
@@ -186,6 +208,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("sharingemailaccess")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateSharingEmailAccess([FromBody] CreateSharingEmailAccessCommand request)
         {
             try
@@ -212,6 +237,10 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteSharing(Guid id)
         {
             try
