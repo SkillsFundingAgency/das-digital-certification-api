@@ -33,18 +33,19 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_ValidRequest_Then_ReturnOkWithUserAction()
         {
             // Arrange
-            var action = new UserActionDetail { Id = 1, UserId = Guid.NewGuid(), ActionTime = DateTime.UtcNow, FamilyName = "A", GivenNames = "B" };
+            var userId = Guid.NewGuid();
+            var expected = new GetUserActionByCodeQueryResult { Id = 1, UserId = userId, ActionTime = DateTime.UtcNow, FamilyName = "A", GivenNames = "B" };
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetUserActionByCodeQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new GetUserActionByCodeQueryResult { UserAction = action });
+                .ReturnsAsync(expected);
 
             // Act
             var result = await _sut.GetUserActionByCode("CODE123");
 
             // Assert
             var ok = result.Should().BeOfType<OkObjectResult>().Which;
-            ok.Value.Should().BeEquivalentTo(action);
+            ok.Value.Should().BeEquivalentTo(expected);
 
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetUserActionByCodeQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -55,7 +56,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             // Arrange
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<GetUserActionByCodeQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new GetUserActionByCodeQueryResult { UserAction = null });
+                .ReturnsAsync((GetUserActionByCodeQueryResult?)null);
 
             // Act
             var result = await _sut.GetUserActionByCode("UNKNOWN");

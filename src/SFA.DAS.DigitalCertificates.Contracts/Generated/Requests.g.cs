@@ -119,7 +119,7 @@ public class PostUsersAdminactionsApiRequest(CreateAdminActionCommand createAdmi
     public object Data { get; set; } = createAdminActionCommand;
 }
 
-/// <summary>GET /api/users/useractions/{code} &#x2192; <see cref="UserActionDetail"/></summary>
+/// <summary>GET /api/users/useractions/{code} &#x2192; <see cref="GetUserActionByCodeQueryResult"/></summary>
 public record GetUsersUseractionsByCodeApiRequest(string Code) : IGetApiRequest
 {
     public string GetUrl => $"api/users/useractions/{Code}";

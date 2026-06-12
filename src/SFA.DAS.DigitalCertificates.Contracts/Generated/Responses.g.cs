@@ -437,6 +437,54 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetUserActionByCodeQueryResult
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public long Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actionType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public ActionType ActionType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actionTime")]
+        public System.DateTime ActionTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actionStatus")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public UserActionStatus ActionStatus { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("familyName")]
+        public string? FamilyName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("givenNames")]
+        public string? GivenNames { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
+        public System.Guid? CertificateId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
+        public string? CourseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("actionCode")]
+        public string? ActionCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("adminActions")]
+        public System.Collections.Generic.ICollection<AdminActionDetail>? AdminActions { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("uln")]
+        public long? Uln { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetUserActionsQueryResult
     {
 

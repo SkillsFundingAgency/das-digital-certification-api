@@ -226,7 +226,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("useractions/{code}")]
-        [ProducesResponseType(typeof(UserActionDetail), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserActionByCodeQueryResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -235,12 +235,12 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserActionByCodeQuery { ActionCode = code });
-                if (result.UserAction == null)
+                if (result == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(result.UserAction);
+                return Ok(result);
             }
             catch (ValidationException ex)
             {

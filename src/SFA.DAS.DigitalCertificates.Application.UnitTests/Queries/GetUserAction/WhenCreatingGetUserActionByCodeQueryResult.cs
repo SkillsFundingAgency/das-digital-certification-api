@@ -2,8 +2,6 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
-using SFA.DAS.DigitalCertificates.Domain.Models;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserAction
@@ -15,16 +13,29 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
         public void Then_SetsPropertiesCorrectly()
         {
             // Arrange
-            var action = new UserActionDetail { Id = 1, UserId = Guid.NewGuid(), ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow, Uln = 12345678 };
+            var userId = Guid.NewGuid();
+            var actionTime = DateTime.UtcNow;
 
             // Act
             var result = new GetUserActionByCodeQueryResult
             {
-                UserAction = action
+                Id = 1,
+                UserId = userId,
+                ActionType = ActionType.Reprint,
+                FamilyName = "A",
+                GivenNames = "B",
+                ActionTime = actionTime,
+                Uln = 12345678
             };
 
             // Assert
-            result.UserAction.Should().BeEquivalentTo(action);
+            result.Id.Should().Be(1);
+            result.UserId.Should().Be(userId);
+            result.ActionType.Should().Be(ActionType.Reprint);
+            result.FamilyName.Should().Be("A");
+            result.GivenNames.Should().Be("B");
+            result.ActionTime.Should().Be(actionTime);
+            result.Uln.Should().Be(12345678);
         }
     }
 }
