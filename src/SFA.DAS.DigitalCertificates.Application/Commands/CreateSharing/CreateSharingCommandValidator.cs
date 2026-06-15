@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
@@ -19,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 
             RuleFor(x => x.CourseName)
             .NotEmpty().WithMessage("CourseName must not be empty")
-            .Matches(@"^[^<>]*$").WithMessage("CourseName contains invalid characters.");
+            .MustNotContainHtmlTags();
         }
     }
 }

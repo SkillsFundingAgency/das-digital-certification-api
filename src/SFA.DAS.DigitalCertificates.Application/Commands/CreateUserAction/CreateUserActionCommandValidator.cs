@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SFA.DAS.DigitalCertificates.Application.Extensions;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
@@ -8,8 +9,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
         public CreateUserActionCommandValidator()
         {
             RuleFor(x => x.ActionType).IsInEnum();
-            RuleFor(x => x.FamilyName).NotEmpty();
-            RuleFor(x => x.GivenNames).NotEmpty();
+            RuleFor(x => x.FamilyName).NotEmpty().MustNotContainHtmlTags(); 
+            RuleFor(x => x.GivenNames).NotEmpty().MustNotContainHtmlTags(); 
 
             When(x => x.ActionType == ActionType.Reprint || x.ActionType == ActionType.Help, () =>
             {
@@ -19,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction
                     .Must(type => type == CertificateType.Standard || type == CertificateType.Framework)
                     .WithMessage("CertificateType must be either Standard or Framework")
                     .When(x => x.CertificateType.HasValue);
-                RuleFor(x => x.CourseName).NotEmpty();
+                RuleFor(x => x.CourseName).NotEmpty().MustNotContainHtmlTags();
             });
         }
     }

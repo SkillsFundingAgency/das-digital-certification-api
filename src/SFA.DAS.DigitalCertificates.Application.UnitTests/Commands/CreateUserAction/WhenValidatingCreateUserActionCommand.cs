@@ -215,5 +215,194 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             result.Errors.Should().Contain(e => e.PropertyName == "CertificateType"
                 && e.ErrorMessage.Contains("CertificateType must be either Standard or Framework"));
         }
+
+        [TestCase("Smith <")]
+        [TestCase("Smith >")]
+        [TestCase("<Smith>")]
+        public void And_FamilyNameContainsInvalidCharacters_Then_ErrorReturned(string familyName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = familyName,
+                GivenNames = "John"
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "FamilyName");
+        }
+
+        [TestCase("<script>alert('xss')</script>")]
+        [TestCase("<b>Smith</b>")]
+        [TestCase("<img src='x' onerror='alert(1)'>")]
+        [TestCase("</div>")]
+        public void And_FamilyNameContainsHtmlTags_Then_ErrorReturnedWithCorrectMessage(string familyName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = familyName,
+                GivenNames = "John"
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "FamilyName" &&
+                e.ErrorMessage == "Family Name contains invalid characters.");
+        }
+
+        [TestCase("O'Brien")]
+        [TestCase("Smith-Jones")]
+        [TestCase("Van Der Berg")]
+        [TestCase("Smith (Jr)")]
+        public void And_FamilyNameContainsSpecialCharactersButNoHtmlTags_Then_CommandIsValid(string familyName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = familyName,
+                GivenNames = "John"
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [TestCase("John <")]
+        [TestCase("John >")]
+        [TestCase("<John>")]
+        public void And_GivenNamesContainsInvalidCharacters_Then_ErrorReturned(string givenNames)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = "Smith",
+                GivenNames = givenNames
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "GivenNames");
+        }
+
+        [TestCase("<script>alert('xss')</script>")]
+        [TestCase("<b>John</b>")]
+        [TestCase("<img src='x' onerror='alert(1)'>")]
+        [TestCase("</div>")]
+        public void And_GivenNamesContainsHtmlTags_Then_ErrorReturnedWithCorrectMessage(string givenNames)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = "Smith",
+                GivenNames = givenNames
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "GivenNames" &&
+                e.ErrorMessage == "Given Names contains invalid characters.");
+        }
+
+        [TestCase("Mary-Jane")]
+        [TestCase("O'Connor")]
+        [TestCase("Jean Pierre")]
+        [TestCase("John (Jr)")]
+        public void And_GivenNamesContainsSpecialCharactersButNoHtmlTags_Then_CommandIsValid(string givenNames)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Contact,
+                FamilyName = "Smith",
+                GivenNames = givenNames
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [TestCase("Test Course <")]
+        [TestCase("Test Course >")]
+        [TestCase("<Test Course>")]
+        public void And_ReprintActionWithCourseNameContainingInvalidCharacters_Then_ErrorReturned(string courseName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Reprint,
+                FamilyName = "Smith",
+                GivenNames = "John",
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = courseName
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "CourseName");
+        }
+
+        [TestCase("<script>alert('xss')</script>")]
+        [TestCase("<b>Course</b>")]
+        [TestCase("<img src='x' onerror='alert(1)'>")]
+        [TestCase("</div>")]
+        public void And_ReprintActionWithCourseNameContainingHtmlTags_Then_ErrorReturnedWithCorrectMessage(string courseName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Reprint,
+                FamilyName = "Smith",
+                GivenNames = "John",
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = courseName
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "CourseName" &&
+                e.ErrorMessage == "Course Name contains invalid characters.");
+        }
+
+        [TestCase("Test & Course")]
+        [TestCase("Test (Course)")]
+        [TestCase("Test 'Course'")]
+        [TestCase("Test \"Course\"")]
+        public void And_ReprintActionWithCourseNameContainingSpecialCharactersButNoHtmlTags_Then_CommandIsValid(string courseName)
+        {
+            var command = new CreateUserActionCommand
+            {
+                UserId = Guid.NewGuid(),
+                ActionType = ActionType.Reprint,
+                FamilyName = "Smith",
+                GivenNames = "John",
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = courseName
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
     }
 }
