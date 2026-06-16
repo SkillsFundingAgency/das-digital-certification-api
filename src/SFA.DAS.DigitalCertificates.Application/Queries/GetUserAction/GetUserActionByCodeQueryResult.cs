@@ -17,7 +17,6 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
         public Guid? CertificateId { get; set; }
         public CertificateType? CertificateType { get; set; }
         public string? CourseName { get; set; }
-        public string? ActionCode { get; set; }
         public IEnumerable<AdminActionDetail>? AdminActions { get; set; }
         public long? Uln { get; set; }
     }
