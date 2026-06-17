@@ -5,6 +5,7 @@
     [Uln] BIGINT NULL,
     [FamilyName] VARCHAR(255) NOT NULL,
     [DateOfBirth] DATE NOT NULL,
+    [EventTime] DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
     [CertificateType] VARCHAR(20) NULL,
     [CourseCode] VARCHAR(255) NULL,
     [CourseName] VARCHAR(1000) NULL,
