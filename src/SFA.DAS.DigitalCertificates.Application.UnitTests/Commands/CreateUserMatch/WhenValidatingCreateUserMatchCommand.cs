@@ -349,7 +349,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>
                 e.PropertyName == "FamilyName" &&
-                e.ErrorMessage == "Family Name contains invalid characters.");
+                e.ErrorMessage == "FamilyName contains invalid characters.");
         }
 
         [TestCase("Smith & Jones")]
@@ -404,7 +404,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>
                 e.PropertyName == "CourseCode" &&
-                e.ErrorMessage == "Course Code contains invalid characters.");
+                e.ErrorMessage == "CourseCode contains invalid characters.");
         }
 
         [TestCase("<Test Course>")]
@@ -433,7 +433,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>
                 e.PropertyName == "CourseName" &&
-                e.ErrorMessage == "Course Name contains invalid characters.");
+                e.ErrorMessage == "CourseName contains invalid characters.");
         }
 
         [TestCase("<Provider>")]
@@ -462,7 +462,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>
                 e.PropertyName == "ProviderName" &&
-                e.ErrorMessage == "Provider Name contains invalid characters.");
+                e.ErrorMessage == "ProviderName contains invalid characters.");
         }
 
         [TestCase("Test & Course")]

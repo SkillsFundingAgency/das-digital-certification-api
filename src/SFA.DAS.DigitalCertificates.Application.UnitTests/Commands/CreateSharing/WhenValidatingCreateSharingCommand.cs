@@ -179,7 +179,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e =>
                 e.PropertyName == "CourseName" &&
-                e.ErrorMessage == "Course Name contains invalid characters.");
+                e.ErrorMessage == "CourseName contains invalid characters.");
         }
 
         [TestCase("Test & Course")]

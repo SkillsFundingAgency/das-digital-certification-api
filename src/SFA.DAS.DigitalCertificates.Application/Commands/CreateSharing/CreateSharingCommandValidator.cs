@@ -20,7 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing
 
             RuleFor(x => x.CourseName)
             .NotEmpty().WithMessage("CourseName must not be empty")
-            .MustNotContainHtmlTags();
+            .MustNotContainHtmlTags(nameof(CreateSharingCommand.CourseName));
         }
     }
 }
