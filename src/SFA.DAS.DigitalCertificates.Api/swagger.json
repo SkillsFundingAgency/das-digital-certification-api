@@ -1882,10 +1882,6 @@
             "type": "string",
             "nullable": true
           },
-          "actionCode": {
-            "type": "string",
-            "nullable": true
-          },
           "adminActions": {
             "type": "array",
             "items": {

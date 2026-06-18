@@ -473,9 +473,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("courseName")]
         public string? CourseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("actionCode")]
-        public string? ActionCode { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("adminActions")]
         public System.Collections.Generic.ICollection<AdminActionDetail>? AdminActions { get; set; } = default!;
 
