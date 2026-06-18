@@ -846,6 +846,89 @@
         }
       }
     },
+    "/api/users/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/users/{userId}/sharings": {
       "get": {
         "tags": [
@@ -1882,10 +1965,6 @@
             "type": "string",
             "nullable": true
           },
-          "actionCode": {
-            "type": "string",
-            "nullable": true
-          },
           "adminActions": {
             "type": "array",
             "items": {
@@ -1919,6 +1998,52 @@
         "properties": {
           "authorisation": {
             "$ref": "#/components/schemas/UserAuthorisation"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetUserByIdQueryResult": {
+        "required": [
+          "emailAddress",
+          "govUkIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "govUkIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "isLocked": {
+            "type": "boolean"
+          },
+          "userMatches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserMatchDetail"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2137,6 +2262,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
           "isLocked": {
             "type": "boolean"
           },
@@ -2240,6 +2369,68 @@
           "authorisedAt": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMatchDetail": {
+        "required": [
+          "familyName"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "uln": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "familyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "certificateType": {
+            "type": "string",
+            "nullable": true
+          },
+          "courseCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "courseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "courseLevel": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateAwarded": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "providerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ukprn": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isMatched": {
+            "type": "boolean"
+          },
+          "isFailed": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

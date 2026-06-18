@@ -23,5 +23,15 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
 
             return matchedUserIds ?? new List<Guid>();
         }
+
+        public async Task<List<UserMatch>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            var matches = await Entities
+                .AsNoTracking()
+                .Where(um => um.UserId == userId)
+                .ToListAsync(cancellationToken);
+
+            return matches ?? new List<UserMatch>();
+        }
     }
 }

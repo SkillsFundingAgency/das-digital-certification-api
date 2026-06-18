@@ -473,9 +473,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("courseName")]
         public string? CourseName { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("actionCode")]
-        public string? ActionCode { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("adminActions")]
         public System.Collections.Generic.ICollection<AdminActionDetail>? AdminActions { get; set; } = default!;
 
@@ -499,6 +496,36 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("authorisation")]
         public UserAuthorisation Authorisation { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetUserByIdQueryResult
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("govUkIdentifier")]
+        public string? GovUkIdentifier { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
+        public string? EmailAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
+        public System.DateTime? CreatedAt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastLoginAt")]
+        public System.DateTime? LastLoginAt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isLocked")]
+        public bool IsLocked { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("userMatches")]
+        public System.Collections.Generic.ICollection<UserMatchDetail>? UserMatches { get; set; } = default!;
 
     }
 
@@ -653,6 +680,9 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("lastLoginAt")]
         public System.DateTime? LastLoginAt { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
+        public System.DateTime CreatedAt { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("isLocked")]
         public bool IsLocked { get; set; } = default!;
 
@@ -736,6 +766,51 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("authorisedAt")]
         public System.DateTime AuthorisedAt { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UserMatchDetail
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("uln")]
+        public long? Uln { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("familyName")]
+        public string? FamilyName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTime DateOfBirth { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        public string? CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseCode")]
+        public string? CourseCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
+        public string? CourseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseLevel")]
+        public string? CourseLevel { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateAwarded")]
+        public int? DateAwarded { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("providerName")]
+        public string? ProviderName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("ukprn")]
+        public int? Ukprn { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isMatched")]
+        public bool IsMatched { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isFailed")]
+        public bool IsFailed { get; set; } = default!;
 
     }
 
