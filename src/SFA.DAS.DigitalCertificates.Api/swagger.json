@@ -2395,6 +2395,10 @@
             "type": "string",
             "format": "date-time"
           },
+          "eventTime": {
+            "type": "string",
+            "format": "date-time"
+          },
           "certificateType": {
             "type": "string",
             "nullable": true

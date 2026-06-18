@@ -21,6 +21,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
         public long? Uln { get; set; }
         public required string FamilyName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public DateTime EventTime { get; set; }
         public string? CertificateType { get; set; }
         public string? CourseCode { get; set; }
         public string? CourseName { get; set; }

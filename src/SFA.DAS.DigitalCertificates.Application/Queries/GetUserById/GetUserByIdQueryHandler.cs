@@ -55,6 +55,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
                     CourseCode = um.CourseCode,
                     CourseName = um.CourseName,
                     CourseLevel = um.CourseLevel,
+                    EventTime = um.EventTime,
                     DateAwarded = um.YearAwarded,
                     ProviderName = um.ProviderName,
                     Ukprn = um.Ukprn,

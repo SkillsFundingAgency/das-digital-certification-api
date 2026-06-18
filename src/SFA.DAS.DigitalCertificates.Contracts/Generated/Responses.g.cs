@@ -516,7 +516,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public string? PhoneNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
-        public System.DateTime? CreatedAt { get; set; } = default!;
+        public System.DateTime CreatedAt { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("lastLoginAt")]
         public System.DateTime? LastLoginAt { get; set; } = default!;
@@ -784,6 +784,9 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTime DateOfBirth { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("eventTime")]
+        public System.DateTime EventTime { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
         public string? CertificateType { get; set; } = default!;
