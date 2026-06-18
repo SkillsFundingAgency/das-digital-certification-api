@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
-
+// TODO: Align the namespace and folder structure. This will be addressed during cleanup, as there are dependent branches in the chain.
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserAction
 {
     [TestFixture]
