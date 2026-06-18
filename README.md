@@ -27,7 +27,8 @@ The Digital Certificates service consists of a database, Inner API, Outer API's,
 
 ```
 * A clone of this repository
-* A code editor that supports Azure functions and .NetCore 8.0 e.g. Visual Studio 2022
+* Visual Studio 2022 (or another IDE supporting .NET 10 development)
+* .NET 10 SDK installed
 * A SQL server which is either an Azure DB or is Azure DB compatible e.g. SQL Server 2022 Developer Edition running locally
 * An Azure Service Bus instance (Only required for the API when sending emails)
 ```
@@ -56,10 +57,21 @@ This utility uses the standard Apprenticeship Service configuration. All configu
 * None
 ```
 
+## Contract generation
+
+To generate the contract for the API, the following global nuget package is required:
+
+```bash
+dotnet tool install -g swashbuckle.aspnetcore.cli --version 8.1.4
+```
+
+When you then build the digital certificates API project, it will generate swagger.json, this is then used by the SFA.DAS.DigitalCertificates.Contracts project
+and will generate the request, response and client files. A nuget package is then created for use with APIM endpoints
+
 ## Technologies
 
 ```
-* .NetCore 8.0
+* .NET 10
 * Azure Table Storage
 * MediatR
 * NUnit
