@@ -10,6 +10,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public long? Uln { get; set; }
         public required string FamilyName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public DateTime EventTime { get; set; }
         public CertificateType? CertificateType { get; set; }
         public string? CourseCode { get; set; }
         public string? CourseName { get; set; }
