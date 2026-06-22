@@ -6,6 +6,7 @@ using MediatR;
 using FluentValidation;
 using FluentValidation.Results;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
 {
@@ -51,7 +52,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
                     Uln = um.Uln,
                     FamilyName = um.FamilyName,
                     DateOfBirth = um.DateOfBirth,
-                    CertificateType = um.CertificateType?.ToString(),
+                    CertificateType = um.CertificateType ?? CertificateType.Unknown,
                     CourseCode = um.CourseCode,
                     CourseName = um.CourseName,
                     CourseLevel = um.CourseLevel,

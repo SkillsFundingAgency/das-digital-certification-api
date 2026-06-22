@@ -11,7 +11,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
         public void Properties_Are_Mapped_Correctly()
         {
             var matches = new[] {
-                new UserMatchDetail { Id = Guid.NewGuid(), Uln = 111111, FamilyName = "Smith", DateOfBirth = new DateTime(1990,1,1), CertificateType = "Standard", CourseCode = "C1", CourseName = "Course", CourseLevel = "3", DateAwarded = 2020, ProviderName = "P", Ukprn = 123, IsMatched = true, IsFailed = false }
+                new UserMatchDetail { Id = Guid.NewGuid(), Uln = 111111, FamilyName = "Smith", DateOfBirth = new DateTime(1990,1,1), CertificateType = Domain.Models.Enums.CertificateType.Standard, CourseCode = "C1", CourseName = "Course", CourseLevel = "3", DateAwarded = 2020, ProviderName = "P", Ukprn = 123, IsMatched = true, IsFailed = false }
             };
 
             var r = new GetUserByIdQueryResult

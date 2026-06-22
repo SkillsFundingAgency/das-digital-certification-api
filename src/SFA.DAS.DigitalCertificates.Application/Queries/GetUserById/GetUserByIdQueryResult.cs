@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
 {
@@ -22,7 +23,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
         public required string FamilyName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime EventTime { get; set; }
-        public string? CertificateType { get; set; }
+        public CertificateType CertificateType { get; set; }
         public string? CourseCode { get; set; }
         public string? CourseName { get; set; }
         public string? CourseLevel { get; set; }

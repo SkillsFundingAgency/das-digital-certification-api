@@ -10,6 +10,7 @@ using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
 {
@@ -68,7 +69,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
             var um = Enumerable.First(result.UserMatches);
             um.Uln.Should().Be(1234567890);
             um.FamilyName.Should().Be("Smith");
-            um.CertificateType.Should().Be("Standard");
+            um.CertificateType.Should().Be(CertificateType.Standard);
         }
 
         [Test]

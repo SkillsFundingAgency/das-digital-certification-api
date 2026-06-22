@@ -2400,8 +2400,7 @@
             "format": "date-time"
           },
           "certificateType": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/CertificateType"
           },
           "courseCode": {
             "type": "string",

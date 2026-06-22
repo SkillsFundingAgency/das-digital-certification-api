@@ -789,7 +789,8 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public System.DateTime EventTime { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        public string? CertificateType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("courseCode")]
         public string? CourseCode { get; set; } = default!;
