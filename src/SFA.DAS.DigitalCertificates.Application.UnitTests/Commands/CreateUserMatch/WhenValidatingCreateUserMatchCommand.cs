@@ -24,7 +24,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -46,14 +46,16 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
                 ProviderName = "Provider",
-                Ukprn = 1
+                Ukprn = 1,
+                IsMatched = true
             };
 
             var result = _validator.Validate(command);
@@ -63,32 +65,11 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         }
 
         [Test]
-        public void And_UkprnIsZero_Then_ErrorReturned()
-        {
-            var command = new CreateUserMatchCommand
-            {
-                Uln = 1234567890,
-                FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
-                CertificateType = CertificateType.Standard,
-                CourseCode = "C123",
-                CourseName = "Test Course",
-                ProviderName = "Provider",
-                Ukprn = 0,
-                IsMatched = true
-            };
-
-            var result = _validator.Validate(command);
-
-            result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == "Ukprn");
-        }
-
-        [Test]
         public void And_DateOfBirthDefault_Then_ErrorReturned()
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
                 DateOfBirth = default,
@@ -96,7 +77,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 CourseCode = "C123",
                 CourseName = "Test Course",
                 ProviderName = "Provider",
-                Ukprn = 1
+                Ukprn = 1,
+                IsMatched = true
             };
 
             var result = _validator.Validate(command);
@@ -110,9 +92,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Unknown,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -132,9 +115,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "",
                 CourseName = "Test Course",
@@ -154,9 +138,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "",
@@ -176,8 +161,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -193,13 +180,60 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         }
 
         [Test]
-        public void And_UkprnIsNegative_Then_ErrorReturned()
+        public void And_CertificateTypeIsStandardAndUkprnIsNull_Then_ErrorReturned()
         {
             var command = new CreateUserMatchCommand
             {
+                UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Standard,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = null,
+                IsMatched = true
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Ukprn");
+        }
+
+        [Test]
+        public void And_CertificateTypeIsStandardAndUkprnIsZero_Then_ErrorReturned()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Standard,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = 0,
+                IsMatched = true
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Ukprn");
+        }
+
+        [Test]
+        public void And_CertificateTypeIsStandardAndUkprnIsNegative_Then_ErrorReturned()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -215,11 +249,104 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         }
 
         [Test]
+        public void And_CertificateTypeIsFrameworkAndUkprnIsNull_Then_IsValid()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Framework,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = null,
+                IsMatched = true,
+                IsFailed = false
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void And_CertificateTypeIsFrameworkAndUkprnIsZero_Then_ErrorReturned()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Framework,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = 0,
+                IsMatched = true
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Ukprn");
+        }
+
+        [Test]
+        public void And_CertificateTypeIsFrameworkAndUkprnIsNegative_Then_ErrorReturned()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Framework,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = -5,
+                IsMatched = true
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Ukprn");
+        }
+
+        [Test]
+        public void And_CertificateTypeIsFrameworkAndUkprnIsGreaterThanZero_Then_IsValid()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                Uln = 1234567890,
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                CertificateType = CertificateType.Framework,
+                CourseCode = "C123",
+                CourseName = "Test Course",
+                ProviderName = "Provider",
+                Ukprn = 123456,
+                IsMatched = true,
+                IsFailed = false
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
         public void And_MultipleRequiredFieldsMissing_Then_MultipleErrorsReturned()
         {
             var command = new CreateUserMatchCommand
             {
-                Uln = 1234567890,
+                UserId = Guid.Empty,
+                Uln = null,
                 FamilyName = "",
                 DateOfBirth = default,
                 CertificateType = CertificateType.Unknown,
@@ -233,6 +360,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             var result = _validator.Validate(command);
 
             result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "UserId");
+            result.Errors.Should().Contain(e => e.PropertyName == "Uln");
             result.Errors.Should().Contain(e => e.PropertyName == "FamilyName");
             result.Errors.Should().Contain(e => e.PropertyName == "DateOfBirth");
             result.Errors.Should().Contain(e => e.PropertyName == "CertificateType");
@@ -249,7 +378,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             {
                 UserId = Guid.NewGuid(),
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -261,7 +390,9 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             var result = _validator.Validate(command);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Should().Contain(e => e.PropertyName == "Uln" && e.ErrorMessage.Contains("ULN is required when matched"));
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "Uln" &&
+                e.ErrorMessage.Contains("ULN is required when matched"));
         }
 
         [Test]
@@ -271,7 +402,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             {
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -295,7 +426,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 UserId = Guid.NewGuid(),
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -318,9 +449,26 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             {
                 UserId = Guid.NewGuid(),
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990,1,1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 IsMatched = false,
                 IsFailed = false
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void And_ConditionalFieldsMissingWhenFailedOnly_Then_IsValid()
+        {
+            var command = new CreateUserMatchCommand
+            {
+                UserId = Guid.NewGuid(),
+                FamilyName = "Smith",
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
+                IsMatched = false,
+                IsFailed = true
             };
 
             var result = _validator.Validate(command);
