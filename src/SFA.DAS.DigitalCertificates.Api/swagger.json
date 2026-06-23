@@ -846,7 +846,7 @@
         }
       }
     },
-    "/api/users/{userId}": {
+    "/api/users/id/{userId}": {
       "get": {
         "tags": [
           "Users"

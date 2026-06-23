@@ -127,7 +127,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        [HttpGet("{userId:guid}")]
+        [HttpGet("id/{userId:guid}")]
         [ProducesResponseType(typeof(GetUserByIdQueryResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
