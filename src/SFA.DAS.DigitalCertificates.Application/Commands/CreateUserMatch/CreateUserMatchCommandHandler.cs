@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
+using System.ComponentModel;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
 {
@@ -10,11 +11,13 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
     {
         private readonly IUserMatchEntityContext _matchContext;
         private readonly IUserEntityContext _userContext;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public CreateUserMatchCommandHandler(IUserMatchEntityContext matchContext, IUserEntityContext userContext)
+        public CreateUserMatchCommandHandler(IUserMatchEntityContext matchContext, IUserEntityContext userContext, IDateTimeProvider dateTimeProvider)
         {
             _matchContext = matchContext;
             _userContext = userContext;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<Unit> Handle(CreateUserMatchCommand request, CancellationToken cancellationToken)
@@ -31,6 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
                 Uln = request.Uln,
                 FamilyName = request.FamilyName,
                 DateOfBirth = request.DateOfBirth,
+                EventTime = _dateTimeProvider.UtcNow,
                 CertificateType = request.CertificateType,
                 CourseCode = request.CourseCode,
                 CourseName = request.CourseName,
