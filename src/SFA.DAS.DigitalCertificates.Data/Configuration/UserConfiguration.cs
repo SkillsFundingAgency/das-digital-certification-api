@@ -16,6 +16,10 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
             builder.HasOne(e => e.UserAuthorisation)
                 .WithOne(u => u.User)
                 .HasForeignKey<UserAuthorisation>(a => a.UserId);
+
+            builder.Property(um => um.CreatedAt)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .ValueGeneratedOnAdd();
         }
     }
 }
