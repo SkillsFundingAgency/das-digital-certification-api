@@ -19,6 +19,7 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
 using SFA.DAS.DigitalCertificates.Domain.Models;
+using SFA.DAS.DigitalCertificates.Application.Commands.UnlockUser;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -323,6 +324,41 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to authorise user for {UserId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut("{userId}/unlock")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UnlockUser(Guid userId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new UnlockUserCommand { UserId = userId });
+
+                if (result.NotFound)
+                {
+                    return BadRequest(new { userId });
+                }
+
+                if (result.Updated)
+                {
+                    return NoContent();
+                }
+
+                return Ok();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to unlock user for {UserId}", userId);
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to unlock user for {UserId}", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
