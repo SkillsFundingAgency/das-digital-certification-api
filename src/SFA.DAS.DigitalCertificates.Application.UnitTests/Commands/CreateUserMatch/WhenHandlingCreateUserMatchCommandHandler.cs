@@ -15,6 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
     {
         private Mock<IUserMatchEntityContext> _userMatchContextMock = null!;
         private Mock<IUserEntityContext> _userContextMock = null!;
+        private Mock<IDateTimeProvider> _dateTimeProviderMock = null;
         private CreateUserMatchCommandHandler _sut = null!;
 
         [SetUp]
@@ -22,8 +23,9 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
         {
             _userMatchContextMock = new Mock<IUserMatchEntityContext>();
             _userContextMock = new Mock<IUserEntityContext>();
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
 
-            _sut = new CreateUserMatchCommandHandler(_userMatchContextMock.Object, _userContextMock.Object);
+            _sut = new CreateUserMatchCommandHandler(_userMatchContextMock.Object, _userContextMock.Object, _dateTimeProviderMock.Object);
         }
 
         [Test]

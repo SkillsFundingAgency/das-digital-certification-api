@@ -20,10 +20,20 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
                 RuleFor(x => x.CourseCode).NotEmpty().MustNotContainHtmlTags(nameof(CreateUserMatchCommand.CourseCode));
                 RuleFor(x => x.CourseName).NotEmpty().MustNotContainHtmlTags(nameof(CreateUserMatchCommand.CourseName));
                 RuleFor(x => x.ProviderName).NotEmpty().MustNotContainHtmlTags(nameof(CreateUserMatchCommand.ProviderName));
-                RuleFor(x => x.Ukprn).NotNull().GreaterThan(0);
+
+                RuleFor(x => x.Ukprn)
+                    .NotNull()
+                    .WithMessage("UKPRN is required when certificate type is standard")
+                    .When(x => x.CertificateType == CertificateType.Standard);
+
+                RuleFor(x => x.Ukprn)
+                    .GreaterThan(0)
+                    .When(x => x.Ukprn.HasValue)
+                    .WithMessage("UKPRN must be greater than 0");
             });
-                RuleFor(x => x).Must(cmd => !(cmd.IsMatched && cmd.IsFailed))
-                    .WithMessage("A user match cannot be both matched and failed");
+
+            RuleFor(x => x).Must(cmd => !(cmd.IsMatched && cmd.IsFailed))
+                .WithMessage("A user match cannot be both matched and failed");
         }
     }
 }

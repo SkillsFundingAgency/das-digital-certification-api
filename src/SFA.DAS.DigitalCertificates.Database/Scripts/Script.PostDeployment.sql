@@ -9,7 +9,8 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-
+:r .\PreDeploymentScripts\DisableSystemVersioningTables.sql
 :r .\PostDeploymentScripts\LookupData\SynchronizeLookupData.sql
+:r .\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql
 
 :r .\PostDeploymentScripts\EnableSystemVersioningTables.sql
