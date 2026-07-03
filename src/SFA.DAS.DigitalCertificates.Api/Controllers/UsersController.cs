@@ -15,6 +15,7 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
+using SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -51,7 +52,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        [HttpPost("identity")]
+        [HttpPost("")]
         public async Task<IActionResult> CreateOrUpdateUser([FromBody] CreateOrUpdateUserRequest request)
         {
             try
@@ -67,6 +68,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error attempting to create or update user.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost("{userId}/identity")]
+        public async Task<IActionResult> UpdateUserIdentity(Guid userId, [FromBody] UpdateUserIdentityRequest request)
+        {
+            try
+            {
+                await _mediator.Send(new UpdateUserIdentityCommand(request, userId));
+                return Ok();
+            }
+            catch (ValidationException ex)
+            {
+                _logger.LogError(ex, "Validation error attempting to update user identity.");
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error attempting to update user identity.");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

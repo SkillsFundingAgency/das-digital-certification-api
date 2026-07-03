@@ -42,9 +42,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
                 .Setup(x => x.Add(It.IsAny<User>()))
                 .Returns((EntityEntry<User>)null!);
 
-            command.Names = null;
-
-            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object, userIdentityEntityContext.Object);
+            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
 
             // Act
             var result = await _sut.Handle(command, CancellationToken.None);
@@ -77,9 +75,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
             userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>()))
                 .ReturnsAsync(existingUser);
 
-            command.Names = null;
-
-            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object, userIdentityEntityContext.Object);
+            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
 
             // Act
             var result = await _sut.Handle(command, CancellationToken.None);
@@ -100,8 +96,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
         public async Task And_NamesProvided_Then_ReplacesUserIdentities(
             CreateOrUpdateUserCommand command,
             [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
-            [Frozen] Mock<IUserEntityContext> userEntityContext,
-            [Frozen] Mock<IUserIdentityEntityContext> userIdentityEntityContext)
+            [Frozen] Mock<IUserEntityContext> userEntityContext)
         {
             // Arrange
             var now = DateTime.UtcNow;
@@ -109,31 +104,20 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
 
             var existingIdentities = new List<UserIdentity>
             {
-                new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Old", GivenNames = "OldName", DateOfBirth = new DateTime(1980,1,1) }
+                new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Old", GivenNames = "OldName", DateOfBirth = new DateTime(1980, 1, 1, 0, 0, 0, DateTimeKind.Unspecified) }
             };
 
             var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", UserIdentities = existingIdentities };
             userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>())).ReturnsAsync(existingUser);
 
-            command.Names = new List<Name>
-            {
-                new Name { FamilyName = "Smith", GivenNames = "John|Paul", ValidSince = new DateTime(2020,3,1) }
-            };
-            command.DateOfBirth = new DateTime(1990,1,1);
-
-            userIdentityEntityContext.Setup(x => x.RemoveRange(It.IsAny<IEnumerable<UserIdentity>>()));
-            userIdentityEntityContext.Setup(x => x.Add(It.IsAny<UserIdentity>())).Returns((EntityEntry<UserIdentity>)null!);
-
             userEntityContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
-            var sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object, userIdentityEntityContext.Object);
+            var sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
 
             // Act
             var result = await sut.Handle(command, CancellationToken.None);
 
             // Assert
-            userIdentityEntityContext.Verify(x => x.RemoveRange(It.Is<IEnumerable<UserIdentity>>(r => r == existingIdentities)), Times.Once);
-            userIdentityEntityContext.Verify(x => x.Add(It.Is<UserIdentity>(u => u.FamilyName == "Smith" && u.GivenNames == "John|Paul" && u.DateOfBirth == command.DateOfBirth)), Times.Once);
             userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
             result.Should().NotBeNull();
         }
