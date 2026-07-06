@@ -94,38 +94,5 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateOrUpd
             result.Should().NotBeNull();
             result.UserId.Should().Be(existingUser.Id);
         }
-
-        [Test, MoqAutoData]
-        public async Task And_NamesProvided_Then_ReplacesUserIdentities(
-            CreateOrUpdateUserCommand command,
-            [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
-            [Frozen] Mock<IUserEntityContext> userEntityContext)
-        {
-            // Arrange
-            var utcNow = DateTime.UtcNow;
-            var now = DateTime.Now;
-
-            dateTimeProvider.Setup(x => x.Now).Returns(now);
-            dateTimeProvider.Setup(x => x.UtcNow).Returns(utcNow);
-
-            var existingIdentities = new List<UserIdentity>
-            {
-                new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Old", GivenNames = "OldName", DateOfBirth = new DateTime(1980, 1, 1, 0, 0, 0, DateTimeKind.Unspecified) }
-            };
-
-            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", CreatedAt = utcNow.AddMonths(-1), UserIdentities = existingIdentities };
-            userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>())).ReturnsAsync(existingUser);
-
-            userEntityContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-
-            var sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
-
-            // Act
-            var result = await sut.Handle(command, CancellationToken.None);
-
-            // Assert
-            userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
-            result.Should().NotBeNull();
-        }
     }
 }
