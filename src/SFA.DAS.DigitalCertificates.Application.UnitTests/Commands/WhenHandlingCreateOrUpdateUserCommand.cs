@@ -68,10 +68,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
             [Frozen] Mock<IUserIdentityEntityContext> userIdentityEntityContext)
         {
             // Arrange
-            var now = DateTime.UtcNow;
-            dateTimeProvider.Setup(x => x.Now).Returns(now);
+            var utcNow = DateTime.UtcNow;
+            var now = DateTime.Now;
 
-            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com" };
+            dateTimeProvider.Setup(x => x.Now).Returns(now);
+            dateTimeProvider.Setup(x => x.UtcNow).Returns(utcNow);
+
+            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", CreatedAt = utcNow.AddMonths(-1) };
             userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>()))
                 .ReturnsAsync(existingUser);
 
@@ -87,6 +90,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
             existingUser.EmailAddress.Should().Be(command.EmailAddress);
             existingUser.PhoneNumber.Should().Be(command.PhoneNumber);
             existingUser.LastLoginAt.Should().Be(now);
+            existingUser.CreatedAt.Should().Be(utcNow.AddMonths(-1));
 
             result.Should().NotBeNull();
             result.UserId.Should().Be(existingUser.Id);
@@ -99,15 +103,18 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
             [Frozen] Mock<IUserEntityContext> userEntityContext)
         {
             // Arrange
-            var now = DateTime.UtcNow;
+            var utcNow = DateTime.UtcNow;
+            var now = DateTime.Now;
+
             dateTimeProvider.Setup(x => x.Now).Returns(now);
+            dateTimeProvider.Setup(x => x.UtcNow).Returns(utcNow);
 
             var existingIdentities = new List<UserIdentity>
             {
                 new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Old", GivenNames = "OldName", DateOfBirth = new DateTime(1980, 1, 1, 0, 0, 0, DateTimeKind.Unspecified) }
             };
 
-            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", UserIdentities = existingIdentities };
+            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", CreatedAt = utcNow.AddMonths(-1), UserIdentities = existingIdentities };
             userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>())).ReturnsAsync(existingUser);
 
             userEntityContext.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
