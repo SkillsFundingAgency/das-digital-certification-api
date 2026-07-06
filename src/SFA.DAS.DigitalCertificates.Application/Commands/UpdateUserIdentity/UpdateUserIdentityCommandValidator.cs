@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity
@@ -9,11 +8,13 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity
         public UpdateUserIdentityCommandValidator(IDateTimeProvider dateTimeProvider)
         {
             RuleFor(x => x.Names)
-                .Must(names => names == null || names.Count > 0)
-                .WithMessage("Names must have at least one entry if provided");
+                .NotEmpty()
+                .WithMessage("Names must have at least one entry");
 
             RuleFor(x => x.DateOfBirth)
-                .Must(dob => dob == null || dob < dateTimeProvider.Now)
+                .NotEmpty()
+                .WithMessage("DateOfBirth is required")
+                .LessThan(dateTimeProvider.Now)
                 .WithMessage("DateOfBirth cannot be in the future");
         }
     }

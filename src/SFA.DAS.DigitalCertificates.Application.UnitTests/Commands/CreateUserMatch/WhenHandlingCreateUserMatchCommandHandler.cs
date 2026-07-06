@@ -15,7 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
     {
         private Mock<IUserMatchEntityContext> _userMatchContextMock = null!;
         private Mock<IUserEntityContext> _userContextMock = null!;
-        private Mock<IDateTimeProvider> _dateTimeProviderMock = null;
+        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
         private CreateUserMatchCommandHandler _sut = null!;
 
         [SetUp]
@@ -39,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 UserId = userId,
                 Uln = 1234567890,
                 FamilyName = "Smith",
-                DateOfBirth = new DateTime(1990, 1, 1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -66,8 +66,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             _userMatchContextMock.Verify(x => x.Add(It.Is<UserMatch>(m =>
                 m.UserId == userId &&
                 m.FamilyName == "Smith" &&
-                m.IsMatched == true &&
-                m.IsFailed == false)),
+                m.IsMatched &&
+                !m.IsFailed)),
                 Times.Once);
 
             _userContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
@@ -87,7 +87,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 UserId = userId,
                 Uln = 1234567890,
                 FamilyName = "Jones",
-                DateOfBirth = new DateTime(1990, 1, 1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",
@@ -114,7 +114,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
             _userMatchContextMock.Verify(x => x.Add(It.Is<UserMatch>(m =>
                 m.UserId == userId &&
                 m.FamilyName == "Jones" &&
-                m.IsFailed == true)),
+                m.IsFailed)),
                 Times.Once);
 
             _userContextMock.Verify(x => x.GetByUserId(userId), Times.Once);
@@ -132,7 +132,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserM
                 UserId = userId,
                 Uln = 1234567890,
                 FamilyName = "NoUser",
-                DateOfBirth = new DateTime(1990, 1, 1),
+                DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified),
                 CertificateType = CertificateType.Standard,
                 CourseCode = "C123",
                 CourseName = "Test Course",

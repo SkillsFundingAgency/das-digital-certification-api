@@ -39,10 +39,13 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
         public void Then_Error_If_Names_List_Is_Empty(
             [Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
         {
+            var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
+            mockDateTimeProvider.Setup(x => x.Now).Returns(now);
+
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
                 Names = new List<Name>(),
-                DateOfBirth = DateTime.UtcNow.AddYears(-20)
+                DateOfBirth = now.AddYears(-20)
             }, Guid.NewGuid());
 
             var validator = new UpdateUserIdentityCommandValidator(mockDateTimeProvider.Object);
@@ -50,24 +53,28 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
             var result = validator.TestValidate(command);
 
             result.ShouldHaveValidationErrorFor(c => c.Names)
-                .WithErrorMessage("Names must have at least one entry if provided");
+                .WithErrorMessage("Names must have at least one entry");
         }
 
         [Test, AutoData]
-        public void Then_Valid_If_Names_Is_Null(
+        public void Then_Error_If_Names_Is_Null(
             [Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
         {
+            var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
+            mockDateTimeProvider.Setup(x => x.Now).Returns(now);
+
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
-                Names = null,
-                DateOfBirth = DateTime.UtcNow.AddYears(-30)
+                Names = null!,
+                DateOfBirth = now.AddYears(-30)
             }, Guid.NewGuid());
 
             var validator = new UpdateUserIdentityCommandValidator(mockDateTimeProvider.Object);
 
             var result = validator.TestValidate(command);
 
-            result.ShouldNotHaveValidationErrorFor(c => c.Names);
+            result.ShouldHaveValidationErrorFor(c => c.Names)
+                .WithErrorMessage("Names must have at least one entry");
         }
 
         [Test, AutoData]
@@ -95,7 +102,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
         }
 
         [Test, AutoData]
-        public void Then_Valid_If_DateOfBirth_Is_Null(
+        public void Then_Error_If_DateOfBirth_Is_Default(
             [Frozen] Mock<IDateTimeProvider> mockDateTimeProvider)
         {
             var now = new DateTime(2025, 11, 10, 0, 0, 0, DateTimeKind.Unspecified);
@@ -107,14 +114,15 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
                 {
                     new() { GivenNames = "Jane", FamilyName = "Doe" }
                 },
-                DateOfBirth = null
+                DateOfBirth = default
             }, Guid.NewGuid());
 
             var validator = new UpdateUserIdentityCommandValidator(mockDateTimeProvider.Object);
 
             var result = validator.TestValidate(command);
 
-            result.ShouldNotHaveValidationErrorFor(c => c.DateOfBirth);
+            result.ShouldHaveValidationErrorFor(c => c.DateOfBirth)
+                .WithErrorMessage("DateOfBirth is required");
         }
     }
 }

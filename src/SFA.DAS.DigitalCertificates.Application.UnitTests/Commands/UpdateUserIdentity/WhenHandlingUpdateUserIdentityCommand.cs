@@ -218,40 +218,5 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
             _userIdentityEntityContext.Verify(x => x.Add(It.IsAny<UserIdentity>()), Times.Exactly(2));
             _userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
-
-        [Test]
-        public async Task And_NamesIsNull_Then_DoesNotReplaceUserIdentities_ButSaves()
-        {
-            var userId = Guid.NewGuid();
-
-            var existingIdentities = new List<UserIdentity>
-            {
-                new() { Id = Guid.NewGuid(), FamilyName = "Old", GivenNames = "OldName" }
-            };
-
-            var user = new User
-            {
-                Id = userId,
-                GovUkIdentifier = "gov-123",
-                EmailAddress = "current@email.com",
-                UserIdentities = existingIdentities
-            };
-
-            var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
-            {
-                Names = null,
-                DateOfBirth = null
-            }, userId);
-
-            _userEntityContext
-                .Setup(x => x.GetWithIdentitiesByUserId(userId))
-                .ReturnsAsync(user);
-
-            await _sut.Handle(command, CancellationToken.None);
-
-            _userIdentityEntityContext.Verify(x => x.RemoveRange(It.IsAny<IEnumerable<UserIdentity>>()), Times.Never);
-            _userIdentityEntityContext.Verify(x => x.Add(It.IsAny<UserIdentity>()), Times.Never);
-            _userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
-        }
     }
 }

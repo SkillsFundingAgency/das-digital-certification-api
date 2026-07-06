@@ -36,7 +36,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity
                 throw new ValidationException(failures);
             }
 
-            if (command.Names != null && command.Names.Count > 0)
+            if (command.Names.Count > 0)
             {
                 if (user.UserIdentities != null)
                 {
@@ -50,7 +50,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity
                         User = user,
                         FamilyName = name.FamilyName,
                         GivenNames = name.GivenNames,
-                        DateOfBirth = command.DateOfBirth ?? default,
+                        DateOfBirth = command.DateOfBirth,
                         ValidSince = name.ValidSince,
                         ValidUntil = name.ValidUntil
                     };
