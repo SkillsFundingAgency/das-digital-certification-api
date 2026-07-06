@@ -8,7 +8,7 @@ using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
-namespace SFA.DAS.DigitalCertificates.UnitTests.Application.Commands
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateOrUpdateUser
 {
     public class WhenValidatingCreateOrUpdateUserCommand
     {

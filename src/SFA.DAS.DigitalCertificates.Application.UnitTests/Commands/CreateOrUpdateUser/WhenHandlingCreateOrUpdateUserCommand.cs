@@ -1,20 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.NUnit3;
 using FluentAssertions;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
-using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.Testing.AutoFixture;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateOrUpdateUser
 {
     public class WhenHandlingCreateOrUpdateUserCommand
     {
