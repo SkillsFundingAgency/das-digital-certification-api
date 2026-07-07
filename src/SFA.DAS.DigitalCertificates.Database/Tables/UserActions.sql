@@ -19,7 +19,7 @@
 WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserActionsHistory]));
 GO
 
-CREATE INDEX IX_UserActions_UserId ON [dbo].[UserActions]([UserId]);
+CREATE INDEX IX_UserActions_UserId ON [dbo].[UserActions]([UserId]) INCLUDE ([Id],[ActionType],[ActionCode]);
 GO
 
 CREATE UNIQUE INDEX UX_UserActions_ActionCode ON [dbo].[UserActions]([ActionCode]);

@@ -33,7 +33,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
                 {
                     GovUkIdentifier = command.GovUkIdentifier,
                     EmailAddress = command.EmailAddress,
-                    CreatedAt = _dateTimeProvider.Now
+                    CreatedAt = _dateTimeProvider.UtcNow
                 };
 
                 _userEntityContext.Add(user);

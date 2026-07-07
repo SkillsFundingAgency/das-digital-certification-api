@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[PatchLog]
+(
+    [PatchName] VARCHAR(200) NOT NULL PRIMARY KEY,
+    [AppliedAt] DATETIME2(0) NOT NULL CONSTRAINT [DF_DataPatch_AppliedAt] DEFAULT SYSUTCDATETIME()
+);
