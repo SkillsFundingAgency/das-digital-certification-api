@@ -147,6 +147,14 @@ public class PostUsersByUserIdAuthoriseApiRequest(CreateUserAuthorisationCommand
     public object Data { get; set; } = createUserAuthorisationCommand;
 }
 
+/// <summary>PUT /api/users/{userId}/unlock</summary>
+public class PutUsersByUserIdUnlockApiRequest : IPutApiRequest<object>
+{
+    public required System.Guid UserId { get; init; }
+    public string PutUrl => $"api/users/{UserId}/unlock";
+    public object Data { get; set; } = default!;
+}
+
 #pragma warning restore CS8767
 #pragma warning restore CS8618
 #pragma warning restore CS1591
