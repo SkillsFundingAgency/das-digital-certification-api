@@ -92,6 +92,12 @@ public record GetUsersByUserIdIdentityApiRequest(System.Guid UserId) : IGetApiRe
     public string GetUrl => $"api/users/{UserId}/identity";
 }
 
+/// <summary>GET /api/users/id/{userId} &#x2192; <see cref="GetUserByIdQueryResult"/></summary>
+public record GetUsersIdByUserIdApiRequest(System.Guid UserId) : IGetApiRequest
+{
+    public string GetUrl => $"api/users/id/{UserId}";
+}
+
 /// <summary>GET /api/users/{userId}/sharings &#x2192; <see cref="GetSharingsQueryResult"/></summary>
 public record GetUsersByUserIdSharingsApiRequest(System.Guid UserId, System.Guid? CertificateId, int? Limit) : IGetApiRequest
 {

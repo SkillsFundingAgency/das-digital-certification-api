@@ -36,7 +36,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
                 GivenNames = ua.GivenNames,
                 Uln = ua.User?.UserAuthorisation?.ULN,
                 CertificateId = ua.CertificateId,
-                CertificateType = ua.CertificateType,
+                CertificateType = ua.CertificateType ?? CertificateType.Unknown,
                 CourseName = ua.CourseName,
                 AdminActions = ua.AdminActions?.OrderByDescending(a => a.ActionTime).Select(a => new AdminActionDetail
                 {

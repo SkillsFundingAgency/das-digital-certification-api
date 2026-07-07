@@ -27,7 +27,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
             // Arrange
             var userId = Guid.NewGuid();
 
-            context.Add(new User { Id = userId, GovUkIdentifier = govUkIdentifier, EmailAddress = "test@test.com" });
+            var createdAt = DateTime.UtcNow;
+            context.Add(new User { Id = userId, GovUkIdentifier = govUkIdentifier, EmailAddress = "test@test.com", CreatedAt = createdAt });
             await context.SaveChangesAsync();
 
             var query = new GetUserQuery() { GovUkIdentifier = govUkIdentifier };
@@ -44,6 +45,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
                     Id = userId,
                     GovUkIdentifier = govUkIdentifier,
                     EmailAddress = "test@test.com",
+                    CreatedAt = createdAt,
                     Names = Enumerable.Empty<Domain.Models.NameRecord>()
                 }
             };
@@ -115,12 +117,15 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
                 ValidUntil = new DateTime(2021, 1, 1)
             };
 
+            var createdAt = DateTime.UtcNow;
+
             var user = new User
             {
                 Id = userId,
                 GovUkIdentifier = govUkIdentifier,
                 EmailAddress = "test@test.com",
-                UserIdentities = new List<UserIdentity> { identity }
+                UserIdentities = new List<UserIdentity> { identity },
+                CreatedAt = createdAt
             };
 
             context.Add(user);
