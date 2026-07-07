@@ -156,5 +156,52 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateShari
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "CourseName");
         }
+
+        [TestCase("<script>alert('xss')</script>")]
+        [TestCase("<b>Bold</b>")]
+        [TestCase("<img src='x' onerror='alert(1)'>")]
+        [TestCase("</div>")]
+        public void And_CourseNameContainsHtmlTags_Then_ErrorReturnedWithCorrectMessage(string courseName)
+        {
+            // Arrange
+            var command = new CreateSharingCommand
+            {
+                UserId = Guid.NewGuid(),
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = courseName
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e =>
+                e.PropertyName == "CourseName" &&
+                e.ErrorMessage == "CourseName contains invalid characters.");
+        }
+
+        [TestCase("Test & Course")]
+        [TestCase("Test (Course)")]
+        [TestCase("Test 'Course'")]
+        [TestCase("Test \"Course\"")]
+        public void And_CourseNameContainsSpecialCharactersButNoHtmlTags_Then_CommandIsValid(string courseName)
+        {
+            // Arrange
+            var command = new CreateSharingCommand
+            {
+                UserId = Guid.NewGuid(),
+                CertificateId = Guid.NewGuid(),
+                CertificateType = CertificateType.Standard,
+                CourseName = courseName
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
     }
 }

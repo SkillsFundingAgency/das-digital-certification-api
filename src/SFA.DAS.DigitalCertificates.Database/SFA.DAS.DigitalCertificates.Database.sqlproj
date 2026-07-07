@@ -88,6 +88,8 @@
     <Build Include="Tables\AdminActionsHistory.sql" />
     <Build Include="Tables\UserIdentity.sql" />
     <Build Include="Tables\UserMatch.sql" />
+    <Build Include="Tables\PatchLog.sql" />
+    <None Include="Scripts\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
