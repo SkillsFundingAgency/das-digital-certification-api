@@ -8,7 +8,7 @@ using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
 {
-    public class GetUserActionByCodeQueryHandler : IRequestHandler<GetUserActionByCodeQuery, GetUserActionByCodeQueryResult>
+    public class GetUserActionByCodeQueryHandler : IRequestHandler<GetUserActionByCodeQuery, GetUserActionByCodeQueryResult?>
     {
         private readonly IUserActionsEntityContext _userActionsContext;
 
@@ -17,22 +17,21 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
             _userActionsContext = userActionsContext;
         }
 
-        public async Task<GetUserActionByCodeQueryResult> Handle(GetUserActionByCodeQuery request, CancellationToken cancellationToken)
+        public async Task<GetUserActionByCodeQueryResult?> Handle(GetUserActionByCodeQuery request, CancellationToken cancellationToken)
         {
             var ua = await _userActionsContext.GetByActionCodeAsync(request.ActionCode, cancellationToken);
 
             if (ua == null)
             {
-                return new GetUserActionByCodeQueryResult { UserAction = null };
+                return null;
             }
 
-            var detail = new UserActionDetail
+            var result = new GetUserActionByCodeQueryResult
             {
                 Id = ua.Id,
                 UserId = ua.UserId,
                 ActionType = ua.ActionType,
                 ActionTime = ua.ActionTime,
-                ActionCode = ua.ActionCode,
                 FamilyName = ua.FamilyName,
                 GivenNames = ua.GivenNames,
                 Uln = ua.User?.UserAuthorisation?.ULN,
@@ -48,7 +47,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
                 ActionStatus = (ua.AdminActions != null && ua.AdminActions.Any()) ? UserActionStatus.Viewed : UserActionStatus.New
             };
 
-            return new GetUserActionByCodeQueryResult { UserAction = detail };
+            return result;
         }
     }
 }

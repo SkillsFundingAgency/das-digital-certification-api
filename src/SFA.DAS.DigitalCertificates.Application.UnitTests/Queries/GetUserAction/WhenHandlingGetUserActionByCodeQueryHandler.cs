@@ -39,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            result.UserAction.Should().BeNull();
+            result.Should().BeNull();
             _userActionsContextMock.Verify(x => x.GetByActionCodeAsync(actionCode, It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -75,8 +75,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            result.UserAction.Should().NotBeNull();
-            var detail = result.UserAction!;
+            result.Should().NotBeNull();
+            var detail = result!;
             detail.Id.Should().Be(1);
             detail.FamilyName.Should().Be("Smith");
             detail.GivenNames.Should().Be("John");
@@ -123,8 +123,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             var result = await _sut.Handle(query, CancellationToken.None);
 
             // Assert
-            result.UserAction.Should().NotBeNull();
-            var detail = result.UserAction!;
+            result.Should().NotBeNull();
+            var detail = result!;
             detail.ActionStatus.Should().Be(UserActionStatus.Viewed);
             detail.AdminActions.Should().NotBeNull();
             detail.AdminActions!.Should().HaveCount(2);
