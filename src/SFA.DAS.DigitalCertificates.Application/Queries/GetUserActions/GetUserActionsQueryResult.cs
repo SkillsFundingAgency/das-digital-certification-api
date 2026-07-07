@@ -23,6 +23,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions
         public string? CourseName { get; set; }
         public string? ActionCode { get; set; }
         public IEnumerable<AdminActionDetail>? AdminActions { get; set; }
+        public long? Uln { get; set; }
     }
 
     public class AdminActionDetail

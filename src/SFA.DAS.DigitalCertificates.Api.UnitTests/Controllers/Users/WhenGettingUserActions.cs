@@ -37,7 +37,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var userId = Guid.NewGuid();
             var actions = new List<UserActionDetail>
             {
-                new UserActionDetail { Id = 1, UserId = userId, ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow }
+                new UserActionDetail { Id = 1, UserId = userId, ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow, Uln = 12345678 }
             };
 
             _mediatorMock
