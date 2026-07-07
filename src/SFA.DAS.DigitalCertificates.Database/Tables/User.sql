@@ -3,7 +3,6 @@
     [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [GovUkIdentifier] VARCHAR(100) NOT NULL,
     [EmailAddress] VARCHAR(100) NOT NULL,
-    [CreatedAt] DATETIME2 NOT NULL,
     [PhoneNumber] VARCHAR(20) NULL,
     [LastLoginAt] DATETIME2 NULL,
     [IsLocked] BIT NOT NULL CONSTRAINT [DF_User_IsLocked] DEFAULT (0),

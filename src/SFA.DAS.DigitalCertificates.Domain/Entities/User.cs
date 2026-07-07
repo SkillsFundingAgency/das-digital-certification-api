@@ -10,7 +10,6 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public required string EmailAddress { get; set; }
         public DateTime CreatedAt { get; set; }
         public string? PhoneNumber { get; set; }
-        public DateTime CreatedAt { get; set; }
         public DateTime? LastLoginAt { get; set; }
         public bool IsLocked { get; set; }
 
