@@ -80,16 +80,24 @@ public class PostUsersIdentityApiRequest(CreateOrUpdateUserRequest createOrUpdat
     public object Data { get; set; } = createOrUpdateUserRequest;
 }
 
-/// <summary>GET /api/users/{userId}/authorisation &#x2192; <see cref="GetUserAuthorisationQueryResult"/></summary>
-public record GetUsersByUserIdAuthorisationApiRequest(System.Guid UserId) : IGetApiRequest
-{
-    public string GetUrl => $"api/users/{UserId}/authorisation";
-}
-
 /// <summary>GET /api/users/{userId}/identity &#x2192; <see cref="GetUserIdentityQueryResult"/></summary>
 public record GetUsersByUserIdIdentityApiRequest(System.Guid UserId) : IGetApiRequest
 {
     public string GetUrl => $"api/users/{UserId}/identity";
+}
+
+/// <summary>POST /api/users/{userId}/identity</summary>
+public class PostUsersByUserIdIdentityApiRequest(UpdateUserIdentityRequest updateUserIdentityRequest) : IPostApiRequest
+{
+    public required System.Guid UserId { get; init; }
+    public string PostUrl => $"api/users/{UserId}/identity";
+    public object Data { get; set; } = updateUserIdentityRequest;
+}
+
+/// <summary>GET /api/users/{userId}/authorisation &#x2192; <see cref="GetUserAuthorisationQueryResult"/></summary>
+public record GetUsersByUserIdAuthorisationApiRequest(System.Guid UserId) : IGetApiRequest
+{
+    public string GetUrl => $"api/users/{UserId}/authorisation";
 }
 
 /// <summary>GET /api/users/id/{userId} &#x2192; <see cref="GetUserByIdQueryResult"/></summary>

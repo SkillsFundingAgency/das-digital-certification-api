@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoFixture.NUnit3;
+﻿using AutoFixture.NUnit4;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
-using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
+using System;
 
 namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateOrUpdateUser
 {
