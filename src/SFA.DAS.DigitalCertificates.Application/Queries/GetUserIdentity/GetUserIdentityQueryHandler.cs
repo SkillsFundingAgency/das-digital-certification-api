@@ -44,6 +44,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity
 
             var identities = user.UserIdentities?.Select(i => new Name
             {
+                UserIdentityId = i.Id,
                 ValidSince = i.ValidSince,
                 ValidUntil = i.ValidUntil,
                 FamilyName = i.FamilyName,

@@ -228,12 +228,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
         public string? PhoneNumber { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("names")]
-        public System.Collections.Generic.ICollection<Name>? Names { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTime? DateOfBirth { get; set; } = default!;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -551,6 +545,9 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     public partial class Name
     {
 
+        [System.Text.Json.Serialization.JsonPropertyName("userIdentityId")]
+        public System.Guid UserIdentityId { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("validSince")]
         public System.DateTime? ValidSince { get; set; } = default!;
 
@@ -658,6 +655,18 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("sharingEmailAccess")]
         public System.Collections.Generic.ICollection<System.DateTime>? SharingEmailAccess { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateUserIdentityRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("names")]
+        public System.Collections.Generic.ICollection<Name>? Names { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTime DateOfBirth { get; set; } = default!;
 
     }
 
