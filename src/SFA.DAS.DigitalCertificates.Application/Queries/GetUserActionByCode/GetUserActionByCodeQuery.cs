@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode
 {
     public class GetUserActionByCodeQuery : IRequest<GetUserActionByCodeQueryResult?>
     {

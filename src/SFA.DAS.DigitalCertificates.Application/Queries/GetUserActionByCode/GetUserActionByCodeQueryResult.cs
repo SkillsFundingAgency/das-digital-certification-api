@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode
 {
     public class GetUserActionByCodeQueryResult
     {

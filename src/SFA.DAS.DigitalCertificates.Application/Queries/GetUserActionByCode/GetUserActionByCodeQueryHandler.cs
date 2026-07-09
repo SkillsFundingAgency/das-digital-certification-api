@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode
 {
     public class GetUserActionByCodeQueryHandler : IRequestHandler<GetUserActionByCodeQuery, GetUserActionByCodeQueryResult?>
     {

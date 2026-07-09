@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserAction
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActionByCode
 {
     [TestFixture]
     public class WhenCreatingGetUserActionByCodeQueryResult

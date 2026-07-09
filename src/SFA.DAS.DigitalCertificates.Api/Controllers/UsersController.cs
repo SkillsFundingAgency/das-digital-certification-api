@@ -16,10 +16,10 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.UnlockUser;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
