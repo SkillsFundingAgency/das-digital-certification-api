@@ -67,6 +67,20 @@ public class PostSharingSharingemailaccessApiRequest(CreateSharingEmailAccessCom
     public object Data { get; set; } = createSharingEmailAccessCommand;
 }
 
+/// <summary>POST /api/user-actions/{userActionId}/admin-actions</summary>
+public class PostUserActionsByUserActionIdAdminActionsApiRequest(CreateAdminActionCommand createAdminActionCommand) : IPostApiRequest
+{
+    public required long UserActionId { get; init; }
+    public string PostUrl => $"api/user-actions/{UserActionId}/admin-actions";
+    public object Data { get; set; } = createAdminActionCommand;
+}
+
+/// <summary>GET /api/user-actions/{code} &#x2192; <see cref="GetUserActionByCodeQueryResult"/></summary>
+public record GetUserActionsByCodeApiRequest(string Code) : IGetApiRequest
+{
+    public string GetUrl => $"api/user-actions/{Code}";
+}
+
 /// <summary>GET /api/users/{govUkIdentifier} &#x2192; <see cref="User"/></summary>
 public record GetUsersByGovUkIdentifierApiRequest(string GovUkIdentifier) : IGetApiRequest
 {
@@ -104,31 +118,18 @@ public record GetUsersByUserIdSharingsApiRequest(System.Guid UserId, System.Guid
     public string GetUrl => QueryHelpers.AddQueryString($"api/users/{UserId}/sharings", new Dictionary<string, string?> { ["certificateId"] = CertificateId?.ToString(), ["limit"] = Limit?.ToString() });
 }
 
-/// <summary>GET /api/users/{userId}/actions &#x2192; <see cref="GetUserActionsQueryResult"/></summary>
-public record GetUsersByUserIdActionsApiRequest(System.Guid UserId) : IGetApiRequest
+/// <summary>GET /api/users/{userId}/user-actions &#x2192; <see cref="GetUserActionsQueryResult"/></summary>
+public record GetUsersByUserIdUserActionsApiRequest(System.Guid UserId) : IGetApiRequest
 {
-    public string GetUrl => $"api/users/{UserId}/actions";
+    public string GetUrl => $"api/users/{UserId}/user-actions";
 }
 
-/// <summary>POST /api/users/{userId}/actions &#x2192; <see cref="CreateUserActionCommandResponse"/></summary>
-public class PostUsersByUserIdActionsApiRequest(CreateUserActionCommand createUserActionCommand) : IPostApiRequest
+/// <summary>POST /api/users/{userId}/user-actions &#x2192; <see cref="CreateUserActionCommandResponse"/></summary>
+public class PostUsersByUserIdUserActionsApiRequest(CreateUserActionCommand createUserActionCommand) : IPostApiRequest
 {
     public required System.Guid UserId { get; init; }
-    public string PostUrl => $"api/users/{UserId}/actions";
+    public string PostUrl => $"api/users/{UserId}/user-actions";
     public object Data { get; set; } = createUserActionCommand;
-}
-
-/// <summary>POST /api/users/adminactions</summary>
-public class PostUsersAdminactionsApiRequest(CreateAdminActionCommand createAdminActionCommand) : IPostApiRequest
-{
-    public string PostUrl => $"api/users/adminactions";
-    public object Data { get; set; } = createAdminActionCommand;
-}
-
-/// <summary>GET /api/users/useractions/{code} &#x2192; <see cref="GetUserActionByCodeQueryResult"/></summary>
-public record GetUsersUseractionsByCodeApiRequest(string Code) : IGetApiRequest
-{
-    public string GetUrl => $"api/users/useractions/{Code}";
 }
 
 /// <summary>POST /api/users/{userId}/match</summary>

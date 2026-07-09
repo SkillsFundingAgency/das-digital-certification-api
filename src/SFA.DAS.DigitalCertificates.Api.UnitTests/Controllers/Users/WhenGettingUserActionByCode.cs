@@ -11,22 +11,21 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
-using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
     public class WhenGettingUserActionByCode
     {
         private Mock<IMediator> _mediatorMock = null!;
-        private Mock<ILogger<UsersController>> _loggerMock = null!;
-        private UsersController _sut = null!;
+        private Mock<ILogger<UserActionsController>> _loggerMock = null!;
+        private UserActionsController _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _mediatorMock = new Mock<IMediator>();
-            _loggerMock = new Mock<ILogger<UsersController>>();
-            _sut = new UsersController(_mediatorMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<UserActionsController>>();
+            _sut = new UserActionsController(_mediatorMock.Object, _loggerMock.Object);
         }
 
         [Test]

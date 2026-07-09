@@ -17,15 +17,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
     public class WhenCreatingAdminAction
     {
         private Mock<IMediator> _mediatorMock = null!;
-        private Mock<ILogger<UsersController>> _loggerMock = null!;
-        private UsersController _sut = null!;
+        private Mock<ILogger<UserActionsController>> _loggerMock = null!;
+        private UserActionsController _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _mediatorMock = new Mock<IMediator>();
-            _loggerMock = new Mock<ILogger<UsersController>>();
-            _sut = new UsersController(_mediatorMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<UserActionsController>>();
+            _sut = new UserActionsController(_mediatorMock.Object, _loggerMock.Object);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(1, command);
 
             // Assert
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -63,7 +63,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(0, command);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
@@ -80,7 +80,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(1, command);
 
             // Assert
             var statusResult = result as StatusCodeResult;
