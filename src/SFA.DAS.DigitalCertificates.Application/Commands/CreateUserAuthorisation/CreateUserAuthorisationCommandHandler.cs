@@ -14,19 +14,16 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisati
     {
         private readonly IUserAuthorisationEntityContext _authContext;
         private readonly IUserEntityContext _userContext;
-        private readonly IUserIdentityEntityContext _userIdentityContext;
         
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public CreateUserAuthorisationCommandHandler(
             IUserAuthorisationEntityContext authContext,
             IUserEntityContext userContext,
-            IUserIdentityEntityContext userIdentityContext,
             IDateTimeProvider dateTimeProvider)
         {
             _authContext = authContext;
             _userContext = userContext;
-            _userIdentityContext = userIdentityContext;
             _dateTimeProvider = dateTimeProvider;
         }
 
@@ -73,11 +70,6 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisati
             };
 
             _authContext.Add(entity);
-
-            if (user.UserIdentities != null && user.UserIdentities.Any())
-            {
-                _userIdentityContext.RemoveRange(user.UserIdentities);
-            }
 
             await _userContext.SaveChangesAsync(cancellationToken);
 

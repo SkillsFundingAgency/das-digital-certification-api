@@ -16,7 +16,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
     {
         private Mock<IUserAuthorisationEntityContext> _authContextMock = null!;
         private Mock<IUserEntityContext> _userContextMock = null!;
-        private Mock<IUserIdentityEntityContext> _userIdentityContextMock = null!;
         private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
         private CreateUserAuthorisationCommandHandler _sut = null!;
 
@@ -25,13 +24,11 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
         {
             _authContextMock = new Mock<IUserAuthorisationEntityContext>();
             _userContextMock = new Mock<IUserEntityContext>();
-            _userIdentityContextMock = new Mock<IUserIdentityEntityContext>();
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
 
             _sut = new CreateUserAuthorisationCommandHandler(
                 _authContextMock.Object,
                 _userContextMock.Object,
-                _userIdentityContextMock.Object,
                 _dateTimeProviderMock.Object);
         }
 
@@ -98,7 +95,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
 
             var identities = new List<UserIdentity>
             {
-                new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Smith", GivenNames = "John", DateOfBirth = new DateTime(1990,1,1) }
+                new UserIdentity { Id = Guid.NewGuid(), FamilyName = "Smith", GivenNames = "John", DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, DateTimeKind.Unspecified) }
             };
 
             var user = new User { Id = userId, GovUkIdentifier = "GOV3", EmailAddress = "test3@example.com", UserIdentities = identities };
@@ -112,7 +109,6 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
 
             // Assert
             _authContextMock.Verify(x => x.Add(It.Is<UserAuthorisation>(a => a.UserId == userId && a.ULN == command.Uln && a.AuthorisedAt == now)), Times.Once);
-            _userIdentityContextMock.Verify(x => x.RemoveRange(It.Is<IEnumerable<UserIdentity>>(r => r == identities)), Times.Once);
             _userContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
     }
