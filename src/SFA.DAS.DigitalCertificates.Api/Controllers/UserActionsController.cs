@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
+using SFA.DAS.DigitalCertificates.Api.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
@@ -27,12 +28,18 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateAdminAction(long userActionId, [FromBody] CreateAdminActionCommand request)
+        public async Task<IActionResult> CreateAdminAction(long userActionId, [FromBody] CreateAdminActionRequest request)
         {
             try
             {
-                request.UserActionId = userActionId;
-                await _mediator.Send(request);
+                var command = new CreateAdminActionCommand
+                {
+                    Username = request.Username,
+                    Action = request.Action,
+                    UserActionId = userActionId
+                };
+
+                await _mediator.Send(command);
                 return NoContent();
             }
             catch (ValidationException ex)
@@ -48,7 +55,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{code}")]
-        [ProducesResponseType(typeof(GetUserActionByCodeQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserActionByCodeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -62,7 +69,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(result);
+                GetUserActionByCodeResponse response = result;
+
+                return Ok(response);
             }
             catch (ValidationException ex)
             {

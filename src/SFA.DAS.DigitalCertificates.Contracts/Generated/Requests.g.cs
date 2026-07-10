@@ -68,14 +68,14 @@ public class PostSharingSharingemailaccessApiRequest(CreateSharingEmailAccessCom
 }
 
 /// <summary>POST /api/user-actions/{userActionId}/admin-actions</summary>
-public class PostUserActionsByUserActionIdAdminActionsApiRequest(CreateAdminActionCommand createAdminActionCommand) : IPostApiRequest
+public class PostUserActionsByUserActionIdAdminActionsApiRequest(CreateAdminActionRequest createAdminActionRequest) : IPostApiRequest
 {
     public required long UserActionId { get; init; }
     public string PostUrl => $"api/user-actions/{UserActionId}/admin-actions";
-    public object Data { get; set; } = createAdminActionCommand;
+    public object Data { get; set; } = createAdminActionRequest;
 }
 
-/// <summary>GET /api/user-actions/{code} &#x2192; <see cref="GetUserActionByCodeQueryResult"/></summary>
+/// <summary>GET /api/user-actions/{code} &#x2192; <see cref="GetUserActionByCodeResponse"/></summary>
 public record GetUserActionsByCodeApiRequest(string Code) : IGetApiRequest
 {
     public string GetUrl => $"api/user-actions/{Code}";

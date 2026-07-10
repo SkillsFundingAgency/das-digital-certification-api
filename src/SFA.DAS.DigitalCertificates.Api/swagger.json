@@ -607,17 +607,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
               }
             }
           }
@@ -673,17 +673,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
                 }
               }
             }
@@ -905,6 +905,29 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -1551,6 +1574,28 @@
         },
         "additionalProperties": false
       },
+      "AdminActionDto": {
+        "required": [
+          "action",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "action": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AdminActionType": {
         "enum": [
           "Viewed",
@@ -1698,7 +1743,7 @@
         ],
         "type": "string"
       },
-      "CreateAdminActionCommand": {
+      "CreateAdminActionRequest": {
         "required": [
           "action",
           "username"
@@ -1711,10 +1756,6 @@
           },
           "action": {
             "$ref": "#/components/schemas/AdminActionType"
-          },
-          "userActionId": {
-            "type": "integer",
-            "format": "int64"
           }
         },
         "additionalProperties": false
@@ -2008,8 +2049,10 @@
         },
         "additionalProperties": false
       },
-      "GetUserActionByCodeQueryResult": {
+      "GetUserActionByCodeResponse": {
         "required": [
+          "actionStatus",
+          "actionType",
           "familyName",
           "givenNames"
         ],
@@ -2024,14 +2067,16 @@
             "format": "uuid"
           },
           "actionType": {
-            "$ref": "#/components/schemas/ActionType"
+            "type": "string",
+            "nullable": true
           },
           "actionTime": {
             "type": "string",
             "format": "date-time"
           },
           "actionStatus": {
-            "$ref": "#/components/schemas/UserActionStatus"
+            "type": "string",
+            "nullable": true
           },
           "familyName": {
             "type": "string",
@@ -2047,7 +2092,8 @@
             "nullable": true
           },
           "certificateType": {
-            "$ref": "#/components/schemas/CertificateType"
+            "type": "string",
+            "nullable": true
           },
           "courseName": {
             "type": "string",
@@ -2056,7 +2102,7 @@
           "adminActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdminActionDetail"
+              "$ref": "#/components/schemas/AdminActionDto"
             },
             "nullable": true
           },

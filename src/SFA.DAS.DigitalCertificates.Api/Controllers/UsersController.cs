@@ -16,10 +16,8 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
-using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.UnlockUser;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
 using SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
@@ -84,6 +82,9 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("{userId}/identity")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateUserIdentity(Guid userId, [FromBody] UpdateUserIdentityRequest request)
         {
             try
