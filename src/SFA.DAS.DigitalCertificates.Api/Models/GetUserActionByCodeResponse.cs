@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.Models
 {
@@ -16,7 +17,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
     {
         public long Id { get; set; }
         public Guid UserId { get; set; }
-        public required string ActionType { get; set; }
+        public ActionType ActionType { get; set; }
         public DateTime ActionTime { get; set; }
         public required string ActionStatus { get; set; }
         public required string FamilyName { get; set; }
@@ -35,7 +36,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
             {
                 Id = source.Id,
                 UserId = source.UserId,
-                ActionType = source.ActionType.ToString(),
+                ActionType = source.ActionType,
                 ActionTime = source.ActionTime,
                 ActionStatus = source.ActionStatus.ToString(),
                 FamilyName = source.FamilyName,

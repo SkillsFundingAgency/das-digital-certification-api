@@ -2052,7 +2052,6 @@
       "GetUserActionByCodeResponse": {
         "required": [
           "actionStatus",
-          "actionType",
           "familyName",
           "givenNames"
         ],
@@ -2067,8 +2066,7 @@
             "format": "uuid"
           },
           "actionType": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/ActionType"
           },
           "actionTime": {
             "type": "string",
