@@ -64,9 +64,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                 {
                     return NotFound();
                 }
-
                 GetUserActionByCodeResponse response = result;
-
                 return Ok(response);
             }
             catch (ValidationException ex)
