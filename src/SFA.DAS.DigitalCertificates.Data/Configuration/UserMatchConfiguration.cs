@@ -13,10 +13,6 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
             builder.ToTable(nameof(UserMatch))
                 .HasKey(x => x.Id);
 
-            builder.Property(um => um.EventTime)
-                .HasDefaultValueSql("GETUTCDATE()")
-                .ValueGeneratedOnAdd();
-
             builder.Property(um => um.CertificateType)
                 .HasConversion<string>()
                 .HasColumnName("CertificateType");

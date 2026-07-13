@@ -587,6 +587,153 @@
         }
       }
     },
+    "/api/user-actions/{userActionId}/admin-actions": {
+      "post": {
+        "tags": [
+          "UserActions"
+        ],
+        "parameters": [
+          {
+            "name": "userActionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdminActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/user-actions/{code}": {
+      "get": {
+        "tags": [
+          "UserActions"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserActionByCodeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/users/{govUkIdentifier}": {
       "get": {
         "tags": [
@@ -758,6 +905,29 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -1048,7 +1218,7 @@
         }
       }
     },
-    "/api/users/{userId}/actions": {
+    "/api/users/{userId}/user-actions": {
       "post": {
         "tags": [
           "Users"
@@ -1068,17 +1238,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             }
           }
@@ -1089,17 +1259,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               }
             }
@@ -1150,153 +1320,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/users/adminactions": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateAdminActionCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/users/useractions/{code}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "code",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetUserActionByCodeQueryResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               }
             }
@@ -1519,7 +1553,7 @@
         ],
         "type": "string"
       },
-      "AdminActionDetail": {
+      "AdminActionResponse": {
         "required": [
           "action",
           "username"
@@ -1687,7 +1721,7 @@
         ],
         "type": "string"
       },
-      "CreateAdminActionCommand": {
+      "CreateAdminActionRequest": {
         "required": [
           "action",
           "username"
@@ -1700,10 +1734,6 @@
           },
           "action": {
             "$ref": "#/components/schemas/AdminActionType"
-          },
-          "userActionId": {
-            "type": "integer",
-            "format": "int64"
           }
         },
         "additionalProperties": false
@@ -1859,7 +1889,7 @@
         },
         "additionalProperties": false
       },
-      "CreateUserActionCommand": {
+      "CreateUserActionRequest": {
         "required": [
           "actionType",
           "familyName",
@@ -1867,10 +1897,6 @@
         ],
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "actionType": {
             "$ref": "#/components/schemas/ActionType"
           },
@@ -1897,7 +1923,7 @@
         },
         "additionalProperties": false
       },
-      "CreateUserActionCommandResponse": {
+      "CreateUserActionResponse": {
         "required": [
           "actionCode"
         ],
@@ -1997,7 +2023,7 @@
         },
         "additionalProperties": false
       },
-      "GetUserActionByCodeQueryResult": {
+      "GetUserActionByCodeResponse": {
         "required": [
           "familyName",
           "givenNames"
@@ -2045,7 +2071,7 @@
           "adminActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdminActionDetail"
+              "$ref": "#/components/schemas/AdminActionResponse"
             },
             "nullable": true
           },
@@ -2057,13 +2083,13 @@
         },
         "additionalProperties": false
       },
-      "GetUserActionsQueryResult": {
+      "GetUserActionsResponse": {
         "type": "object",
         "properties": {
           "userActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserActionDetail"
+              "$ref": "#/components/schemas/UserActionDetailDto"
             },
             "nullable": true
           }
@@ -2381,7 +2407,7 @@
         },
         "additionalProperties": false
       },
-      "UserActionDetail": {
+      "UserActionDetailDto": {
         "required": [
           "familyName",
           "givenNames"
@@ -2433,7 +2459,7 @@
           "adminActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdminActionDetail"
+              "$ref": "#/components/schemas/AdminActionResponse"
             },
             "nullable": true
           },

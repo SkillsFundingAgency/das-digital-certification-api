@@ -11,32 +11,33 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
+using SFA.DAS.DigitalCertificates.Api.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
     public class WhenCreatingAdminAction
     {
         private Mock<IMediator> _mediatorMock = null!;
-        private Mock<ILogger<UsersController>> _loggerMock = null!;
-        private UsersController _sut = null!;
+        private Mock<ILogger<UserActionsController>> _loggerMock = null!;
+        private UserActionsController _sut = null!;
 
         [SetUp]
         public void SetUp()
         {
             _mediatorMock = new Mock<IMediator>();
-            _loggerMock = new Mock<ILogger<UsersController>>();
-            _sut = new UsersController(_mediatorMock.Object, _loggerMock.Object);
+            _loggerMock = new Mock<ILogger<UserActionsController>>();
+            _sut = new UserActionsController(_mediatorMock.Object, _loggerMock.Object);
         }
 
         [Test]
         public async Task And_ValidRequest_Then_MediatorIsCalledAndReturns204()
         {
             // Arrange
-            var command = new CreateAdminActionCommand
+            var command = new CreateAdminActionRequest
             {
                 Username = "admin",
-                Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed,
-                UserActionId = 1
+                Action = AdminActionType.Viewed
             };
 
             _mediatorMock
@@ -44,7 +45,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(1, command);
 
             // Assert
             _mediatorMock.Verify(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()), Times.Once);
@@ -56,14 +57,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_ValidationException_Then_ReturnsBadRequest()
         {
             // Arrange
-            var command = new CreateAdminActionCommand { Username = "", Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed, UserActionId = 0 };
+            var command = new CreateAdminActionRequest { Username = "", Action = AdminActionType.Viewed };
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(0, command);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
@@ -73,14 +74,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_GeneralException_Then_ReturnsInternalServerError()
         {
             // Arrange
-            var command = new CreateAdminActionCommand { Username = "admin", Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed, UserActionId = 1 };
+            var command = new CreateAdminActionRequest { Username = "admin", Action = AdminActionType.Viewed };
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateAdminAction(command);
+            var result = await _sut.CreateAdminAction(1, command);
 
             // Assert
             var statusResult = result as StatusCodeResult;

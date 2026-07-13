@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAction;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActionByCode;
 using SFA.DAS.DigitalCertificates.Domain.Entities;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserAction
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActionByCode
 {
     [TestFixture]
     public class WhenHandlingGetUserActionByCodeQueryHandler
