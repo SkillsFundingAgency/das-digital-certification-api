@@ -126,18 +126,18 @@ public record GetUsersByUserIdSharingsApiRequest(System.Guid UserId, System.Guid
     public string GetUrl => QueryHelpers.AddQueryString($"api/users/{UserId}/sharings", new Dictionary<string, string?> { ["certificateId"] = CertificateId?.ToString(), ["limit"] = Limit?.ToString() });
 }
 
-/// <summary>GET /api/users/{userId}/user-actions &#x2192; <see cref="GetUserActionsQueryResult"/></summary>
+/// <summary>GET /api/users/{userId}/user-actions &#x2192; <see cref="GetUserActionsResponse"/></summary>
 public record GetUsersByUserIdUserActionsApiRequest(System.Guid UserId) : IGetApiRequest
 {
     public string GetUrl => $"api/users/{UserId}/user-actions";
 }
 
-/// <summary>POST /api/users/{userId}/user-actions &#x2192; <see cref="CreateUserActionCommandResponse"/></summary>
-public class PostUsersByUserIdUserActionsApiRequest(CreateUserActionCommand createUserActionCommand) : IPostApiRequest
+/// <summary>POST /api/users/{userId}/user-actions &#x2192; <see cref="CreateUserActionResponse"/></summary>
+public class PostUsersByUserIdUserActionsApiRequest(CreateUserActionRequest createUserActionRequest) : IPostApiRequest
 {
     public required System.Guid UserId { get; init; }
     public string PostUrl => $"api/users/{UserId}/user-actions";
-    public object Data { get; set; } = createUserActionCommand;
+    public object Data { get; set; } = createUserActionRequest;
 }
 
 /// <summary>POST /api/users/{userId}/match</summary>

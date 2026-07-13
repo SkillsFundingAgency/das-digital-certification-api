@@ -48,7 +48,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AdminActionDetail
+    public partial class AdminActionResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("username")]
@@ -60,21 +60,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("action")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
         public AdminActionType Action { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AdminActionDto
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("username")]
-        public string? Username { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("actionTime")]
-        public System.DateTime ActionTime { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("action")]
-        public string? Action { get; set; } = default!;
 
     }
 
@@ -338,11 +323,8 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserActionCommand
+    public partial class CreateUserActionRequest
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("actionType")]
         [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
@@ -367,7 +349,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserActionCommandResponse
+    public partial class CreateUserActionResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("actionCode")]
@@ -453,13 +435,15 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public System.Guid UserId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("actionType")]
-        public string? ActionType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public ActionType ActionType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("actionTime")]
         public System.DateTime ActionTime { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("actionStatus")]
-        public string? ActionStatus { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public UserActionStatus ActionStatus { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("familyName")]
         public string? FamilyName { get; set; } = default!;
@@ -471,13 +455,14 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public System.Guid? CertificateId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        public string? CertificateType { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("courseName")]
         public string? CourseName { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adminActions")]
-        public System.Collections.Generic.ICollection<AdminActionDto>? AdminActions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<AdminActionResponse>? AdminActions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("uln")]
         public long? Uln { get; set; } = default!;
@@ -485,11 +470,11 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserActionsQueryResult
+    public partial class GetUserActionsResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userActions")]
-        public System.Collections.Generic.ICollection<UserActionDetail>? UserActions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<UserActionDetailDto>? UserActions { get; set; } = default!;
 
     }
 
@@ -713,7 +698,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserActionDetail
+    public partial class UserActionDetailDto
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
@@ -753,7 +738,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public string? ActionCode { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("adminActions")]
-        public System.Collections.Generic.ICollection<AdminActionDetail>? AdminActions { get; set; } = default!;
+        public System.Collections.Generic.ICollection<AdminActionResponse>? AdminActions { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("uln")]
         public long? Uln { get; set; } = default!;

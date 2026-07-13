@@ -32,12 +32,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         {
             try
             {
-                var command = new CreateAdminActionCommand
-                {
-                    Username = request.Username,
-                    Action = request.Action,
-                    UserActionId = userActionId
-                };
+                var command = (CreateAdminActionCommand)request;
+                command.UserActionId = userActionId;
 
                 await _mediator.Send(command);
                 return NoContent();

@@ -1238,17 +1238,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserActionCommand"
+                "$ref": "#/components/schemas/CreateUserActionRequest"
               }
             }
           }
@@ -1259,17 +1259,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateUserActionCommandResponse"
+                  "$ref": "#/components/schemas/CreateUserActionResponse"
                 }
               }
             }
@@ -1320,17 +1320,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserActionsQueryResult"
+                  "$ref": "#/components/schemas/GetUserActionsResponse"
                 }
               }
             }
@@ -1553,7 +1553,7 @@
         ],
         "type": "string"
       },
-      "AdminActionDetail": {
+      "AdminActionResponse": {
         "required": [
           "action",
           "username"
@@ -1570,28 +1570,6 @@
           },
           "action": {
             "$ref": "#/components/schemas/AdminActionType"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AdminActionDto": {
-        "required": [
-          "action",
-          "username"
-        ],
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string",
-            "nullable": true
-          },
-          "actionTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "action": {
-            "type": "string",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1911,7 +1889,7 @@
         },
         "additionalProperties": false
       },
-      "CreateUserActionCommand": {
+      "CreateUserActionRequest": {
         "required": [
           "actionType",
           "familyName",
@@ -1919,10 +1897,6 @@
         ],
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "actionType": {
             "$ref": "#/components/schemas/ActionType"
           },
@@ -1949,7 +1923,7 @@
         },
         "additionalProperties": false
       },
-      "CreateUserActionCommandResponse": {
+      "CreateUserActionResponse": {
         "required": [
           "actionCode"
         ],
@@ -2051,7 +2025,6 @@
       },
       "GetUserActionByCodeResponse": {
         "required": [
-          "actionStatus",
           "familyName",
           "givenNames"
         ],
@@ -2073,8 +2046,7 @@
             "format": "date-time"
           },
           "actionStatus": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/UserActionStatus"
           },
           "familyName": {
             "type": "string",
@@ -2090,8 +2062,7 @@
             "nullable": true
           },
           "certificateType": {
-            "type": "string",
-            "nullable": true
+            "$ref": "#/components/schemas/CertificateType"
           },
           "courseName": {
             "type": "string",
@@ -2100,7 +2071,7 @@
           "adminActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdminActionDto"
+              "$ref": "#/components/schemas/AdminActionResponse"
             },
             "nullable": true
           },
@@ -2112,13 +2083,13 @@
         },
         "additionalProperties": false
       },
-      "GetUserActionsQueryResult": {
+      "GetUserActionsResponse": {
         "type": "object",
         "properties": {
           "userActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserActionDetail"
+              "$ref": "#/components/schemas/UserActionDetailDto"
             },
             "nullable": true
           }
@@ -2436,7 +2407,7 @@
         },
         "additionalProperties": false
       },
-      "UserActionDetail": {
+      "UserActionDetailDto": {
         "required": [
           "familyName",
           "givenNames"
@@ -2488,7 +2459,7 @@
           "adminActions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdminActionDetail"
+              "$ref": "#/components/schemas/AdminActionResponse"
             },
             "nullable": true
           },

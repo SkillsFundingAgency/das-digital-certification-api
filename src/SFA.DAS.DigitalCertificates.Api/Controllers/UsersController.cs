@@ -19,6 +19,7 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.UnlockUser;
 using SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity;
+using SFA.DAS.DigitalCertificates.Api.Models;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -204,16 +205,18 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("{userId}/user-actions")]
-        [ProducesResponseType(typeof(CreateUserActionCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CreateUserActionResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUserAction(Guid userId, [FromBody] CreateUserActionCommand request)
+        public async Task<IActionResult> CreateUserAction(Guid userId, [FromBody] CreateUserActionRequest request)
         {
             try
             {
-                request.UserId = userId;
-                var result = await _mediator.Send(request);
-                return Ok(result);
+                var command = (CreateUserActionCommand)request;
+                command.UserId = userId;
+                var result = await _mediator.Send(command);
+                CreateUserActionResponse response = result;
+                return Ok(response);
             }
             catch (ValidationException ex)
             {
@@ -230,7 +233,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         
 
         [HttpGet("{userId}/user-actions")]
-        [ProducesResponseType(typeof(GetUserActionsQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserActionsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserActions(Guid userId)
@@ -238,7 +241,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserActionsQuery { UserId = userId });
-                return Ok(new { userActions = result.UserActions });
+                GetUserActionsResponse response = result;
+                return Ok(response);
             }
             catch (ValidationException ex)
             {

@@ -11,6 +11,8 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction;
+using SFA.DAS.DigitalCertificates.Api.Models;
+using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
@@ -32,11 +34,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_ValidRequest_Then_MediatorIsCalledAndReturns204()
         {
             // Arrange
-            var command = new CreateAdminActionCommand
+            var command = new CreateAdminActionRequest
             {
                 Username = "admin",
-                Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed,
-                UserActionId = 1
+                Action = AdminActionType.Viewed
             };
 
             _mediatorMock
@@ -56,7 +57,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_ValidationException_Then_ReturnsBadRequest()
         {
             // Arrange
-            var command = new CreateAdminActionCommand { Username = "", Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed, UserActionId = 0 };
+            var command = new CreateAdminActionRequest { Username = "", Action = AdminActionType.Viewed };
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()))
@@ -73,7 +74,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         public async Task And_GeneralException_Then_ReturnsInternalServerError()
         {
             // Arrange
-            var command = new CreateAdminActionCommand { Username = "admin", Action = SFA.DAS.DigitalCertificates.Domain.Models.Enums.AdminActionType.Viewed, UserActionId = 1 };
+            var command = new CreateAdminActionRequest { Username = "admin", Action = AdminActionType.Viewed };
 
             _mediatorMock
                 .Setup(m => m.Send(It.IsAny<CreateAdminActionCommand>(), It.IsAny<CancellationToken>()))
