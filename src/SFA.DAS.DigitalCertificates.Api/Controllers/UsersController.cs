@@ -59,7 +59,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        [HttpPost("identity")]
+        [HttpPost("")]
         [ProducesResponseType(typeof(CreateOrUpdateUserCommandResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
