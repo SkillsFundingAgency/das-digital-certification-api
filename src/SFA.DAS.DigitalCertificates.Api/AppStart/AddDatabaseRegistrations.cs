@@ -26,7 +26,12 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             }
             else
             {
-                services.AddSingleton<TokenCredential>(new DefaultAzureCredential());
+                services.AddSingleton(new ChainedTokenCredential(
+                                 new ManagedIdentityCredential(new ManagedIdentityCredentialOptions()),
+                                 new AzureCliCredential(),
+                                 new VisualStudioCodeCredential(),
+                                 new VisualStudioCredential())
+                         );
                 services.AddDbContext<DigitalCertificatesDataContext>(ServiceLifetime.Scoped);
             }
 
