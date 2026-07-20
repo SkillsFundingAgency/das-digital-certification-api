@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction;
-using SFA.DAS.DigitalCertificates.Application.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
@@ -16,7 +15,6 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
-using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.UnlockUser;
 using SFA.DAS.DigitalCertificates.Application.Commands.UpdateUserIdentity;
 using SFA.DAS.DigitalCertificates.Api.Models;
@@ -37,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{govUkIdentifier}")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUser(string govUkIdentifier)
@@ -45,7 +43,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserQuery { GovUkIdentifier = govUkIdentifier });
-                return Ok(result.User);
+                return Ok((GetUserResponse?)result.User);
             }
             catch (ValidationException ex)
             {
@@ -59,8 +57,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        [HttpPost("identity")]
-        [ProducesResponseType(typeof(CreateOrUpdateUserCommandResponse), StatusCodes.Status200OK)]
+        [HttpPost("")]
+        [ProducesResponseType(typeof(CreateOrUpdateUserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateOrUpdateUser([FromBody] CreateOrUpdateUserRequest request)
@@ -68,7 +66,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send((CreateOrUpdateUserCommand)request);
-                return Ok(result);
+                return Ok((CreateOrUpdateUserResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -106,7 +104,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{userId}/authorisation")]
-        [ProducesResponseType(typeof(GetUserAuthorisationQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserAuthorisationResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserAuthorisation(Guid userId)
@@ -114,7 +112,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserAuthorisationQuery { UserId = userId });
-                return Ok(result);
+                return Ok((GetUserAuthorisationResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -129,7 +127,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{userId}/identity")]
-        [ProducesResponseType(typeof(GetUserIdentityQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserIdentityResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserIdentity(Guid userId)
@@ -137,7 +135,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserIdentityQuery { UserId = userId });
-                return Ok(result);
+                return Ok((GetUserIdentityResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -152,7 +150,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("id/{userId:guid}")]
-        [ProducesResponseType(typeof(GetUserByIdQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserByIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -161,7 +159,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserByIdQuery { UserId = userId });
-                return Ok(result);
+                return Ok((GetUserByIdResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -176,7 +174,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{userId}/sharings")]
-        [ProducesResponseType(typeof(GetSharingsQueryResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetSharingsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSharings(Guid userId, [FromQuery] Guid certificateId, [FromQuery] int? limit = null)
@@ -190,7 +188,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     Limit = limit
                 });
 
-                return Ok(result.SharingDetails);
+                return Ok((GetSharingsResponse?)result.SharingDetails);
             }
             catch (ValidationException ex)
             {
@@ -215,8 +213,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                 var command = (CreateUserActionCommand)request;
                 command.UserId = userId;
                 var result = await _mediator.Send(command);
-                CreateUserActionResponse response = result;
-                return Ok(response);
+                return Ok((CreateUserActionResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -230,8 +227,6 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        
-
         [HttpGet("{userId}/user-actions")]
         [ProducesResponseType(typeof(GetUserActionsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -241,8 +236,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             try
             {
                 var result = await _mediator.Send(new GetUserActionsQuery { UserId = userId });
-                GetUserActionsResponse response = result;
-                return Ok(response);
+                return Ok((GetUserActionsResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -256,18 +250,19 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        
+
 
         [HttpPost("{userId}/match")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUserMatch(Guid userId, [FromBody] CreateUserMatchCommand request)
+        public async Task<IActionResult> CreateUserMatch(Guid userId, [FromBody] CreateUserMatchRequest request)
         {
             try
             {
-                request.UserId = userId;
-                await _mediator.Send(request);
+                var command = (CreateUserMatchCommand)request;
+                command.UserId = userId;
+                await _mediator.Send(command);
                 return NoContent();
             }
             catch (ValidationException ex)
@@ -286,12 +281,13 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateUserAuthorisation(Guid userId, [FromBody] CreateUserAuthorisationCommand request)
+        public async Task<IActionResult> CreateUserAuthorisation(Guid userId, [FromBody] CreateUserAuthorisationRequest request)
         {
             try
             {
-                request.UserId = userId;
-                await _mediator.Send(request);
+                var command = (CreateUserAuthorisationCommand)request;
+                command.UserId = userId;
+                await _mediator.Send(command);
                 return NoContent();
             }
             catch (ValidationException ex)

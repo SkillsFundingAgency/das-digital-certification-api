@@ -53,7 +53,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await _sut.GetSharings(userId, certId);
 
             // Assert
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(details);
+            result.Should().BeOfType<OkObjectResult>();
+            var returned = (OkObjectResult)result;
+            var response = returned.Value as Models.GetSharingsResponse;
+            response.Should().NotBeNull();
+            response!.UserId.Should().Be(details.UserId);
+            response.CertificateId.Should().Be(details.CertificateId);
+            response.CertificateType.Should().Be(details.CertificateType);
+            response.CourseName.Should().Be(details.CourseName);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -80,7 +87,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await _sut.GetSharings(userId, certId);
 
             // Assert
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(emptyDetails);
+            result.Should().BeOfType<OkObjectResult>();
+            var returned = (OkObjectResult)result;
+            var response = returned.Value as Models.GetSharingsResponse;
+            response.Should().NotBeNull();
+            response!.UserId.Should().Be(emptyDetails.UserId);
+            response.CertificateId.Should().Be(emptyDetails.CertificateId);
+            response.CertificateType.Should().Be(emptyDetails.CertificateType);
+            response.CourseName.Should().Be(emptyDetails.CourseName);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -107,7 +121,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await _sut.GetSharings(userId, certId);
 
             // Assert
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().Be(emptyDetails);
+            result.Should().BeOfType<OkObjectResult>();
+            var returned = (OkObjectResult)result;
+            var response = returned.Value as Models.GetSharingsResponse;
+            response.Should().NotBeNull();
+            response!.UserId.Should().Be(emptyDetails.UserId);
+            response.CertificateId.Should().Be(emptyDetails.CertificateId);
+            response.CertificateType.Should().Be(emptyDetails.CertificateType);
+            response.CourseName.Should().Be(emptyDetails.CourseName);
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetSharingsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 

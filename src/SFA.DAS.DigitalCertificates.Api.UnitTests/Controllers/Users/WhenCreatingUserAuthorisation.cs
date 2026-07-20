@@ -33,9 +33,8 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserAuthorisationCommand
+            var request = new Models.CreateUserAuthorisationRequest
             {
-                UserId = Guid.Empty,
                 Uln = 1234567890
             };
 
@@ -44,11 +43,11 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _sut.CreateUserAuthorisation(userId, command);
+            var result = await _sut.CreateUserAuthorisation(userId, request);
 
             // Assert
             _mediatorMock.Verify(
-                m => m.Send(It.Is<CreateUserAuthorisationCommand>(c => c.UserId == userId && c.Uln == command.Uln), It.IsAny<CancellationToken>()),
+                m => m.Send(It.Is<CreateUserAuthorisationCommand>(c => c.UserId == userId && c.Uln == request.Uln), It.IsAny<CancellationToken>()),
                 Times.Once);
 
             result.Should().BeOfType<NoContentResult>();
@@ -59,9 +58,8 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserAuthorisationCommand
+            var request = new Models.CreateUserAuthorisationRequest
             {
-                UserId = Guid.Empty,
                 Uln = 1234567890
             };
 
@@ -70,7 +68,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateUserAuthorisation(userId, command);
+            var result = await _sut.CreateUserAuthorisation(userId, request);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
@@ -81,9 +79,8 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserAuthorisationCommand
+            var request = new Models.CreateUserAuthorisationRequest
             {
-                UserId = Guid.Empty,
                 Uln = 1234567890
             };
 
@@ -92,7 +89,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateUserAuthorisation(userId, command);
+            var result = await _sut.CreateUserAuthorisation(userId, request);
 
             // Assert
             var statusResult = result as StatusCodeResult;
