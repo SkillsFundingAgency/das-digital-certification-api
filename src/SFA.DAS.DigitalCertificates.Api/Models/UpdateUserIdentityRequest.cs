@@ -9,10 +9,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
         public List<NameRequest>? Names { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-        public static implicit operator Application.Models.UpdateUserIdentityRequest(UpdateUserIdentityRequest? source)
+        public static implicit operator Application.Models.UpdateUserIdentityRequest(UpdateUserIdentityRequest source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
-
             return new Application.Models.UpdateUserIdentityRequest
             {
                 Names = source.Names?.Select(n => new Application.Models.Name

@@ -9,10 +9,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
         public required string EmailAddress { get; set; }
         public string? PhoneNumber { get; set; }
 
-        public static implicit operator CreateOrUpdateUserCommand(CreateOrUpdateUserRequest? source)
+        public static implicit operator CreateOrUpdateUserCommand(CreateOrUpdateUserRequest source)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
-
             return new CreateOrUpdateUserCommand
             {
                 GovUkIdentifier = source.GovUkIdentifier,
