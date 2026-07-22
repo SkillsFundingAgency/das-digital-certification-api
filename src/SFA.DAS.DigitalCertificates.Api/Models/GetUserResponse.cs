@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using SFA.DAS.DigitalCertificates.Domain.Models;
 
 namespace SFA.DAS.DigitalCertificates.Api.Models
 {
-    public class NameDto
-    {
-        public DateTime? ValidSince { get; set; }
-        public DateTime? ValidUntil { get; set; }
-        public required string FamilyName { get; set; } = null!;
-        public required string GivenNames { get; set; } = null!;
-    }
-
     public class GetUserResponse
     {
         public Guid Id { get; set; }
@@ -22,8 +12,6 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
         public DateTime? LastLoginAt { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsLocked { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public IEnumerable<NameDto>? Names { get; set; }
 
         public static implicit operator GetUserResponse?(User? source)
         {
@@ -37,15 +25,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
                 PhoneNumber = source.PhoneNumber,
                 LastLoginAt = source.LastLoginAt,
                 CreatedAt = source.CreatedAt,
-                IsLocked = source.IsLocked,
-                DateOfBirth = source.DateOfBirth,
-                Names = source.Names?.Select(n => new NameDto
-                {
-                    ValidSince = n.ValidSince,
-                    ValidUntil = n.ValidUntil,
-                    FamilyName = n.FamilyName,
-                    GivenNames = n.GivenNames
-                }).ToList()
+                IsLocked = source.IsLocked
             };
         }
     }
