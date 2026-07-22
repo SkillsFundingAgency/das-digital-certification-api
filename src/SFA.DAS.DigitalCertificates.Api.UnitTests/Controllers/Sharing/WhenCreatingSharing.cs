@@ -40,7 +40,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             var now = DateTime.UtcNow;
             var expiry = now.AddDays(28);
 
-            var command = new CreateSharingCommand
+            var request = new Models.CreateSharingRequest
             {
                 UserId = userId,
                 CertificateId = certificateId,
@@ -62,19 +62,19 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             };
 
             _mediatorMock
-                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.Is<CreateSharingCommand>(c => c.UserId == userId && c.CertificateId == certificateId && c.CourseName == "Test Course"), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(response);
 
             // Act
-            var result = await _sut.CreateSharing(command);
+            var result = await _sut.CreateSharing(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.Is<CreateSharingCommand>(c => c.UserId == userId && c.CertificateId == certificateId && c.CourseName == "Test Course"), It.IsAny<CancellationToken>()), Times.Once);
 
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
 
-            var returned = okResult!.Value as CreateSharingCommandResponse;
+            var returned = okResult!.Value as Models.CreateSharingResponse;
             returned.Should().NotBeNull();
 
             returned!.UserId.Should().Be(userId);
@@ -92,7 +92,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_ValidationException_Then_ReturnsBadRequest()
         {
             // Arrange
-            var command = new CreateSharingCommand
+            var request = new Models.CreateSharingRequest
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -101,14 +101,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             };
 
             _mediatorMock
-                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<CreateSharingCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new FluentValidation.ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateSharing(command);
+            var result = await _sut.CreateSharing(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateSharingCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             var badRequest = result as BadRequestObjectResult;
             badRequest.Should().NotBeNull();
@@ -118,7 +118,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_GeneralException_Then_ReturnsInternalServerError()
         {
             // Arrange
-            var command = new CreateSharingCommand
+            var request = new Models.CreateSharingRequest
             {
                 UserId = Guid.NewGuid(),
                 CertificateId = Guid.NewGuid(),
@@ -127,14 +127,14 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             };
 
             _mediatorMock
-                .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<CreateSharingCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateSharing(command);
+            var result = await _sut.CreateSharing(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateSharingCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             var statusResult = result as StatusCodeResult;
             statusResult.Should().NotBeNull();

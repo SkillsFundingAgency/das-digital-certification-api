@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
+using SFA.DAS.DigitalCertificates.Api.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.Testing.AutoFixture;
 
@@ -33,7 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var result = await controller.GetUser(govUkIdentifier);
 
             // Assert
-            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo(userResult.User);
+            result.Should().BeOfType<OkObjectResult>().Which.Value.Should().BeEquivalentTo((GetUserResponse?)userResult.User);
         }
 
         [Test, MoqAutoData]

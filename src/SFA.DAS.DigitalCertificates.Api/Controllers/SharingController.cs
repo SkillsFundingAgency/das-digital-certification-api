@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SFA.DAS.DigitalCertificates.Domain.Models;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharing;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingAccess;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmail;
@@ -14,6 +13,7 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByEmailLinkCode;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetSharingByLinkCode;
 using System;
 using System.Threading.Tasks;
+using SFA.DAS.DigitalCertificates.Api.Models;
 
 namespace SFA.DAS.DigitalCertificates.Api.Controllers
 {
@@ -31,7 +31,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("sharingemail/emaillinkcode/{emailLinkCode}")]
-        [ProducesResponseType(typeof(CertificateSharingEmailLinkSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetSharingByEmailLinkCodeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -49,7 +49,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(result.SharingEmail);
+                return Ok((GetSharingByEmailLinkCodeResponse?)result.SharingEmail);
             }
             catch (ValidationException ex)
             {
@@ -64,7 +64,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("linkcode/{linkCode}")]
-        [ProducesResponseType(typeof(CertificateSharingLinkSummary), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetSharingByLinkCodeResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetSharingByLinkCode(Guid linkCode)
@@ -81,7 +81,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(result.Sharing);
+                return Ok((GetSharingByLinkCodeResponse?)result.Sharing);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(CertificateSharing), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetSharingByIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -110,7 +110,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
                     return NotFound();
                 }
 
-                return Ok(result.Sharing);
+                return Ok((GetSharingByIdResponse?)result.Sharing);
             }
             catch (ValidationException ex)
             {
@@ -125,15 +125,16 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(CreateSharingCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CreateSharingResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSharing([FromBody] CreateSharingCommand request)
+        public async Task<IActionResult> CreateSharing([FromBody] CreateSharingRequest request)
         {
             try
             {
-                var result = await _mediator.Send(request);
-                return Ok(result);
+                var command = (CreateSharingCommand)request;
+                var result = await _mediator.Send(command);
+                return Ok((CreateSharingResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -148,23 +149,24 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         }
 
         [HttpPost("{id}/email")]
-        [ProducesResponseType(typeof(CreateSharingEmailCommandResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CreateSharingEmailResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSharingEmail(Guid id, [FromBody] CreateSharingEmailCommand request)
+        public async Task<IActionResult> CreateSharingEmail(Guid id, [FromBody] CreateSharingEmailRequest request)
         {
             try
             {
-                request.SharingId = id;
-                var result = await _mediator.Send(request);
+                var command = (CreateSharingEmailCommand)request;
+                command.SharingId = id;
+                var result = await _mediator.Send(command);
 
                 if (result == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(result);
+                return Ok((CreateSharingEmailResponse?)result);
             }
             catch (ValidationException ex)
             {
@@ -182,16 +184,17 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSharingAccess([FromBody] CreateSharingAccessCommand request)
+        public async Task<IActionResult> CreateSharingAccess([FromBody] CreateSharingAccessRequest request)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var command = (CreateSharingAccessCommand)request;
+                var result = await _mediator.Send(command);
 
                 if (result == null)
                 {
                     return BadRequest();
-               }
+                }
 
                 return NoContent();
             }
@@ -211,11 +214,12 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateSharingEmailAccess([FromBody] CreateSharingEmailAccessCommand request)
+        public async Task<IActionResult> CreateSharingEmailAccess([FromBody] CreateSharingEmailAccessRequest request)
         {
             try
             {
-                var result = await _mediator.Send(request);
+                var command = (CreateSharingEmailAccessCommand)request;
+                var result = await _mediator.Send(command);
 
                 if (result == null)
                 {

@@ -61,7 +61,17 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             // Assert
             result.Should().BeOfType<OkObjectResult>();
             var okResult = (OkObjectResult)result;
-            okResult.Value.Should().Be(sharing);
+            var returned = okResult.Value as Models.GetSharingByIdResponse;
+            returned.Should().NotBeNull();
+            returned!.UserId.Should().Be(sharing.UserId);
+            returned.CertificateId.Should().Be(sharing.CertificateId);
+            returned.CertificateType.Should().Be(sharing.CertificateType);
+            returned.CourseName.Should().Be(sharing.CourseName);
+            returned.SharingId.Should().Be(sharing.SharingId);
+            returned.SharingNumber.Should().Be(sharing.SharingNumber);
+            returned.CreatedAt.Should().Be(sharing.CreatedAt);
+            returned.LinkCode.Should().Be(sharing.LinkCode);
+            returned.ExpiryTime.Should().Be(sharing.ExpiryTime);
 
             _mediatorMock.Verify(
                 x => x.Send(It.Is<GetSharingByIdQuery>(q => q.SharingId == sharingId && q.Limit == null), It.IsAny<CancellationToken>()),
@@ -99,7 +109,17 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             // Assert
             result.Should().BeOfType<OkObjectResult>();
             var okResult = (OkObjectResult)result;
-            okResult.Value.Should().Be(sharing);
+            var returned = okResult.Value as Models.GetSharingByIdResponse;
+            returned.Should().NotBeNull();
+            returned!.UserId.Should().Be(sharing.UserId);
+            returned.CertificateId.Should().Be(sharing.CertificateId);
+            returned.CertificateType.Should().Be(sharing.CertificateType);
+            returned.CourseName.Should().Be(sharing.CourseName);
+            returned.SharingId.Should().Be(sharing.SharingId);
+            returned.SharingNumber.Should().Be(sharing.SharingNumber);
+            returned.CreatedAt.Should().Be(sharing.CreatedAt);
+            returned.LinkCode.Should().Be(sharing.LinkCode);
+            returned.ExpiryTime.Should().Be(sharing.ExpiryTime);
 
             _mediatorMock.Verify(
                 x => x.Send(It.Is<GetSharingByIdQuery>(q => q.SharingId == sharingId && q.Limit == limit), It.IsAny<CancellationToken>()),

@@ -76,102 +76,17 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CertificateSharing
+    public partial class AuthorisationResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("authorisationId")]
+        public System.Guid AuthorisationId { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
-        public System.Guid CertificateId { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("uln")]
+        public long Uln { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
-        public CertificateType CertificateType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
-        public string? CourseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
-        public System.Guid SharingId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingNumber")]
-        public int SharingNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
-        public System.DateTime CreatedAt { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("linkCode")]
-        public System.Guid LinkCode { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
-        public System.DateTime ExpiryTime { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingAccess")]
-        public System.Collections.Generic.ICollection<System.DateTime>? SharingAccess { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingEmails")]
-        public System.Collections.Generic.ICollection<SharingEmailDetail>? SharingEmails { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CertificateSharingEmailLinkSummary
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
-        public System.Guid SharingEmailId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
-        public System.Guid CertificateId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
-        public CertificateType CertificateType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
-        public System.DateTime ExpiryTime { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CertificateSharingLinkSummary
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
-        public System.Guid SharingId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
-        public System.Guid CertificateId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
-        public CertificateType CertificateType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
-        public System.DateTime ExpiryTime { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CertificateSharings
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
-        public System.Guid CertificateId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
-        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
-        public CertificateType CertificateType { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
-        public string? CourseName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharings")]
-        public System.Collections.Generic.ICollection<SharingDetail>? Sharings { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("authorisedAt")]
+        public System.DateTime AuthorisedAt { get; set; } = default!;
 
     }
 
@@ -204,15 +119,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateOrUpdateUserCommandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateOrUpdateUserRequest
     {
 
@@ -228,7 +134,16 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingAccessCommand
+    public partial class CreateOrUpdateUserResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSharingAccessRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
@@ -237,7 +152,37 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingCommand
+    public partial class CreateSharingEmailAccessRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
+        public System.Guid SharingEmailId { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSharingEmailRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
+        public string? EmailAddress { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSharingEmailResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailLinkCode")]
+        public System.Guid EmailLinkCode { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateSharingRequest
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userId")]
@@ -256,7 +201,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingCommandResponse
+    public partial class CreateSharingResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userId")]
@@ -286,39 +231,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
         public System.DateTime ExpiryTime { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingEmailAccessCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
-        public System.Guid SharingEmailId { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingEmailCommand
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
-        public System.Guid SharingId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
-        public string? EmailAddress { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSharingEmailCommandResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("emailLinkCode")]
-        public System.Guid EmailLinkCode { get; set; } = default!;
 
     }
 
@@ -358,11 +270,8 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserAuthorisationCommand
+    public partial class CreateUserAuthorisationRequest
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("uln")]
         public long Uln { get; set; } = default!;
@@ -370,11 +279,8 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserMatchCommand
+    public partial class CreateUserMatchRequest
     {
-
-        [System.Text.Json.Serialization.JsonPropertyName("userId")]
-        public System.Guid UserId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("uln")]
         public long? Uln { get; set; } = default!;
@@ -416,11 +322,102 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetSharingsQueryResult
+    public partial class GetSharingByEmailLinkCodeResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("sharingDetails")]
-        public CertificateSharings SharingDetails { get; set; } = default!;
+        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
+        public System.Guid SharingEmailId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
+        public System.Guid CertificateId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
+        public System.DateTime ExpiryTime { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSharingByIdResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
+        public System.Guid CertificateId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
+        public string? CourseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
+        public System.Guid SharingId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingNumber")]
+        public int SharingNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
+        public System.DateTime CreatedAt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("linkCode")]
+        public System.Guid LinkCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
+        public System.DateTime ExpiryTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingAccess")]
+        public System.Collections.Generic.ICollection<System.DateTime>? SharingAccess { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingEmails")]
+        public System.Collections.Generic.ICollection<SharingEmailDetailGetById>? SharingEmails { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSharingByLinkCodeResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
+        public System.Guid SharingId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
+        public System.Guid CertificateId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("expiryTime")]
+        public System.DateTime ExpiryTime { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetSharingsResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userId")]
+        public System.Guid UserId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateId")]
+        public System.Guid CertificateId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("certificateType")]
+        [System.Text.Json.Serialization.JsonConverter(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+        public CertificateType CertificateType { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("courseName")]
+        public string? CourseName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharings")]
+        public System.Collections.Generic.ICollection<SharingDetailDto>? Sharings { get; set; } = default!;
 
     }
 
@@ -479,16 +476,16 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserAuthorisationQueryResult
+    public partial class GetUserAuthorisationResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("authorisation")]
-        public UserAuthorisation Authorisation { get; set; } = default!;
+        public UserAuthorisationResponse Authorisation { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserByIdQueryResult
+    public partial class GetUserByIdResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userId")]
@@ -513,22 +510,22 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public bool IsLocked { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("userMatches")]
-        public System.Collections.Generic.ICollection<UserMatchDetail>? UserMatches { get; set; } = default!;
+        public System.Collections.Generic.ICollection<UserMatchDetailDto>? UserMatches { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserIdentityQueryResult
+    public partial class GetUserIdentityResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("identity")]
-        public System.Collections.Generic.ICollection<Name>? Identity { get; set; } = default!;
+        public System.Collections.Generic.ICollection<IdentityNameDto>? Identity { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTime? DateOfBirth { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("authorisation")]
-        public UserAuthorisation Authorisation { get; set; } = default!;
+        public AuthorisationResponse Authorisation { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("excluded")]
         public System.Collections.Generic.ICollection<long>? Excluded { get; set; } = default!;
@@ -536,7 +533,40 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Name
+    public partial class GetUserResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public System.Guid Id { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("govUkIdentifier")]
+        public string? GovUkIdentifier { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
+        public string? EmailAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
+        public string? PhoneNumber { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("lastLoginAt")]
+        public System.DateTime? LastLoginAt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
+        public System.DateTime CreatedAt { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("isLocked")]
+        public bool IsLocked { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTime? DateOfBirth { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("names")]
+        public System.Collections.Generic.ICollection<NameDto>? Names { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class IdentityNameDto
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userIdentityId")]
@@ -557,8 +587,29 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class NameRecord
+    public partial class NameDto
     {
+
+        [System.Text.Json.Serialization.JsonPropertyName("validSince")]
+        public System.DateTime? ValidSince { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("validUntil")]
+        public System.DateTime? ValidUntil { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("familyName")]
+        public string? FamilyName { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("givenNames")]
+        public string? GivenNames { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class NameRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("userIdentityId")]
+        public System.Guid UserIdentityId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("validSince")]
         public System.DateTime? ValidSince { get; set; } = default!;
@@ -605,7 +656,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SharingDetail
+    public partial class SharingDetailDto
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("sharingId")]
@@ -627,12 +678,33 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         public System.Collections.Generic.ICollection<System.DateTime>? SharingAccess { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sharingEmails")]
-        public System.Collections.Generic.ICollection<SharingEmailDetail>? SharingEmails { get; set; } = default!;
+        public System.Collections.Generic.ICollection<SharingEmailDetailDto>? SharingEmails { get; set; } = default!;
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SharingEmailDetail
+    public partial class SharingEmailDetailDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
+        public System.Guid SharingEmailId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
+        public string? EmailAddress { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("emailLinkCode")]
+        public System.Guid EmailLinkCode { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sentTime")]
+        public System.DateTime SentTime { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("sharingEmailAccess")]
+        public System.Collections.Generic.ICollection<System.DateTime>? SharingEmailAccess { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SharingEmailDetailGetById
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("sharingEmailId")]
@@ -657,43 +729,10 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("names")]
-        public System.Collections.Generic.ICollection<Name>? Names { get; set; } = default!;
+        public System.Collections.Generic.ICollection<NameRequest>? Names { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
         public System.DateTime DateOfBirth { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class User
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("govUkIdentifier")]
-        public string? GovUkIdentifier { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("emailAddress")]
-        public string? EmailAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("phoneNumber")]
-        public string? PhoneNumber { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("lastLoginAt")]
-        public System.DateTime? LastLoginAt { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("createdAt")]
-        public System.DateTime CreatedAt { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("isLocked")]
-        public bool IsLocked { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTime? DateOfBirth { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("names")]
-        public System.Collections.Generic.ICollection<NameRecord>? Names { get; set; } = default!;
 
     }
 
@@ -758,7 +797,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserAuthorisation
+    public partial class UserAuthorisationResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("authorisationId")]
@@ -773,7 +812,7 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserMatchDetail
+    public partial class UserMatchDetailDto
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("id")]
