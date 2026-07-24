@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,11 +27,11 @@ namespace SFA.DAS.DigitalCertificates.Api.AppStart
             else
             {
                 services.AddSingleton(new ChainedTokenCredential(
-                    new ManagedIdentityCredential(),
-                    new AzureCliCredential(),
-                    new VisualStudioCodeCredential(),
-                    new VisualStudioCredential())
-            );
+                                 new ManagedIdentityCredential(new ManagedIdentityCredentialOptions()),
+                                 new AzureCliCredential(),
+                                 new VisualStudioCodeCredential(),
+                                 new VisualStudioCredential())
+                         );
                 services.AddDbContext<DigitalCertificatesDataContext>(ServiceLifetime.Scoped);
             }
 

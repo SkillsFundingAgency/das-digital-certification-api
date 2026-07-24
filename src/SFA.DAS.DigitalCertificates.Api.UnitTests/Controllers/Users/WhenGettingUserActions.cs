@@ -11,7 +11,9 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
+using SFA.DAS.DigitalCertificates.Api.Models;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
@@ -37,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var userId = Guid.NewGuid();
             var actions = new List<UserActionDetail>
             {
-                new UserActionDetail { Id = 1, UserId = userId, ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow }
+                new UserActionDetail { Id = 1, UserId = userId, ActionType = ActionType.Reprint, FamilyName = "A", GivenNames = "B", ActionTime = DateTime.UtcNow, Uln = 12345678 }
             };
 
             _mediatorMock
@@ -51,10 +53,9 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var ok = result.Should().BeOfType<OkObjectResult>().Which;
             ok.Value.Should().NotBeNull();
 
-            var useractionsProp = ok.Value.GetType().GetProperty("userActions");
-            useractionsProp.Should().NotBeNull();
-            var value = useractionsProp.GetValue(ok.Value) as IEnumerable<UserActionDetail>;
-            value.Should().BeEquivalentTo(actions);
+            var response = ok.Value as GetUserActionsResponse;
+            response.Should().NotBeNull();
+            response!.UserActions.Should().BeEquivalentTo(actions);
 
             _mediatorMock.Verify(m => m.Send(It.IsAny<GetUserActionsQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }

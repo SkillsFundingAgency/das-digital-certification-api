@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
@@ -27,7 +27,8 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
             // Arrange
             var userId = Guid.NewGuid();
 
-            context.Add(new User { Id = userId, GovUkIdentifier = govUkIdentifier, EmailAddress = "test@test.com" });
+            var createdAt = DateTime.UtcNow;
+            context.Add(new User { Id = userId, GovUkIdentifier = govUkIdentifier, EmailAddress = "test@test.com", CreatedAt = createdAt });
             await context.SaveChangesAsync();
 
             var query = new GetUserQuery() { GovUkIdentifier = govUkIdentifier };
@@ -44,6 +45,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
                     Id = userId,
                     GovUkIdentifier = govUkIdentifier,
                     EmailAddress = "test@test.com",
+                    CreatedAt = createdAt,
                     Names = Enumerable.Empty<Domain.Models.NameRecord>()
                 }
             };
@@ -83,6 +85,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
         public async Task And_Sending_Query_With_Null_Id_Throws_ValidationException()
         {
             IServiceCollection services = new ServiceCollection();
+            services.AddLogging();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetUserQuery>());
             services.AddValidatorsFromAssemblyContaining<GetUserQuery>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
@@ -114,12 +117,15 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries
                 ValidUntil = new DateTime(2021, 1, 1)
             };
 
+            var createdAt = DateTime.UtcNow;
+
             var user = new User
             {
                 Id = userId,
                 GovUkIdentifier = govUkIdentifier,
                 EmailAddress = "test@test.com",
-                UserIdentities = new List<UserIdentity> { identity }
+                UserIdentities = new List<UserIdentity> { identity },
+                CreatedAt = createdAt
             };
 
             context.Add(user);
