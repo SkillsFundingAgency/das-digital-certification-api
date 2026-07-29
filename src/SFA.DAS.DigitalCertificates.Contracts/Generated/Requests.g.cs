@@ -14,19 +14,19 @@ using System.Linq;
 using SFA.DAS.Apim.Shared.Interfaces;
 using SFA.DAS.DigitalCertificates.Contracts.ApiResponses;
 
-/// <summary>GET /api/sharing/sharingemail/emaillinkcode/{emailLinkCode} &#x2192; <see cref="CertificateSharingEmailLinkSummary"/></summary>
+/// <summary>GET /api/sharing/sharingemail/emaillinkcode/{emailLinkCode} &#x2192; <see cref="GetSharingByEmailLinkCodeResponse"/></summary>
 public record GetSharingSharingemailEmaillinkcodeByEmailLinkCodeApiRequest(System.Guid EmailLinkCode) : IGetApiRequest
 {
     public string GetUrl => $"api/sharing/sharingemail/emaillinkcode/{EmailLinkCode}";
 }
 
-/// <summary>GET /api/sharing/linkcode/{linkCode} &#x2192; <see cref="CertificateSharingLinkSummary"/></summary>
+/// <summary>GET /api/sharing/linkcode/{linkCode} &#x2192; <see cref="GetSharingByLinkCodeResponse"/></summary>
 public record GetSharingLinkcodeByLinkCodeApiRequest(System.Guid LinkCode) : IGetApiRequest
 {
     public string GetUrl => $"api/sharing/linkcode/{LinkCode}";
 }
 
-/// <summary>GET /api/sharing/{id} &#x2192; <see cref="CertificateSharing"/></summary>
+/// <summary>GET /api/sharing/{id} &#x2192; <see cref="GetSharingByIdResponse"/></summary>
 public record GetSharingByIdApiRequest(System.Guid Id, int? Limit) : IGetApiRequest
 {
     public string GetUrl => QueryHelpers.AddQueryString($"api/sharing/{Id}", new Dictionary<string, string?> { ["limit"] = Limit?.ToString() });
@@ -38,33 +38,33 @@ public record DeleteSharingByIdApiRequest(System.Guid Id) : IDeleteApiRequest
     public string DeleteUrl => $"api/sharing/{Id}";
 }
 
-/// <summary>POST /api/sharing &#x2192; <see cref="CreateSharingCommandResponse"/></summary>
-public class PostSharingApiRequest(CreateSharingCommand createSharingCommand) : IPostApiRequest
+/// <summary>POST /api/sharing &#x2192; <see cref="CreateSharingResponse"/></summary>
+public class PostSharingApiRequest(CreateSharingRequest createSharingRequest) : IPostApiRequest
 {
     public string PostUrl => $"api/sharing";
-    public object Data { get; set; } = createSharingCommand;
+    public object Data { get; set; } = createSharingRequest;
 }
 
-/// <summary>POST /api/sharing/{id}/email &#x2192; <see cref="CreateSharingEmailCommandResponse"/></summary>
-public class PostSharingByIdEmailApiRequest(CreateSharingEmailCommand createSharingEmailCommand) : IPostApiRequest
+/// <summary>POST /api/sharing/{id}/email &#x2192; <see cref="CreateSharingEmailResponse"/></summary>
+public class PostSharingByIdEmailApiRequest(CreateSharingEmailRequest createSharingEmailRequest) : IPostApiRequest
 {
     public required System.Guid Id { get; init; }
     public string PostUrl => $"api/sharing/{Id}/email";
-    public object Data { get; set; } = createSharingEmailCommand;
+    public object Data { get; set; } = createSharingEmailRequest;
 }
 
 /// <summary>POST /api/sharing/sharingaccess</summary>
-public class PostSharingSharingaccessApiRequest(CreateSharingAccessCommand createSharingAccessCommand) : IPostApiRequest
+public class PostSharingSharingaccessApiRequest(CreateSharingAccessRequest createSharingAccessRequest) : IPostApiRequest
 {
     public string PostUrl => $"api/sharing/sharingaccess";
-    public object Data { get; set; } = createSharingAccessCommand;
+    public object Data { get; set; } = createSharingAccessRequest;
 }
 
 /// <summary>POST /api/sharing/sharingemailaccess</summary>
-public class PostSharingSharingemailaccessApiRequest(CreateSharingEmailAccessCommand createSharingEmailAccessCommand) : IPostApiRequest
+public class PostSharingSharingemailaccessApiRequest(CreateSharingEmailAccessRequest createSharingEmailAccessRequest) : IPostApiRequest
 {
     public string PostUrl => $"api/sharing/sharingemailaccess";
-    public object Data { get; set; } = createSharingEmailAccessCommand;
+    public object Data { get; set; } = createSharingEmailAccessRequest;
 }
 
 /// <summary>POST /api/user-actions/{userActionId}/admin-actions</summary>
@@ -81,20 +81,20 @@ public record GetUserActionsByCodeApiRequest(string Code) : IGetApiRequest
     public string GetUrl => $"api/user-actions/{Code}";
 }
 
-/// <summary>GET /api/users/{govUkIdentifier} &#x2192; <see cref="User"/></summary>
+/// <summary>GET /api/users/{govUkIdentifier} &#x2192; <see cref="GetUserResponse"/></summary>
 public record GetUsersByGovUkIdentifierApiRequest(string GovUkIdentifier) : IGetApiRequest
 {
     public string GetUrl => $"api/users/{GovUkIdentifier}";
 }
 
-/// <summary>POST /api/users/identity &#x2192; <see cref="CreateOrUpdateUserCommandResponse"/></summary>
-public class PostUsersIdentityApiRequest(CreateOrUpdateUserRequest createOrUpdateUserRequest) : IPostApiRequest
+/// <summary>POST /api/users &#x2192; <see cref="CreateOrUpdateUserResponse"/></summary>
+public class PostUsersApiRequest(CreateOrUpdateUserRequest createOrUpdateUserRequest) : IPostApiRequest
 {
-    public string PostUrl => $"api/users/identity";
+    public string PostUrl => $"api/users";
     public object Data { get; set; } = createOrUpdateUserRequest;
 }
 
-/// <summary>GET /api/users/{userId}/identity &#x2192; <see cref="GetUserIdentityQueryResult"/></summary>
+/// <summary>GET /api/users/{userId}/identity &#x2192; <see cref="GetUserIdentityResponse"/></summary>
 public record GetUsersByUserIdIdentityApiRequest(System.Guid UserId) : IGetApiRequest
 {
     public string GetUrl => $"api/users/{UserId}/identity";
@@ -108,19 +108,19 @@ public class PostUsersByUserIdIdentityApiRequest(UpdateUserIdentityRequest updat
     public object Data { get; set; } = updateUserIdentityRequest;
 }
 
-/// <summary>GET /api/users/{userId}/authorisation &#x2192; <see cref="GetUserAuthorisationQueryResult"/></summary>
+/// <summary>GET /api/users/{userId}/authorisation &#x2192; <see cref="GetUserAuthorisationResponse"/></summary>
 public record GetUsersByUserIdAuthorisationApiRequest(System.Guid UserId) : IGetApiRequest
 {
     public string GetUrl => $"api/users/{UserId}/authorisation";
 }
 
-/// <summary>GET /api/users/id/{userId} &#x2192; <see cref="GetUserByIdQueryResult"/></summary>
+/// <summary>GET /api/users/id/{userId} &#x2192; <see cref="GetUserByIdResponse"/></summary>
 public record GetUsersIdByUserIdApiRequest(System.Guid UserId) : IGetApiRequest
 {
     public string GetUrl => $"api/users/id/{UserId}";
 }
 
-/// <summary>GET /api/users/{userId}/sharings &#x2192; <see cref="GetSharingsQueryResult"/></summary>
+/// <summary>GET /api/users/{userId}/sharings &#x2192; <see cref="GetSharingsResponse"/></summary>
 public record GetUsersByUserIdSharingsApiRequest(System.Guid UserId, System.Guid? CertificateId, int? Limit) : IGetApiRequest
 {
     public string GetUrl => QueryHelpers.AddQueryString($"api/users/{UserId}/sharings", new Dictionary<string, string?> { ["certificateId"] = CertificateId?.ToString(), ["limit"] = Limit?.ToString() });
@@ -141,19 +141,19 @@ public class PostUsersByUserIdUserActionsApiRequest(CreateUserActionRequest crea
 }
 
 /// <summary>POST /api/users/{userId}/match</summary>
-public class PostUsersByUserIdMatchApiRequest(CreateUserMatchCommand createUserMatchCommand) : IPostApiRequest
+public class PostUsersByUserIdMatchApiRequest(CreateUserMatchRequest createUserMatchRequest) : IPostApiRequest
 {
     public required System.Guid UserId { get; init; }
     public string PostUrl => $"api/users/{UserId}/match";
-    public object Data { get; set; } = createUserMatchCommand;
+    public object Data { get; set; } = createUserMatchRequest;
 }
 
 /// <summary>POST /api/users/{userId}/authorise</summary>
-public class PostUsersByUserIdAuthoriseApiRequest(CreateUserAuthorisationCommand createUserAuthorisationCommand) : IPostApiRequest
+public class PostUsersByUserIdAuthoriseApiRequest(CreateUserAuthorisationRequest createUserAuthorisationRequest) : IPostApiRequest
 {
     public required System.Guid UserId { get; init; }
     public string PostUrl => $"api/users/{UserId}/authorise";
-    public object Data { get; set; } = createUserAuthorisationCommand;
+    public object Data { get; set; } = createUserAuthorisationRequest;
 }
 
 /// <summary>PUT /api/users/{userId}/unlock</summary>

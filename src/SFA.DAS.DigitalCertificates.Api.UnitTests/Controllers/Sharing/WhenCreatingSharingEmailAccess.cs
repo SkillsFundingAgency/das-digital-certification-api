@@ -33,16 +33,16 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_MediatorReturnsId_Then_ReturnsNoContent()
         {
             // Arrange
-            var command = new CreateSharingEmailAccessCommand { SharingEmailId = Guid.NewGuid() };
+            var request = new Models.CreateSharingEmailAccessRequest { SharingEmailId = Guid.NewGuid() };
             var createdId = Guid.NewGuid();
 
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ReturnsAsync(createdId);
+            _mediatorMock.Setup(m => m.Send(It.Is<CreateSharingEmailAccessCommand>(c => c.SharingEmailId == request.SharingEmailId), It.IsAny<CancellationToken>())).ReturnsAsync(createdId);
 
             // Act
-            var result = await _sut.CreateSharingEmailAccess(command);
+            var result = await _sut.CreateSharingEmailAccess(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.Is<CreateSharingEmailAccessCommand>(c => c.SharingEmailId == request.SharingEmailId), It.IsAny<CancellationToken>()), Times.Once);
 
             var noContent = result as NoContentResult;
             noContent.Should().NotBeNull();
@@ -52,15 +52,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_MediatorReturnsNull_Then_ReturnsBadRequest()
         {
             // Arrange
-            var command = new CreateSharingEmailAccessCommand { SharingEmailId = Guid.NewGuid() };
+            var request = new Models.CreateSharingEmailAccessRequest { SharingEmailId = Guid.NewGuid() };
 
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ReturnsAsync((Guid?)null);
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync((Guid?)null);
 
             // Act
-            var result = await _sut.CreateSharingEmailAccess(command);
+            var result = await _sut.CreateSharingEmailAccess(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             var badRequest = result as BadRequestResult;
             badRequest.Should().NotBeNull();
@@ -70,15 +70,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_ValidationException_Then_ReturnsBadRequestObject()
         {
             // Arrange
-            var command = new CreateSharingEmailAccessCommand { SharingEmailId = Guid.NewGuid() };
+            var request = new Models.CreateSharingEmailAccessRequest { SharingEmailId = Guid.NewGuid() };
 
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ThrowsAsync(new ValidationException("Validation failed"));
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateSharingEmailAccess(command);
+            var result = await _sut.CreateSharingEmailAccess(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             var badRequest = result as BadRequestObjectResult;
             badRequest.Should().NotBeNull();
@@ -88,15 +88,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         public async Task And_GeneralException_Then_ReturnsInternalServerError()
         {
             // Arrange
-            var command = new CreateSharingEmailAccessCommand { SharingEmailId = Guid.NewGuid() };
+            var request = new Models.CreateSharingEmailAccessRequest { SharingEmailId = Guid.NewGuid() };
 
-            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("Unexpected error"));
+            _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateSharingEmailAccess(command);
+            var result = await _sut.CreateSharingEmailAccess(request);
 
             // Assert
-            _mediatorMock.Verify(m => m.Send(command, It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<CreateSharingEmailAccessCommand>(), It.IsAny<CancellationToken>()), Times.Once);
 
             var statusResult = result as StatusCodeResult;
             statusResult.Should().NotBeNull();

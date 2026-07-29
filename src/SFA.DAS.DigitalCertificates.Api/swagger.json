@@ -27,17 +27,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingEmailLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByEmailLinkCodeResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingEmailLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByEmailLinkCodeResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingEmailLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByEmailLinkCodeResponse"
                 }
               }
             }
@@ -110,17 +110,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByLinkCodeResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByLinkCodeResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharingLinkSummary"
+                  "$ref": "#/components/schemas/GetSharingByLinkCodeResponse"
                 }
               }
             }
@@ -181,17 +181,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharing"
+                  "$ref": "#/components/schemas/GetSharingByIdResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharing"
+                  "$ref": "#/components/schemas/GetSharingByIdResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CertificateSharing"
+                  "$ref": "#/components/schemas/GetSharingByIdResponse"
                 }
               }
             }
@@ -315,17 +315,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingCommand"
+                "$ref": "#/components/schemas/CreateSharingRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingCommand"
+                "$ref": "#/components/schemas/CreateSharingRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingCommand"
+                "$ref": "#/components/schemas/CreateSharingRequest"
               }
             }
           }
@@ -336,17 +336,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingResponse"
                 }
               }
             }
@@ -397,17 +397,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailRequest"
               }
             }
           }
@@ -418,17 +418,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingEmailCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingEmailResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingEmailCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingEmailResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateSharingEmailCommandResponse"
+                  "$ref": "#/components/schemas/CreateSharingEmailResponse"
                 }
               }
             }
@@ -488,17 +488,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingAccessRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingAccessRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingAccessRequest"
               }
             }
           }
@@ -542,17 +542,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailAccessRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailAccessRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateSharingEmailAccessCommand"
+                "$ref": "#/components/schemas/CreateSharingEmailAccessRequest"
               }
             }
           }
@@ -755,17 +755,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/GetUserResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/GetUserResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/GetUserResponse"
                 }
               }
             }
@@ -796,7 +796,7 @@
         }
       }
     },
-    "/api/users/identity": {
+    "/api/users": {
       "post": {
         "tags": [
           "Users"
@@ -826,17 +826,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateOrUpdateUserCommandResponse"
+                  "$ref": "#/components/schemas/CreateOrUpdateUserResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateOrUpdateUserCommandResponse"
+                  "$ref": "#/components/schemas/CreateOrUpdateUserResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateOrUpdateUserCommandResponse"
+                  "$ref": "#/components/schemas/CreateOrUpdateUserResponse"
                 }
               }
             }
@@ -952,17 +952,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserIdentityQueryResult"
+                  "$ref": "#/components/schemas/GetUserIdentityResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserIdentityQueryResult"
+                  "$ref": "#/components/schemas/GetUserIdentityResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserIdentityQueryResult"
+                  "$ref": "#/components/schemas/GetUserIdentityResponse"
                 }
               }
             }
@@ -1015,17 +1015,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserAuthorisationQueryResult"
+                  "$ref": "#/components/schemas/GetUserAuthorisationResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserAuthorisationQueryResult"
+                  "$ref": "#/components/schemas/GetUserAuthorisationResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserAuthorisationQueryResult"
+                  "$ref": "#/components/schemas/GetUserAuthorisationResponse"
                 }
               }
             }
@@ -1078,17 +1078,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                  "$ref": "#/components/schemas/GetUserByIdResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                  "$ref": "#/components/schemas/GetUserByIdResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserByIdQueryResult"
+                  "$ref": "#/components/schemas/GetUserByIdResponse"
                 }
               }
             }
@@ -1177,17 +1177,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetSharingsQueryResult"
+                  "$ref": "#/components/schemas/GetSharingsResponse"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetSharingsQueryResult"
+                  "$ref": "#/components/schemas/GetSharingsResponse"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetSharingsQueryResult"
+                  "$ref": "#/components/schemas/GetSharingsResponse"
                 }
               }
             }
@@ -1381,17 +1381,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserMatchCommand"
+                "$ref": "#/components/schemas/CreateUserMatchRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserMatchCommand"
+                "$ref": "#/components/schemas/CreateUserMatchRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserMatchCommand"
+                "$ref": "#/components/schemas/CreateUserMatchRequest"
               }
             }
           }
@@ -1446,17 +1446,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserAuthorisationCommand"
+                "$ref": "#/components/schemas/CreateUserAuthorisationRequest"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserAuthorisationCommand"
+                "$ref": "#/components/schemas/CreateUserAuthorisationRequest"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateUserAuthorisationCommand"
+                "$ref": "#/components/schemas/CreateUserAuthorisationRequest"
               }
             }
           }
@@ -1581,134 +1581,20 @@
         ],
         "type": "string"
       },
-      "CertificateSharing": {
-        "required": [
-          "courseName"
-        ],
+      "AuthorisationResponse": {
         "type": "object",
         "properties": {
-          "userId": {
+          "authorisationId": {
             "type": "string",
             "format": "uuid"
           },
-          "certificateId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateType": {
-            "$ref": "#/components/schemas/CertificateType"
-          },
-          "courseName": {
-            "type": "string",
-            "nullable": true
-          },
-          "sharingId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "sharingNumber": {
+          "uln": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
-          "createdAt": {
+          "authorisedAt": {
             "type": "string",
             "format": "date-time"
-          },
-          "linkCode": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "expiryTime": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "sharingAccess": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "nullable": true
-          },
-          "sharingEmails": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SharingEmailDetail"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CertificateSharingEmailLinkSummary": {
-        "type": "object",
-        "properties": {
-          "sharingEmailId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateType": {
-            "$ref": "#/components/schemas/CertificateType"
-          },
-          "expiryTime": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CertificateSharingLinkSummary": {
-        "type": "object",
-        "properties": {
-          "sharingId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateType": {
-            "$ref": "#/components/schemas/CertificateType"
-          },
-          "expiryTime": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CertificateSharings": {
-        "required": [
-          "courseName"
-        ],
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "certificateType": {
-            "$ref": "#/components/schemas/CertificateType"
-          },
-          "courseName": {
-            "type": "string",
-            "nullable": true
-          },
-          "sharings": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SharingDetail"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1738,16 +1624,6 @@
         },
         "additionalProperties": false
       },
-      "CreateOrUpdateUserCommandResponse": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateOrUpdateUserRequest": {
         "required": [
           "emailAddress",
@@ -1770,7 +1646,17 @@
         },
         "additionalProperties": false
       },
-      "CreateSharingAccessCommand": {
+      "CreateOrUpdateUserResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSharingAccessRequest": {
         "type": "object",
         "properties": {
           "sharingId": {
@@ -1780,7 +1666,44 @@
         },
         "additionalProperties": false
       },
-      "CreateSharingCommand": {
+      "CreateSharingEmailAccessRequest": {
+        "type": "object",
+        "properties": {
+          "sharingEmailId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSharingEmailRequest": {
+        "required": [
+          "emailAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSharingEmailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "emailLinkCode": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSharingRequest": {
         "required": [
           "courseName"
         ],
@@ -1804,7 +1727,7 @@
         },
         "additionalProperties": false
       },
-      "CreateSharingCommandResponse": {
+      "CreateSharingResponse": {
         "required": [
           "courseName"
         ],
@@ -1844,47 +1767,6 @@
           "expiryTime": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateSharingEmailAccessCommand": {
-        "type": "object",
-        "properties": {
-          "sharingEmailId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateSharingEmailCommand": {
-        "required": [
-          "emailAddress"
-        ],
-        "type": "object",
-        "properties": {
-          "sharingId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CreateSharingEmailCommandResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "emailLinkCode": {
-            "type": "string",
-            "format": "uuid"
           }
         },
         "additionalProperties": false
@@ -1936,16 +1818,12 @@
         },
         "additionalProperties": false
       },
-      "CreateUserAuthorisationCommand": {
+      "CreateUserAuthorisationRequest": {
         "required": [
           "uln"
         ],
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "uln": {
             "type": "integer",
             "format": "int64"
@@ -1953,16 +1831,12 @@
         },
         "additionalProperties": false
       },
-      "CreateUserMatchCommand": {
+      "CreateUserMatchRequest": {
         "required": [
           "familyName"
         ],
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "uln": {
             "type": "integer",
             "format": "int64",
@@ -2014,11 +1888,134 @@
         },
         "additionalProperties": false
       },
-      "GetSharingsQueryResult": {
+      "GetSharingByEmailLinkCodeResponse": {
         "type": "object",
         "properties": {
-          "sharingDetails": {
-            "$ref": "#/components/schemas/CertificateSharings"
+          "sharingEmailId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateType": {
+            "$ref": "#/components/schemas/CertificateType"
+          },
+          "expiryTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSharingByIdResponse": {
+        "required": [
+          "courseName"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateType": {
+            "$ref": "#/components/schemas/CertificateType"
+          },
+          "courseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sharingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sharingNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "linkCode": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiryTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sharingAccess": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "nullable": true
+          },
+          "sharingEmails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SharingEmailDetailGetById"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSharingByLinkCodeResponse": {
+        "type": "object",
+        "properties": {
+          "sharingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateType": {
+            "$ref": "#/components/schemas/CertificateType"
+          },
+          "expiryTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetSharingsResponse": {
+        "required": [
+          "courseName"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "certificateType": {
+            "$ref": "#/components/schemas/CertificateType"
+          },
+          "courseName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sharings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SharingDetailDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2096,16 +2093,16 @@
         },
         "additionalProperties": false
       },
-      "GetUserAuthorisationQueryResult": {
+      "GetUserAuthorisationResponse": {
         "type": "object",
         "properties": {
           "authorisation": {
-            "$ref": "#/components/schemas/UserAuthorisation"
+            "$ref": "#/components/schemas/UserAuthorisationResponse"
           }
         },
         "additionalProperties": false
       },
-      "GetUserByIdQueryResult": {
+      "GetUserByIdResponse": {
         "required": [
           "emailAddress",
           "govUkIdentifier"
@@ -2143,20 +2140,20 @@
           "userMatches": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserMatchDetail"
+              "$ref": "#/components/schemas/UserMatchDetailDto"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "GetUserIdentityQueryResult": {
+      "GetUserIdentityResponse": {
         "type": "object",
         "properties": {
           "identity": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Name"
+              "$ref": "#/components/schemas/IdentityNameDto"
             },
             "nullable": true
           },
@@ -2166,7 +2163,7 @@
             "nullable": true
           },
           "authorisation": {
-            "$ref": "#/components/schemas/UserAuthorisation"
+            "$ref": "#/components/schemas/AuthorisationResponse"
           },
           "excluded": {
             "type": "array",
@@ -2179,11 +2176,53 @@
         },
         "additionalProperties": false
       },
-      "Name": {
-        "required": [
-          "familyName",
-          "givenNames"
-        ],
+      "GetUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "govUkIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isLocked": {
+            "type": "boolean"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NameDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IdentityNameDto": {
         "type": "object",
         "properties": {
           "userIdentityId": {
@@ -2211,13 +2250,45 @@
         },
         "additionalProperties": false
       },
-      "NameRecord": {
+      "NameDto": {
         "required": [
           "familyName",
           "givenNames"
         ],
         "type": "object",
         "properties": {
+          "validSince": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "familyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "givenNames": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "NameRequest": {
+        "required": [
+          "familyName",
+          "givenNames"
+        ],
+        "type": "object",
+        "properties": {
+          "userIdentityId": {
+            "type": "string",
+            "format": "uuid"
+          },
           "validSince": {
             "type": "string",
             "format": "date-time",
@@ -2266,7 +2337,7 @@
         },
         "additionalProperties": { }
       },
-      "SharingDetail": {
+      "SharingDetailDto": {
         "type": "object",
         "properties": {
           "sharingId": {
@@ -2300,14 +2371,47 @@
           "sharingEmails": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SharingEmailDetail"
+              "$ref": "#/components/schemas/SharingEmailDetailDto"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "SharingEmailDetail": {
+      "SharingEmailDetailDto": {
+        "required": [
+          "emailAddress"
+        ],
+        "type": "object",
+        "properties": {
+          "sharingEmailId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "emailAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "emailLinkCode": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sentTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sharingEmailAccess": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SharingEmailDetailGetById": {
         "required": [
           "emailAddress"
         ],
@@ -2346,63 +2450,13 @@
           "names": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Name"
+              "$ref": "#/components/schemas/NameRequest"
             },
             "nullable": true
           },
           "dateOfBirth": {
             "type": "string",
             "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "User": {
-        "required": [
-          "emailAddress",
-          "govUkIdentifier"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "govUkIdentifier": {
-            "type": "string",
-            "nullable": true
-          },
-          "emailAddress": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastLoginAt": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "isLocked": {
-            "type": "boolean"
-          },
-          "dateOfBirth": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "names": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NameRecord"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2478,7 +2532,7 @@
         ],
         "type": "string"
       },
-      "UserAuthorisation": {
+      "UserAuthorisationResponse": {
         "type": "object",
         "properties": {
           "authorisationId": {
@@ -2496,7 +2550,7 @@
         },
         "additionalProperties": false
       },
-      "UserMatchDetail": {
+      "UserMatchDetailDto": {
         "required": [
           "familyName"
         ],
