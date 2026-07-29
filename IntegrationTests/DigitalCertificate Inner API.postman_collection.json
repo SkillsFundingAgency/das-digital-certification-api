@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "28e4c1eb-cd3c-4426-8358-97e7d581a95f",
+    "_postman_id": "7b3d9e66-018b-4df2-826e-aaf1960e6300",
     "name": "DigitalCertificate Inner API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "1033522"
+    "_exporter_id": "56424886",
+    "_collection_link": "https://go.postman.co/collection/56424886-7b3d9e66-018b-4df2-826e-aaf1960e6300?source=collection_link"
   },
   "item": [
     {
@@ -563,6 +564,231 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "GetUserById",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/id/{{UserId}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "id",
+            "{{UserId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateAdminAction",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"string\",\r\n  \"action\": \"Viewed\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/user-actions/{{UserActionId}}/admin-actions",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "user-actions",
+            "{{UserActionId}}",
+            "admin-actions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetUserActionByCode",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/user-actions/{{UserActionCode}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "user-actions",
+            "{{UserActionCode}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UnlockUser",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/unlock",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "unlock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateUserIdentity",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"names\": [\r\n    {\r\n      \"userIdentityId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n      \"validSince\": \"2026-07-22T11:28:41.357Z\",\r\n      \"validUntil\": \"2026-07-22T11:28:41.357Z\",\r\n      \"familyName\": \"Test\",\r\n      \"givenNames\": \"Test\"\r\n    }\r\n  ],\r\n  \"dateOfBirth\": \"2026-07-22T11:28:41.357Z\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/identity",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "identity"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "auth": {
@@ -644,6 +870,14 @@
       "key": "DeletedSharingId",
       "value": "",
       "description": "Obtained from CreateSharing sharingId"
+    },
+    {
+      "key": "UserActionId",
+      "value": ""
+    },
+    {
+      "key": "UserActionCode",
+      "value": ""
     }
   ]
 }
