@@ -10,11 +10,11 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
 {
-    public class WhenGettingUserById
+    public class WhenGettingUserMatches
     {
         private Mock<IMediator> _mediatorMock = null!;
         private Mock<ILogger<UsersController>> _loggerMock = null!;
@@ -33,7 +33,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             var userId = Guid.NewGuid();
 
-            var expected = new GetUserByIdQueryResult
+            var expected = new GetUserMatchesQueryResult
             {
                 UserId = userId,
                 GovUkIdentifier = "G1",
@@ -43,15 +43,15 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             };
 
             _mediatorMock
-                .Setup(m => m.Send(It.IsAny<GetUserByIdQuery>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<GetUserMatchesQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(expected);
 
-            var result = await _sut.GetUserById(userId);
+            var result = await _sut.GetUserMatches(userId);
 
             var ok = result.Should().BeOfType<OkObjectResult>().Which;
             ok.Value.Should().BeEquivalentTo(expected);
 
-            _mediatorMock.Verify(m => m.Send(It.IsAny<GetUserByIdQuery>(), It.IsAny<CancellationToken>()), Times.Once);
+            _mediatorMock.Verify(m => m.Send(It.IsAny<GetUserMatchesQuery>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -61,10 +61,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var validationException = new ValidationException("Validation failed");
 
             _mediatorMock
-                .Setup(m => m.Send(It.IsAny<GetUserByIdQuery>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<GetUserMatchesQuery>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(validationException);
 
-            var result = await _sut.GetUserById(userId);
+            var result = await _sut.GetUserMatches(userId);
 
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -75,10 +75,10 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var userId = Guid.NewGuid();
 
             _mediatorMock
-                .Setup(m => m.Send(It.IsAny<GetUserByIdQuery>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<GetUserMatchesQuery>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Unexpected error"));
 
-            var result = await _sut.GetUserById(userId);
+            var result = await _sut.GetUserMatches(userId);
 
             result.Should().BeOfType<StatusCodeResult>()
                   .Which.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);

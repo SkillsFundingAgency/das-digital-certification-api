@@ -485,7 +485,25 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserByIdResponse
+    public partial class GetUserIdentityResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("identity")]
+        public System.Collections.Generic.ICollection<IdentityNameDto>? Identity { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+        public System.DateTime? DateOfBirth { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("authorisation")]
+        public AuthorisationResponse Authorisation { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("excluded")]
+        public System.Collections.Generic.ICollection<long>? Excluded { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetUserMatchesResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("userId")]
@@ -515,24 +533,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetUserIdentityResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("identity")]
-        public System.Collections.Generic.ICollection<IdentityNameDto>? Identity { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTime? DateOfBirth { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("authorisation")]
-        public AuthorisationResponse Authorisation { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("excluded")]
-        public System.Collections.Generic.ICollection<long>? Excluded { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetUserResponse
     {
 
@@ -557,12 +557,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
         [System.Text.Json.Serialization.JsonPropertyName("isLocked")]
         public bool IsLocked { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
-        public System.DateTime? DateOfBirth { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("names")]
-        public System.Collections.Generic.ICollection<NameDto>? Names { get; set; } = default!;
-
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -571,24 +565,6 @@ namespace SFA.DAS.DigitalCertificates.Contracts.ApiResponses
 
         [System.Text.Json.Serialization.JsonPropertyName("userIdentityId")]
         public System.Guid UserIdentityId { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("validSince")]
-        public System.DateTime? ValidSince { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("validUntil")]
-        public System.DateTime? ValidUntil { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("familyName")]
-        public string? FamilyName { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("givenNames")]
-        public string? GivenNames { get; set; } = default!;
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class NameDto
-    {
 
         [System.Text.Json.Serialization.JsonPropertyName("validSince")]
         public System.DateTime? ValidSince { get; set; } = default!;

@@ -1,24 +1,24 @@
 ﻿using System;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserMatches
 {
-    public class GetUserByIdQueryValidatorTests
+    public class GetUserMatchesQueryValidatorTests
     {
-        private GetUserByIdQueryValidator _validator = null!;
+        private GetUserMatchesQueryValidator _validator = null!;
 
         [SetUp]
         public void Arrange()
         {
-            _validator = new GetUserByIdQueryValidator();
+            _validator = new GetUserMatchesQueryValidator();
         }
 
         [Test]
         public void Should_Have_Error_When_UserId_Is_Empty()
         {
-            var query = new GetUserByIdQuery { UserId = Guid.Empty };
+            var query = new GetUserMatchesQuery { UserId = Guid.Empty };
 
             var result = _validator.TestValidate(query);
 
@@ -28,7 +28,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
         [Test]
         public void Should_Not_Have_Error_When_UserId_Is_Provided()
         {
-            var query = new GetUserByIdQuery { UserId = Guid.NewGuid() };
+            var query = new GetUserMatchesQuery { UserId = Guid.NewGuid() };
 
             var result = _validator.TestValidate(query);
 

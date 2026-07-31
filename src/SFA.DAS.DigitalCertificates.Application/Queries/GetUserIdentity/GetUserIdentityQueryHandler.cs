@@ -30,7 +30,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity
 
         public async Task<GetUserIdentityQueryResult> Handle(GetUserIdentityQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userContext.GetWithIdentitiesAndAuthorisation(request.UserId);
+            var user = await _userContext.GetWithIdentitiesAndAuthorisationByUserId(request.UserId);
 
             if (user == null)
             {

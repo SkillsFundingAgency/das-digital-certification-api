@@ -1,11 +1,11 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches;
 
-namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
+namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserMatches
 {
-    public class GetUserByIdQueryResultTests
+    public class GetUserMatchesQueryResultTests
     {
         [Test]
         public void Properties_Are_Mapped_Correctly()
@@ -14,7 +14,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserById
                 new UserMatchDetail { Id = Guid.NewGuid(), Uln = 111111, FamilyName = "Smith", DateOfBirth = new DateTime(1990,1,1), CertificateType = Domain.Models.Enums.CertificateType.Standard, CourseCode = "C1", CourseName = "Course", CourseLevel = "3", DateAwarded = 2020, ProviderName = "P", Ukprn = 123, IsMatched = true, IsFailed = false }
             };
 
-            var r = new GetUserByIdQueryResult
+            var r = new GetUserMatchesQueryResult
             {
                 UserId = Guid.NewGuid(),
                 GovUkIdentifier = "G1",

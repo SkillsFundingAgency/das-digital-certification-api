@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.Models
 {
-    public class GetUserByIdResponse
+    public class GetUserMatchesResponse
     {
         public Guid UserId { get; set; }
         public required string GovUkIdentifier { get; set; }
@@ -17,11 +17,11 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
         public bool IsLocked { get; set; }
         public IEnumerable<UserMatchDetailDto> UserMatches { get; set; } = new List<UserMatchDetailDto>();
 
-        public static implicit operator GetUserByIdResponse?(GetUserByIdQueryResult? source)
+        public static implicit operator GetUserMatchesResponse?(GetUserMatchesQueryResult? source)
         {
             if (source == null) return null;
 
-            return new GetUserByIdResponse
+            return new GetUserMatchesResponse
             {
                 UserId = source.UserId,
                 GovUkIdentifier = source.GovUkIdentifier,
