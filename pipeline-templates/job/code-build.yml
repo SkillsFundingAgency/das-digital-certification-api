@@ -13,14 +13,6 @@ jobs:
   steps:
   - template: azure-pipelines-templates/build/step/gitversion.yml@das-platform-building-blocks
 
-  - task: DotNetCoreCLI@2
-    displayName: Restore .NET tools
-    inputs:
-      command: custom
-      custom: tool
-      arguments: restore
-      workingDirectory: $(Build.SourcesDirectory)/src
-
   - template: azure-pipelines-templates/build/step/app-build.yml@das-platform-building-blocks
     parameters:
       SonarCloudProjectKey: SkillsFundingAgency_das-digital-certification-api
