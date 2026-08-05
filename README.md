@@ -59,14 +59,8 @@ This utility uses the standard Apprenticeship Service configuration. All configu
 
 ## Contract generation
 
-To generate the contract for the API, the following global nuget package is required:
-
-```bash
-dotnet tool install -g swashbuckle.aspnetcore.cli --version 8.1.4
-```
-
-When you then build the digital certificates API project, it will generate swagger.json, this is then used by the SFA.DAS.DigitalCertificates.Contracts project
-and will generate the request, response and client files. A nuget package is then created for use with APIM endpoints
+When the SFA.DAS.DigitalCertificates project is built, it will generate swagger.json. Subsequently a build of the SFA.DAS.DigitalCertificates.Contracts project
+and will generate the request, response and client files. A nuget package is then created for use with APIM endpoints projects, which is published via the CI pipeline.
 
 ## Technologies
 

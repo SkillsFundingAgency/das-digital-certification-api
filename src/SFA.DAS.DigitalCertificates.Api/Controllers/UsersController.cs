@@ -11,7 +11,7 @@ using SFA.DAS.DigitalCertificates.Application.Queries.GetSharings;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUser;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserIdentity;
-using SFA.DAS.DigitalCertificates.Application.Queries.GetUserById;
+using SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisation;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch;
 using SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions;
@@ -149,26 +149,26 @@ namespace SFA.DAS.DigitalCertificates.Api.Controllers
             }
         }
 
-        [HttpGet("id/{userId:guid}")]
-        [ProducesResponseType(typeof(GetUserByIdResponse), StatusCodes.Status200OK)]
+        [HttpGet("{userId:guid}/matches")]
+        [ProducesResponseType(typeof(GetUserMatchesResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetUserById(Guid userId)
+        public async Task<IActionResult> GetUserMatches(Guid userId)
         {
             try
             {
-                var result = await _mediator.Send(new GetUserByIdQuery { UserId = userId });
-                return Ok((GetUserByIdResponse?)result);
+                var result = await _mediator.Send(new GetUserMatchesQuery { UserId = userId });
+                return Ok((GetUserMatchesResponse?)result);
             }
             catch (ValidationException ex)
             {
-                _logger.LogError(ex, "Validation error attempting to retrieve user for {UserId}", userId);
+                _logger.LogError(ex, "Validation error attempting to retrieve user matches for {UserId}", userId);
                 return NotFound();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error attempting to retrieve user for {UserId}", userId);
+                _logger.LogError(ex, "Error attempting to retrieve user matches for {UserId}", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }

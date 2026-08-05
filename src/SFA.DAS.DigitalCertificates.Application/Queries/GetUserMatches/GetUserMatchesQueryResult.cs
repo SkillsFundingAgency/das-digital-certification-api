@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
-namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserById
+namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserMatches
 {
-    public class GetUserByIdQueryResult
+    public class GetUserMatchesQueryResult
     {
         public Guid UserId { get; set; }
         public required string GovUkIdentifier { get; set; }

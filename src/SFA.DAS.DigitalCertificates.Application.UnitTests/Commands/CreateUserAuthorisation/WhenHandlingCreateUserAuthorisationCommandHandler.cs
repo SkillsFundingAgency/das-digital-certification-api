@@ -38,7 +38,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             // Arrange
             var command = new CreateUserAuthorisationCommand { UserId = Guid.NewGuid(), Uln = 1 };
 
-            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(command.UserId)).ReturnsAsync((User?)null);
+            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(command.UserId)).ReturnsAsync((User?)null);
 
             // Act
             Func<Task> act = async () => await _sut.Handle(command, CancellationToken.None);
@@ -55,7 +55,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             var command = new CreateUserAuthorisationCommand { UserId = userId, Uln = 1 };
             var user = new User { Id = userId, GovUkIdentifier = "GOV1", EmailAddress = "test@example.com" };
 
-            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(userId)).ReturnsAsync(user);
+            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(userId)).ReturnsAsync(user);
             _authContextMock.Setup(x => x.GetByUlnAsync(command.Uln, It.IsAny<CancellationToken>())).ReturnsAsync(new UserAuthorisation());
 
             // Act
@@ -73,7 +73,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
             var command = new CreateUserAuthorisationCommand { UserId = userId, Uln = 1 };
             var user = new User { Id = userId, GovUkIdentifier = "GOV2", EmailAddress = "test2@example.com", UserAuthorisation = new UserAuthorisation() };
 
-            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(userId)).ReturnsAsync(user);
+            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(userId)).ReturnsAsync(user);
             _authContextMock.Setup(x => x.GetByUlnAsync(command.Uln, It.IsAny<CancellationToken>())).ReturnsAsync((UserAuthorisation?)null);
 
             // Act
@@ -100,7 +100,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateUserA
 
             var user = new User { Id = userId, GovUkIdentifier = "GOV3", EmailAddress = "test3@example.com", UserIdentities = identities };
 
-            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(userId)).ReturnsAsync(user);
+            _userContextMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(userId)).ReturnsAsync(user);
             _authContextMock.Setup(x => x.GetByUlnAsync(command.Uln, It.IsAny<CancellationToken>())).ReturnsAsync((UserAuthorisation?)null);
             _userContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 

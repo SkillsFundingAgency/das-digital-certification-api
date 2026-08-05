@@ -114,10 +114,10 @@ public record GetUsersByUserIdAuthorisationApiRequest(System.Guid UserId) : IGet
     public string GetUrl => $"api/users/{UserId}/authorisation";
 }
 
-/// <summary>GET /api/users/id/{userId} &#x2192; <see cref="GetUserByIdResponse"/></summary>
-public record GetUsersIdByUserIdApiRequest(System.Guid UserId) : IGetApiRequest
+/// <summary>GET /api/users/{userId}/matches &#x2192; <see cref="GetUserMatchesResponse"/></summary>
+public record GetUsersByUserIdMatchesApiRequest(System.Guid UserId) : IGetApiRequest
 {
-    public string GetUrl => $"api/users/id/{UserId}";
+    public string GetUrl => $"api/users/{UserId}/matches";
 }
 
 /// <summary>GET /api/users/{userId}/sharings &#x2192; <see cref="GetSharingsResponse"/></summary>
