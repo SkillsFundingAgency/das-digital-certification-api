@@ -2,7 +2,7 @@
 (
     [Id] BIGINT NOT NULL,
     [UserId] UNIQUEIDENTIFIER NOT NULL,
-    [ActionType] INT NOT NULL,
+    [ActionTypeId] INT NOT NULL,
     [ActionCode] VARCHAR(50) NULL,
     [ActionTime] DATETIME2 NOT NULL,
     [FamilyName] VARCHAR(255) NOT NULL,

@@ -65,6 +65,7 @@
     <Folder Include="Scripts\PostDeploymentScripts\LookupData" />
     <Folder Include="Scripts\PreDeploymentScripts" />
     <Folder Include="Scripts\PostDeploymentScripts\Patches" />
+    <Folder Include="Scripts\PreDeploymentScripts\Patches" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
@@ -90,6 +91,7 @@
     <Build Include="Tables\UserMatch.sql" />
     <Build Include="Tables\PatchLog.sql" />
     <None Include="Scripts\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql" />
+    <None Include="Scripts\PreDeploymentScripts\Patches\Delete_Duplicate_Reprint_ActionType.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
@@ -107,5 +109,8 @@
   <ItemGroup>
     <None Include="Scripts\PreDeploymentScripts\DisableSystemVersioningTables.sql" />
     <None Include="Scripts\PostDeploymentScripts\EnableSystemVersioningTables.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SFA.DAS.DigitalCertificates.Database.refactorlog" />
   </ItemGroup>
 </Project>
