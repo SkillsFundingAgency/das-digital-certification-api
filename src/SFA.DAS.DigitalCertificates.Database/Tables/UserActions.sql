@@ -10,14 +10,9 @@
     [CertificateId] UNIQUEIDENTIFIER NULL,
     [CertificateType] VARCHAR(20) NULL,
     [CourseName] VARCHAR(1000) NULL,
-    [ValidFrom] DATETIME2 (0) GENERATED ALWAYS AS ROW START,
-    [ValidTo] DATETIME2 (0) GENERATED ALWAYS AS ROW END,
-    PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo),
     CONSTRAINT [FK_UserActions_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User]([Id]),
     CONSTRAINT [FK_UserActions_ActionType] FOREIGN KEY ([ActionTypeId]) REFERENCES [dbo].[ActionType]([Id])
 )
-
-WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserActionsHistory]));
 GO
 
 CREATE INDEX IX_UserActions_UserId ON [dbo].[UserActions]([UserId]) INCLUDE ([Id],[ActionTypeId],[ActionCode]);

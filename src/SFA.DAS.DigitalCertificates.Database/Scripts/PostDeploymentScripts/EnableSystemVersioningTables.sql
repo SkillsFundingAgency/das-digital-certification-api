@@ -35,11 +35,6 @@ SET (
     SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[SharingEmailAccessHistory])
 );
 
-ALTER TABLE [dbo].[UserActions]
-SET (
-    SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[UserActionsHistory])
-);
-
 ALTER TABLE [dbo].[AdminActions]
 SET (
     SYSTEM_VERSIONING = ON (HISTORY_TABLE = [dbo].[AdminActionsHistory])
