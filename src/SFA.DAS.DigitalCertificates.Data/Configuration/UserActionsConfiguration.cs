@@ -22,7 +22,7 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
             builder
                 .Property(ua => ua.ActionType)
                 .HasConversion<int>()
-                .HasColumnName("ActionType");
+                .HasColumnName("ActionTypeId");
 
             builder
                 .HasOne(ua => ua.User)

@@ -11,3 +11,8 @@
 */
 
 :r .\PreDeploymentScripts\DisableSystemVersioningTables.sql
+:r .\PreDeploymentScripts\Patches\Delete_Duplicate_Reprint_ActionType.sql
+
+-- temporarily run the action type lookup script before updating the database so that a foreign key can be added initially
+-- this can be removed after all environments have been updated with the correct ActionType entries
+:r .\PostDeploymentScripts\LookupData\ActionType.sql

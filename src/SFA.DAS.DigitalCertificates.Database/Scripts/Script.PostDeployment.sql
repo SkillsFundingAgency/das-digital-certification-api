@@ -12,5 +12,6 @@ Post-Deployment Script Template
 :r .\PreDeploymentScripts\DisableSystemVersioningTables.sql
 :r .\PostDeploymentScripts\LookupData\SynchronizeLookupData.sql
 :r .\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql
+:r .\PostDeploymentScripts\Patches\Drop_UserActionsHistory_Table.sql
 
 :r .\PostDeploymentScripts\EnableSystemVersioningTables.sql

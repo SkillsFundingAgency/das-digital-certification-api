@@ -8,14 +8,17 @@
 */
 BEGIN TRANSACTION
 
+DROP TABLE IF EXISTS #ActionType;
 CREATE TABLE #ActionType(
 	[Id] [int] NOT NULL,
 	[Description] [nvarchar](25) NOT NULL
 ) 
 
-INSERT #ActionType VALUES (0, N'Reprint')
-INSERT #ActionType VALUES (1, N'SupportUlnNotFound')
-INSERT #ActionType VALUES (2, N'UserLocked')
+INSERT #ActionType VALUES (1, N'Reprint')
+INSERT #ActionType VALUES (2, N'Help')
+INSERT #ActionType VALUES (3, N'Contact')
+INSERT #ActionType VALUES (4, N'NotMatched')
+INSERT #ActionType VALUES (5, N'NotFound')
 
 MERGE [ActionType] [Target] USING #ActionType [Source]
 ON ([Source].Id = [Target].Id)
