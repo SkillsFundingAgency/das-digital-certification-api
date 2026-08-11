@@ -34,19 +34,19 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             // Arrange
             var sharingId = Guid.NewGuid();
-            var command = new CreateSharingEmailCommand { SharingId = sharingId, EmailAddress = "test@example.com" };
+            var request = new Models.CreateSharingEmailRequest { EmailAddress = "test@example.com" };
             var response = new CreateSharingEmailCommandResponse { Id = Guid.NewGuid(), EmailLinkCode = Guid.NewGuid() };
 
-            _mediatorMock.Setup(m => m.Send(It.Is<CreateSharingEmailCommand>(c => c.SharingId == sharingId), It.IsAny<CancellationToken>())).ReturnsAsync(response);
+            _mediatorMock.Setup(m => m.Send(It.Is<CreateSharingEmailCommand>(c => c.SharingId == sharingId && c.EmailAddress == "test@example.com"), It.IsAny<CancellationToken>())).ReturnsAsync(response);
 
             // Act
-            var result = await _sut.CreateSharingEmail(sharingId, command);
+            var result = await _sut.CreateSharingEmail(sharingId, request);
 
             // Assert
             _mediatorMock.Verify(m => m.Send(It.Is<CreateSharingEmailCommand>(c => c.SharingId == sharingId), It.IsAny<CancellationToken>()), Times.Once);
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
-            var returned = okResult!.Value as CreateSharingEmailCommandResponse;
+            var returned = okResult!.Value as Models.CreateSharingEmailResponse;
             returned.Should().NotBeNull();
             returned!.Id.Should().Be(response.Id);
             returned.EmailLinkCode.Should().Be(response.EmailLinkCode);
@@ -57,12 +57,12 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             // Arrange
             var sharingId = Guid.NewGuid();
-            var command = new CreateSharingEmailCommand { SharingId = sharingId, EmailAddress = "test@example.com" };
+            var request = new Models.CreateSharingEmailRequest { EmailAddress = "test@example.com" };
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync((CreateSharingEmailCommandResponse?)null);
 
             // Act
-            var result = await _sut.CreateSharingEmail(sharingId, command);
+            var result = await _sut.CreateSharingEmail(sharingId, request);
 
             // Assert
             result.Should().BeOfType<NotFoundResult>();
@@ -73,12 +73,12 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             // Arrange
             var sharingId = Guid.NewGuid();
-            var command = new CreateSharingEmailCommand { SharingId = sharingId, EmailAddress = "test@example.com" };
+            var request = new Models.CreateSharingEmailRequest { EmailAddress = "test@example.com" };
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateSharingEmail(sharingId, command);
+            var result = await _sut.CreateSharingEmail(sharingId, request);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
@@ -89,12 +89,12 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
         {
             // Arrange
             var sharingId = Guid.NewGuid();
-            var command = new CreateSharingEmailCommand { SharingId = sharingId, EmailAddress = "test@example.com" };
+            var request = new Models.CreateSharingEmailRequest { EmailAddress = "test@example.com" };
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<CreateSharingEmailCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateSharingEmail(sharingId, command);
+            var result = await _sut.CreateSharingEmail(sharingId, request);
 
             // Assert
             var statusResult = result as StatusCodeResult;

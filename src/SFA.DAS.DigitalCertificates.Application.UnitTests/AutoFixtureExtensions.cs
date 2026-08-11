@@ -2,7 +2,7 @@
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Kernel;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

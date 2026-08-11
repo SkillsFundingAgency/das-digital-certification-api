@@ -11,9 +11,8 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
         public required string EmailAddress { get; set; }
         public string? PhoneNumber { get; set; }
         public DateTime? LastLoginAt { get; set; }
+        public DateTime CreatedAt { get; set; }
         public bool IsLocked { get; set; }
-        public DateTime? DateOfBirth { get; set; }
-        public IEnumerable<NameRecord>? Names { get; set; }
 
         public static implicit operator User?(Entities.User? source)
         {
@@ -22,29 +21,15 @@ namespace SFA.DAS.DigitalCertificates.Domain.Models
                 return null;
             }
 
-            var dob = source.UserIdentities?.OrderByDescending(i => i.ValidSince).FirstOrDefault()?.DateOfBirth;
-
-            var names = source.UserIdentities?
-                .Select(i => new NameRecord
-                {
-                    ValidSince = i.ValidSince,
-                    ValidUntil = i.ValidUntil,
-                    FamilyName = i.FamilyName,
-                    GivenNames = i.GivenNames
-                })
-                .OrderByDescending(n => n.ValidSince)
-                .ToList();
-
             return new User
             {
                 Id = source.Id,
                 GovUkIdentifier = source.GovUkIdentifier,
                 EmailAddress = source.EmailAddress,
+                CreatedAt = source.CreatedAt,
                 PhoneNumber = source.PhoneNumber,
                 LastLoginAt = source.LastLoginAt,
-                IsLocked = source.IsLocked,
-                DateOfBirth = dob,
-                Names = names
+                IsLocked = source.IsLocked
             };
         }
     }

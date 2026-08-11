@@ -41,7 +41,12 @@ namespace SFA.DAS.DigitalCertificates.Domain.Interfaces
             return user?.UserAuthorisation;
         }
 
-        public async Task<User?> GetWithIdentitiesAndAuthorisation(Guid userId)
+        public async Task<User?> GetWithMatchesByUserId(Guid userId)
+            => await Entities
+                .Include(u => u.UserMatches)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+        public async Task<User?> GetWithIdentitiesAndAuthorisationByUserId(Guid userId)
             => await Entities
                 .Include(u => u.UserIdentities)
                 .Include(u => u.UserAuthorisation)

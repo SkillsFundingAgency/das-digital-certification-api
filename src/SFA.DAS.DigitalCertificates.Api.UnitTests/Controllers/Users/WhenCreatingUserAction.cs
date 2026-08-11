@@ -11,6 +11,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAction;
+using SFA.DAS.DigitalCertificates.Api.Models;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
@@ -34,7 +35,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserActionCommand
+            var command = new CreateUserActionRequest
             {
                 ActionType = ActionType.Contact,
                 FamilyName = "Smith",
@@ -59,7 +60,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
             var okResult = result as OkObjectResult;
             okResult.Should().NotBeNull();
 
-            var returned = okResult!.Value as CreateUserActionCommandResponse;
+            var returned = okResult!.Value as CreateUserActionResponse;
             returned.Should().NotBeNull();
             returned!.ActionCode.Should().Be("ACTION123");
         }
@@ -69,7 +70,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserActionCommand
+            var command = new CreateUserActionRequest
             {
                 ActionType = ActionType.Reprint,
                 FamilyName = "Smith",
@@ -92,7 +93,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserActionCommand
+            var command = new CreateUserActionRequest
             {
                 ActionType = ActionType.Contact,
                 FamilyName = "Smith",

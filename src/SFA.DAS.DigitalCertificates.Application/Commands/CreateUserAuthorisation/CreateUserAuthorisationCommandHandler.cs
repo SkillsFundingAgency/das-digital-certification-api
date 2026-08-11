@@ -29,7 +29,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserAuthorisati
 
         public async Task<Unit> Handle(CreateUserAuthorisationCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userContext.GetWithIdentitiesAndAuthorisation(request.UserId);
+            var user = await _userContext.GetWithIdentitiesAndAuthorisationByUserId(request.UserId);
 
             if (user == null)
             {

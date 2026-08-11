@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "28e4c1eb-cd3c-4426-8358-97e7d581a95f",
+    "_postman_id": "fd12f7de-668c-4d5a-84dc-296046e6986f",
     "name": "DigitalCertificate Inner API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "1033522"
@@ -12,7 +12,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/emaillinkcode/{{SharingEmailLinkCode}}",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/sharing/sharingemail/emaillinkcode/{{SharingEmailLinkCode}}",
           "protocol": "https",
           "host": [
             "{{Environment}}-digital-certification-api",
@@ -24,6 +24,7 @@
           "path": [
             "api",
             "sharing",
+            "sharingemail",
             "emaillinkcode",
             "{{SharingEmailLinkCode}}"
           ]
@@ -111,7 +112,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"certificateId\": \"{{StandardCertificateId}}\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseName\": \"Software tester\"\r\n}",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"certificateId\": \"{{StandardCertificateId}}\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseName\": \"Network engineer\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -143,7 +144,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"sharingId\": \"5b644dd1-ef80-4997-db8f-08de964ecd42\",\r\n  \"emailAddress\": \"abc@education.gov.uk\"\r\n}",
+          "raw": "{\r\n  \"sharingId\": \"{{SharingId}}\",\r\n  \"emailAddress\": \"abc@education.gov.uk\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -279,7 +280,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"govUkIdentifier\": \"{{GovUkIdentifier}}\",\r\n  \"emailAddress\": \"abc@education.gov.uk\",\r\n  \"phoneNumber\": \"07880360143\",\r\n  \"names\": [\r\n    {\r\n      \"validSince\": \"2026-04-14T10:16:40.331Z\",\r\n      \"validUntil\": \"2026-04-14T10:16:40.331Z\",\r\n      \"familyName\": \"John\",\r\n      \"givenNames\": \"Smith\"\r\n    }\r\n  ],\r\n  \"dateOfBirth\": \"2026-04-14T10:16:40.331Z\"\r\n}",
+          "raw": "{\r\n  \"govUkIdentifier\": \"{{GovUkIdentifier}}\",\r\n  \"emailAddress\": \"preprodfirst2.preprodlast2@test.com\",\r\n  \"phoneNumber\": \"07880000010\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -287,7 +288,7 @@
           }
         },
         "url": {
-          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/identity",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users",
           "protocol": "https",
           "host": [
             "{{Environment}}-digital-certification-api",
@@ -298,8 +299,7 @@
           ],
           "path": [
             "api",
-            "users",
-            "identity"
+            "users"
           ]
         }
       },
@@ -312,7 +312,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"actionType\": \"Reprint\",\r\n  \"familyName\": \"Smith\",\r\n  \"givenNames\": \"Alexa\",\r\n  \"certificateId\": \"{{StandardCertificateId}}\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseName\": \"Accountancy or taxation professional\"\r\n}",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"actionType\": \"NotMatched\",\r\n  \"familyName\": \"PreProdLast2\",\r\n  \"givenNames\": \"PreProdFirst2\",\r\n  \"certificateId\": null,\r\n  \"certificateType\": null,\r\n  \"courseName\": null\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -320,7 +320,7 @@
           }
         },
         "url": {
-          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users//{{UserId}}/actions",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users//{{UserId}}/user-actions",
           "protocol": "https",
           "host": [
             "{{Environment}}-digital-certification-api",
@@ -334,7 +334,7 @@
             "users",
             "",
             "{{UserId}}",
-            "actions"
+            "user-actions"
           ]
         }
       },
@@ -347,7 +347,77 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 2697749755,\r\n  \"familyName\": \"Smith\",\r\n  \"dateOfBirth\": \"1974-03-03\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseCode\": \"66\",\r\n  \"courseName\": \"Senior housing and property management\",\r\n  \"courseLevel\": \"4\",\r\n  \"yearAwarded\": 2025,\r\n  \"providerName\": \"PROFOUND SERVICES LIMITED\",\r\n  \"ukprn\": 90010528,\r\n  \"isMatched\": false,\r\n  \"isFailed\": false\r\n}",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 9990000002,\r\n  \"familyName\": \"PreProdLast2\",\r\n  \"dateOfBirth\": \"2003-02-02\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseCode\": \"1\",\r\n  \"courseName\": \"Network engineer\",\r\n  \"courseLevel\": \"4\",\r\n  \"yearAwarded\": 2020,\r\n  \"providerName\": \"Ginger Nut Training\",\r\n  \"ukprn\": 90010524,\r\n  \"isMatched\": false,\r\n  \"isFailed\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users//{{UserId}}/match",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "",
+            "{{UserId}}",
+            "match"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateUserMatch Second Match",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 6240000002,\r\n  \"familyName\": \"PreProdLast2\",\r\n  \"dateOfBirth\": \"2003-02-02\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseCode\": \"1\",\r\n  \"courseName\": \"Network engineer\",\r\n  \"courseLevel\": \"4\",\r\n  \"yearAwarded\": 2020,\r\n  \"providerName\": \"Ginger Nut Training\",\r\n  \"ukprn\": 90010524,\r\n  \"isMatched\": true,\r\n  \"isFailed\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users//{{UserId}}/match",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "",
+            "{{UserId}}",
+            "match"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateUserMatch Second Fail",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 9990000002,\r\n  \"familyName\": \"PreProdLast2\",\r\n  \"dateOfBirth\": \"2003-02-02\",\r\n  \"certificateType\": \"Standard\",\r\n  \"courseCode\": \"1\",\r\n  \"courseName\": \"Network engineer\",\r\n  \"courseLevel\": \"4\",\r\n  \"yearAwarded\": 2020,\r\n  \"providerName\": \"Ginger Nut Training\",\r\n  \"ukprn\": 90010524,\r\n  \"isMatched\": false,\r\n  \"isFailed\": true\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -382,7 +452,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 2697749755\r\n}",
+          "raw": "{\r\n  \"userId\": \"{{UserId}}\",\r\n  \"uln\": 6240000002\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -502,7 +572,7 @@
           }
         },
         "url": {
-          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/actions",
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/user-actions",
           "protocol": "https",
           "host": [
             "{{Environment}}-digital-certification-api",
@@ -515,7 +585,7 @@
             "api",
             "users",
             "{{UserId}}",
-            "actions"
+            "user-actions"
           ]
         }
       },
@@ -563,6 +633,181 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "GetUserMatches",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/matches",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "matches"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateAdminAction",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"tester\",\r\n  \"action\": \"Viewed\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/user-actions/{{UserActionId}}/admin-actions",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "user-actions",
+            "{{UserActionId}}",
+            "admin-actions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetUserActionByCode",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/user-actions/{{UserActionCode}}",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "user-actions",
+            "{{UserActionCode}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UnlockUser",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/unlock",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "unlock"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateUserIdentity",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"names\": [\r\n    {\r\n      \"validSince\": \"2001-09-01T00:00:00.000Z\",\r\n      \"validUntil\": null,\r\n      \"familyName\": \"PreprodLast2\",\r\n      \"givenNames\": \"PreprodFirst2\"\r\n    }\r\n  ],\r\n  \"dateOfBirth\": \"2003-02-02\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://{{Environment}}-digital-certification-api.apprenticeships.education.gov.uk/api/users/{{UserId}}/identity",
+          "protocol": "https",
+          "host": [
+            "{{Environment}}-digital-certification-api",
+            "apprenticeships",
+            "education",
+            "gov",
+            "uk"
+          ],
+          "path": [
+            "api",
+            "users",
+            "{{UserId}}",
+            "identity"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "auth": {
@@ -606,19 +851,19 @@
     },
     {
       "key": "UserId",
-      "value": "4639ACF6-F4BF-4205-6614-08DEAF324F80"
+      "value": "4B7D8D18-1B13-422D-8A6E-72090EF8A7D1"
     },
     {
       "key": "GovUkIdentifier",
-      "value": "urn:fdc:gov.uk:2022:ruFjQz8uSpWAo2U0gxNszmm7zsRogQlvg5umbuWpYHA"
+      "value": "test-govuk-preprodfirst2"
     },
     {
       "key": "StandardCertificateId",
-      "value": "D61A7AD4-261E-436E-8E6D-12A822B0DC38"
+      "value": "A55B28A8-F7D0-449A-A0DA-D2B58A4530B5"
     },
     {
       "key": "FrameworkLearnerId",
-      "value": "9EFF940D-931B-4CA3-ACF0-CC508D3D1218"
+      "value": "4ACD2D8A-B0AB-4C0F-BA93-89DD94327043"
     },
     {
       "key": "SharingId",
@@ -644,6 +889,16 @@
       "key": "DeletedSharingId",
       "value": "",
       "description": "Obtained from CreateSharing sharingId"
+    },
+    {
+      "key": "UserActionId",
+      "value": "",
+      "description": "Obtained from GetUserActionByCode"
+    },
+    {
+      "key": "UserActionCode",
+      "value": "",
+      "description": "Obtained from CreateUserAction"
     }
   ]
 }

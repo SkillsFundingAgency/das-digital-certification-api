@@ -8,7 +8,7 @@ using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 
 namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateSharingEmailAccess
 {
-    public class CreateSharingEmailAccessCommandHandler : IRequestHandler<CreateSharingEmailAccessCommand, System.Guid?>
+    public class CreateSharingEmailAccessCommandHandler : IRequestHandler<CreateSharingEmailAccessCommand, Guid?>
     {
         private readonly ISharingEmailEntityContext _sharingEmailContext;
         private readonly IDateTimeProvider _dateTimeProvider;

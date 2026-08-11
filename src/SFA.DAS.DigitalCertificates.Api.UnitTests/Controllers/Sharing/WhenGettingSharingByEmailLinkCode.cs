@@ -56,7 +56,12 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Sharing
             // Assert
             result.Should().BeOfType<OkObjectResult>();
             var ok = (OkObjectResult)result;
-            ok.Value.Should().Be(summary);
+            var returned = ok.Value as Models.GetSharingByEmailLinkCodeResponse;
+            returned.Should().NotBeNull();
+            returned!.SharingEmailId.Should().Be(summary.SharingEmailId);
+            returned.CertificateId.Should().Be(summary.CertificateId);
+            returned.CertificateType.Should().Be(summary.CertificateType);
+            returned.ExpiryTime.Should().Be(summary.ExpiryTime);
 
             _mediatorMock.Verify(x => x.Send(It.Is<GetSharingByEmailLinkCodeQuery>(q => q.EmailLinkCode == emailLinkCode), It.IsAny<CancellationToken>()), Times.Once);
         }

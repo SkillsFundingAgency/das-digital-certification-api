@@ -34,7 +34,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserMatchCommand
+            var request = new Models.CreateUserMatchRequest
             {
                 FamilyName = "Smith",
                 DateOfBirth = new DateTime(1990, 1, 1),
@@ -50,7 +50,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _sut.CreateUserMatch(userId, command);
+            var result = await _sut.CreateUserMatch(userId, request);
 
             // Assert
             _mediatorMock.Verify(
@@ -65,7 +65,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserMatchCommand
+            var request = new Models.CreateUserMatchRequest
             {
                 FamilyName = "Brown",
                 DateOfBirth = new DateTime(1992, 8, 10),
@@ -81,7 +81,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new ValidationException("Validation failed"));
 
             // Act
-            var result = await _sut.CreateUserMatch(userId, command);
+            var result = await _sut.CreateUserMatch(userId, request);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
@@ -92,7 +92,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var command = new CreateUserMatchCommand
+            var request = new Models.CreateUserMatchRequest
             {
                 FamilyName = "Taylor",
                 DateOfBirth = new DateTime(1995, 11, 25),
@@ -108,7 +108,7 @@ namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users
                 .ThrowsAsync(new Exception("Unexpected error"));
 
             // Act
-            var result = await _sut.CreateUserMatch(userId, command);
+            var result = await _sut.CreateUserMatch(userId, request);
 
             // Assert
             var statusResult = result as StatusCodeResult;

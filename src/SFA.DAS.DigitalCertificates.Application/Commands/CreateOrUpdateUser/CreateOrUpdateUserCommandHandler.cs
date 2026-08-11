@@ -21,7 +21,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser
 
         public async Task<CreateOrUpdateUserCommandResponse> Handle(CreateOrUpdateUserCommand command, CancellationToken cancellationToken)
         {
-            User? user = await _userEntityContext.GetWithIdentities(command.GovUkIdentifier);
+            User? user = await _userEntityContext.Get(command.GovUkIdentifier);
 
             if (user == null)
             {

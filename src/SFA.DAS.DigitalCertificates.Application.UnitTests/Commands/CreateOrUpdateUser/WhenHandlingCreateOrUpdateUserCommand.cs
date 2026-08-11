@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoFixture;
-using AutoFixture.NUnit3;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
@@ -17,82 +14,112 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateOrUpd
 {
     public class WhenHandlingCreateOrUpdateUserCommand
     {
-        [OneTimeSetUp]
-        public void GlobalFixtureSetup()
+        private Mock<IUserEntityContext> _userEntityContextMock = null!;
+        private Mock<IDateTimeProvider> _dateTimeProviderMock = null!;
+        private CreateOrUpdateUserCommandHandler _sut = null!;
+        
+        private readonly DateTime _utcNow = DateTime.UtcNow;
+        private readonly DateTime _now = DateTime.Now;
+
+        [SetUp]
+        public void SetUp()
         {
-            Fixture fixture = new();
-            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+            _userEntityContextMock = new Mock<IUserEntityContext>();
+            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            _dateTimeProviderMock.SetupGet(d => d.UtcNow).Returns(_utcNow);
+            _dateTimeProviderMock.SetupGet(d => d.Now).Returns(_now);
+
+            _sut = new CreateOrUpdateUserCommandHandler(_dateTimeProviderMock.Object, _userEntityContextMock.Object);
         }
 
         [Test, MoqAutoData]
         public async Task And_UserDoesNotExist_Then_AddsUserAndSavesChanges(
-            CreateOrUpdateUserCommand command,
-            [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
-            [Frozen] Mock<IUserEntityContext> userEntityContext,
-            [Frozen] Mock<IUserIdentityEntityContext> userIdentityEntityContext)
+            CreateOrUpdateUserCommand command)
         {
             // Arrange
-            var now = System.DateTime.UtcNow;
-            dateTimeProvider.Setup(x => x.Now).Returns(now);
-            userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>()))
+            var cancellationToken = new CancellationToken();
+            User? addedUser = null;
+
+            _userEntityContextMock
+                .Setup(x => x.Get(command.GovUkIdentifier))
                 .ReturnsAsync((User?)null);
 
-            userEntityContext
+            _userEntityContextMock
                 .Setup(x => x.Add(It.IsAny<User>()))
+                .Callback<User>(user => addedUser = user)
                 .Returns((EntityEntry<User>)null!);
 
-            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
-
             // Act
-            var result = await _sut.Handle(command, CancellationToken.None);
+            var result = await _sut.Handle(command, cancellationToken);
 
             // Assert
-            userEntityContext.Verify(x => x.Add(It.Is<User>(u =>
-                u.GovUkIdentifier == command.GovUkIdentifier &&
-                u.EmailAddress == command.EmailAddress &&
-                u.PhoneNumber == command.PhoneNumber &&
-                u.LastLoginAt == now
-            )), Times.Once);
+            addedUser.Should().NotBeNull();
+            addedUser!.GovUkIdentifier.Should().Be(command.GovUkIdentifier);
+            addedUser.EmailAddress.Should().Be(command.EmailAddress);
+            addedUser.PhoneNumber.Should().Be(command.PhoneNumber);
+            addedUser.CreatedAt.Should().Be(_utcNow);
+            addedUser.LastLoginAt.Should().Be(_now);
 
-            userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            result.UserId.Should().Be(addedUser.Id);
 
-            result.Should().NotBeNull();
+            _userEntityContextMock.Verify(
+                x => x.Get(command.GovUkIdentifier),
+                Times.Once);
+
+            _userEntityContextMock.Verify(
+                x => x.Add(It.IsAny<User>()),
+                Times.Once);
+
+            _userEntityContextMock.Verify(
+                x => x.SaveChangesAsync(cancellationToken),
+                Times.Once);
         }
 
         [Test, MoqAutoData]
-        public async Task And_UserExists_Then_UpdatesEmailPhoneAndLastLogin(
-            CreateOrUpdateUserCommand command,
-            [Frozen] Mock<IDateTimeProvider> dateTimeProvider,
-            [Frozen] Mock<IUserEntityContext> userEntityContext,
-            [Frozen] Mock<IUserIdentityEntityContext> userIdentityEntityContext)
+        public async Task And_UserExists_Then_UpdatesUserAndSavesChanges(
+            CreateOrUpdateUserCommand command)
         {
             // Arrange
-            var utcNow = DateTime.UtcNow;
-            var now = DateTime.Now;
+            var cancellationToken = new CancellationToken();
+            var originalCreatedAt = _utcNow.AddMonths(-1);
 
-            dateTimeProvider.Setup(x => x.Now).Returns(now);
-            dateTimeProvider.Setup(x => x.UtcNow).Returns(utcNow);
+            var existingUser = new User
+            {
+                Id = Guid.NewGuid(),
+                GovUkIdentifier = command.GovUkIdentifier,
+                EmailAddress = "current@email.com",
+                PhoneNumber = "0123456789",
+                CreatedAt = originalCreatedAt
+            };
 
-            var existingUser = new User { Id = Guid.NewGuid(), GovUkIdentifier = command.GovUkIdentifier, EmailAddress = "current@email.com", CreatedAt = utcNow.AddMonths(-1) };
-            userEntityContext.Setup(x => x.GetWithIdentities(It.IsAny<string>()))
+            _userEntityContextMock
+                .Setup(x => x.Get(command.GovUkIdentifier))
                 .ReturnsAsync(existingUser);
 
-            var _sut = new CreateOrUpdateUserCommandHandler(dateTimeProvider.Object, userEntityContext.Object);
-
             // Act
-            var result = await _sut.Handle(command, CancellationToken.None);
+            var result = await _sut.Handle(command, cancellationToken);
 
             // Assert
-            userEntityContext.Verify(x => x.Add(It.IsAny<User>()), Times.Never);
-            userEntityContext.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
-
+            existingUser.GovUkIdentifier.Should().Be(command.GovUkIdentifier);
             existingUser.EmailAddress.Should().Be(command.EmailAddress);
             existingUser.PhoneNumber.Should().Be(command.PhoneNumber);
-            existingUser.LastLoginAt.Should().Be(now);
-            existingUser.CreatedAt.Should().Be(utcNow.AddMonths(-1));
+            existingUser.LastLoginAt.Should().Be(_now);
+            existingUser.CreatedAt.Should().Be(originalCreatedAt);
 
-            result.Should().NotBeNull();
             result.UserId.Should().Be(existingUser.Id);
+
+            _userEntityContextMock.Verify(
+                x => x.Get(command.GovUkIdentifier),
+                Times.Once);
+
+            _userEntityContextMock.Verify(
+                x => x.Add(It.IsAny<User>()),
+                Times.Never);
+
+            _userEntityContextMock.Verify(
+                x => x.SaveChangesAsync(cancellationToken),
+                Times.Once);
         }
     }
 }

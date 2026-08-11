@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using FluentAssertions;
 using FluentValidation;
 using MediatR;
@@ -11,7 +11,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.DigitalCertificates.Api.Controllers;
 using SFA.DAS.DigitalCertificates.Application.Commands.CreateOrUpdateUser;
-using SFA.DAS.DigitalCertificates.Application.Models;
+using SFA.DAS.DigitalCertificates.Api.Models;
 using SFA.DAS.Testing.AutoFixture;
 
 namespace SFA.DAS.DigitalCertificates.Api.UnitTests.Controllers.Users

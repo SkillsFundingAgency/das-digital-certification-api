@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SFA.DAS.DigitalCertificates.Domain.Interfaces;
 using static SFA.DAS.DigitalCertificates.Domain.Models.Enums;
+using SFA.DAS.DigitalCertificates.Domain.Models;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,14 +32,15 @@ namespace SFA.DAS.DigitalCertificates.Application.Queries.GetUserActions
                     ActionCode = ua.ActionCode,
                     FamilyName = ua.FamilyName,
                     GivenNames = ua.GivenNames,
+                    Uln = ua.User?.UserAuthorisation?.ULN,
                     CertificateId = ua.CertificateId,
-                    CertificateType = ua.CertificateType,
+                    CertificateType = ua.CertificateType ?? CertificateType.Unknown,
                     CourseName = ua.CourseName,
                     AdminActions = ua.AdminActions?.OrderByDescending(a => a.ActionTime).Select(a => new AdminActionDetail
                     {
                         Username = a.Username,
                         ActionTime = a.ActionTime,
-                        Action = a.Action.ToString()
+                        Action = a.Action
                     }).ToList(),
                     ActionStatus = (ua.AdminActions != null && ua.AdminActions.Any()) ? UserActionStatus.Viewed : UserActionStatus.New
                 }).ToList()

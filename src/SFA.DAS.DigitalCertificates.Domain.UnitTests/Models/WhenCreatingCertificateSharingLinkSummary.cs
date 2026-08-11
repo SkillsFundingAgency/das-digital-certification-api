@@ -15,7 +15,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Models
             var certificateType = CertificateType.Framework;
             var expiryTime = DateTime.UtcNow.AddDays(3);
 
-            var model = new SFA.DAS.DigitalCertificates.Domain.Models.CertificateSharingLinkSummary
+            var model = new Domain.Models.CertificateSharingLinkSummary
             {
                 SharingId = sharingId,
                 CertificateId = certificateId,

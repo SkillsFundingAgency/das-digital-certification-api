@@ -60,6 +60,14 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
                     FamilyName = "Smith",
                     GivenNames = "John",
                     ActionCode = "AC1"
+                    ,
+                    User = new User
+                    {
+                        Id = userId,
+                        GovUkIdentifier = "GOV123",
+                        EmailAddress = "test@example.com",
+                        UserAuthorisation = new UserAuthorisation { Id = Guid.NewGuid(), UserId = userId, ULN = 12345678, AuthorisedAt = DateTime.UtcNow }
+                    }
                 }
             };
 
@@ -77,6 +85,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             ua.GivenNames.Should().Be("John");
             ua.ActionStatus.Should().Be(UserActionStatus.New);
             ua.AdminActions.Should().BeEmpty();
+            ua.Uln.Should().Be(12345678);
             _userActionsContextMock.Verify(x => x.GetByUserIdAsync(userId, It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -101,7 +110,14 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
                     FamilyName = "Jones",
                     GivenNames = "Amy",
                     ActionCode = "AC2",
-                    AdminActions = new List<AdminActions> { admin1, admin2 }
+                    AdminActions = new List<AdminActions> { admin1, admin2 },
+                    User = new User
+                    {
+                        Id = userId,
+                        GovUkIdentifier = "GOV123",
+                        EmailAddress = "test@example.com",
+                        UserAuthorisation = new UserAuthorisation { Id = Guid.NewGuid(), UserId = userId, ULN = 12345678, AuthorisedAt = DateTime.UtcNow }
+                    }
                 }
             };
 
@@ -119,6 +135,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserActio
             ua.AdminActions!.Should().HaveCount(2);
             ua.AdminActions.First().Username.Should().Be("admin2");
             ua.AdminActions.Last().Username.Should().Be("admin1");
+            ua.Uln.Should().Be(12345678);
             _userActionsContextMock.Verify(x => x.GetByUserIdAsync(userId, It.IsAny<CancellationToken>()), Times.Once);
         }
     }

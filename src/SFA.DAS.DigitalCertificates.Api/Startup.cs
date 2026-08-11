@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using SFA.DAS.Api.Common.AppStart;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DigitalCertificates.Api.AppStart;
@@ -82,27 +82,17 @@ namespace SFA.DAS.DigitalCertificates.Api
                 {
                     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
-                        In = ParameterLocation.Header,
-                        Description = "Please enter token",
                         Name = "Authorization",
+                        Description = "JWT Authorization header using the Bearer scheme.",
+                        In = ParameterLocation.Header,
                         Type = SecuritySchemeType.Http,
-                        BearerFormat = "JWT",
-                        Scheme = "bearer"
+                        Scheme = "bearer",
+                        BearerFormat = "JWT"
                     });
 
-                    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    opt.AddSecurityRequirement(document => new OpenApiSecurityRequirement
                     {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type=ReferenceType.SecurityScheme,
-                                    Id="Bearer"
-                                }
-                            },
-                            new string[]{}
-                        }
+                        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
                     });
                 }
             });

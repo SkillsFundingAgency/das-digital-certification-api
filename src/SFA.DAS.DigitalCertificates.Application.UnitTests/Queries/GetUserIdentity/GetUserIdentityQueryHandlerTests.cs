@@ -39,7 +39,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserIdent
             };
 
             var userEntityMock = new Mock<IUserEntityContext>();
-            userEntityMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(userId)).ReturnsAsync(user);
+            userEntityMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(userId)).ReturnsAsync(user);
 
             var matchMock = new Mock<IUserMatchEntityContext>();
             var authMock = new Mock<IUserAuthorisationEntityContext>();
@@ -79,7 +79,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Queries.GetUserIdent
             };
 
             var userEntityMock = new Mock<IUserEntityContext>();
-            userEntityMock.Setup(x => x.GetWithIdentitiesAndAuthorisation(userId)).ReturnsAsync(user);
+            userEntityMock.Setup(x => x.GetWithIdentitiesAndAuthorisationByUserId(userId)).ReturnsAsync(user);
 
             var matchMock = new Mock<IUserMatchEntityContext>();
             matchMock.Setup(x => x.GetPreviouslyAuthorisedUlns("Smith", dob)).ReturnsAsync(new List<Guid> { userId, otherUserId });

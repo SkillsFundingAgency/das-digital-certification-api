@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11822.322 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F0113337-E298-4D11-AA06-23B69C2337E0}"
 EndProject
@@ -25,6 +25,8 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.DAS.DigitalCertificates.Database", "SFA.DAS.DigitalCertificates.Database\SFA.DAS.DigitalCertificates.Database.sqlproj", "{4EB62E3C-047A-4090-853E-EA91EE6EB484}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Domain", "SFA.DAS.DigitalCertificates.Domain\SFA.DAS.DigitalCertificates.Domain.csproj", "{547E76C7-E4D3-8F58-08AA-1D165B8FD209}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.DAS.DigitalCertificates.Contracts", "SFA.DAS.DigitalCertificates.Contracts\SFA.DAS.DigitalCertificates.Contracts.csproj", "{E5F3F6A5-7CD8-F055-4675-56E4F9346A74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +68,10 @@ Global
 		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{547E76C7-E4D3-8F58-08AA-1D165B8FD209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F3F6A5-7CD8-F055-4675-56E4F9346A74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F3F6A5-7CD8-F055-4675-56E4F9346A74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F3F6A5-7CD8-F055-4675-56E4F9346A74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F3F6A5-7CD8-F055-4675-56E4F9346A74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
