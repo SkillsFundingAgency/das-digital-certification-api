@@ -77,5 +77,52 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Action");
         }
+
+        [Test]
+        public void And_UsernameContainsPunctuationAndAmpersand_Then_CommandIsValid()
+        {
+            var command = new CreateAdminActionCommand
+            {
+                Username = "O'Connor & Sons Ltd.-Test",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void And_UsernameExceedsMaxLength_Then_ErrorReturned()
+        {
+            var command = new CreateAdminActionCommand
+            {
+                Username = new string('a', 256),
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
+
+        [Test]
+        public void And_UsernameContainsInvalidCharacters_Then_ErrorReturned()
+        {
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad<script>",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            var result = _validator.Validate(command);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
     }
 }
