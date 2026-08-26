@@ -18,6 +18,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
         [Test]
         public void And_AllFieldsAreCorrect_Then_CommandIsValid()
         {
+            // Arrange
             var command = new CreateAdminActionCommand
             {
                 Username = "admin",
@@ -25,14 +26,17 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
                 UserActionId = 1
             };
 
+            // Act
             var result = _validator.Validate(command);
 
+            // Assert
             result.IsValid.Should().BeTrue();
         }
 
         [Test]
         public void And_UsernameIsEmpty_Then_ErrorReturned()
         {
+            // Arrange
             var command = new CreateAdminActionCommand
             {
                 Username = "",
@@ -40,8 +44,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
                 UserActionId = 1
             };
 
+            // Act
             var result = _validator.Validate(command);
 
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Username");
         }
@@ -49,6 +55,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
         [Test]
         public void And_UserActionIdIsZero_Then_ErrorReturned()
         {
+            // Arrange
             var command = new CreateAdminActionCommand
             {
                 Username = "admin",
@@ -56,8 +63,10 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
                 UserActionId = 0
             };
 
+            // Act
             var result = _validator.Validate(command);
 
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "UserActionId");
         }
@@ -65,6 +74,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
         [Test]
         public void And_ActionIsInvalid_Then_ErrorReturned()
         {
+            // Arrange
             var command = new CreateAdminActionCommand
             {
                 Username = "admin",
@@ -72,10 +82,106 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
                 UserActionId = 1
             };
 
+            // Act
             var result = _validator.Validate(command);
 
+            // Assert
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Action");
+        }
+
+        [Test]
+        public void And_UsernameContainsPunctuationAndAmpersand_Then_CommandIsValid()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "O'Connor & Sons Ltd.-Test",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void And_UsernameExceedsMaxLength_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = new string('a', 256),
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
+
+        [Test]
+        public void And_UsernameContainsInvalidCharacters_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad<script>",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
+
+        [Test]
+        public void And_UsernameContainsDoubleQuote_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad\"name",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
+
+        [Test]
+        public void And_UsernameContainsBackslash_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad\\name",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
         }
     }
 }
