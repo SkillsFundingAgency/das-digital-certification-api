@@ -9,7 +9,7 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateAdminAction
             RuleFor(x => x.Username)
                 .NotEmpty()
                 .MaximumLength(255)
-                .Matches(@"^[\p{L}\p{N}\s\p{P}&]+$")
+                .Matches(@"^[^<>\""\\]+$")
                 .WithMessage("User name contains invalid characters.");
 
             RuleFor(x => x.UserActionId).GreaterThan(0);

@@ -145,5 +145,43 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.CreateAdmin
             result.IsValid.Should().BeFalse();
             result.Errors.Should().Contain(e => e.PropertyName == "Username");
         }
+
+        [Test]
+        public void And_UsernameContainsDoubleQuote_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad\"name",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
+
+        [Test]
+        public void And_UsernameContainsBackslash_Then_ErrorReturned()
+        {
+            // Arrange
+            var command = new CreateAdminActionCommand
+            {
+                Username = "bad\\name",
+                Action = AdminActionType.Viewed,
+                UserActionId = 1
+            };
+
+            // Act
+            var result = _validator.Validate(command);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().Contain(e => e.PropertyName == "Username");
+        }
     }
 }
