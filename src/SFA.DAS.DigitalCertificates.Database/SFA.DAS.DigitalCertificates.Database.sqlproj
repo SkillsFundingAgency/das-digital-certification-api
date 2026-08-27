@@ -66,32 +66,26 @@
     <Folder Include="Scripts\PreDeploymentScripts" />
     <Folder Include="Scripts\PostDeploymentScripts\Patches" />
     <Folder Include="Scripts\PreDeploymentScripts\Patches" />
+    <Folder Include="Scripts\Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\User.sql" />
     <None Include="Scripts\PostDeploymentScripts\LookupData\ActionType.sql" />
     <None Include="Scripts\PostDeploymentScripts\LookupData\SynchronizeLookupData.sql" />
-    <Build Include="Tables\UserHistory.sql" />
     <Build Include="Tables\ActionType.sql" />
     <Build Include="Tables\UserAuthorisation.sql" />
-    <Build Include="Tables\UserAuthorisationHistory.sql" />
     <Build Include="Tables\Sharing.sql" />
     <Build Include="Tables\SharingEmail.sql" />
     <Build Include="Tables\SharingEmailAccess.sql" />
     <Build Include="Tables\SharingAccess.sql" />
-    <Build Include="Tables\SharingHistory.sql" />
-    <Build Include="Tables\SharingAccessHistory.sql" />
-    <Build Include="Tables\SharingEmailAccessHistory.sql" />
-    <Build Include="Tables\SharingEmailHistory.sql" />
     <Build Include="Tables\UserActions.sql" />
     <Build Include="Tables\AdminActions.sql" />
-    <Build Include="Tables\AdminActionsHistory.sql" />
     <Build Include="Tables\UserIdentity.sql" />
     <Build Include="Tables\UserMatch.sql" />
     <Build Include="Tables\PatchLog.sql" />
-    <None Include="Scripts\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql" />
-    <None Include="Scripts\PreDeploymentScripts\Patches\Delete_Duplicate_Reprint_ActionType.sql" />
-    <None Include="Scripts\PostDeploymentScripts\Patches\Drop_UserActionsHistory_Table.sql" />
+    <None Include="Scripts\PostDeploymentScripts\Patches\Patch_Drop_SystemVersioned_History_Tables.sql" />
+    <None Include="Scripts\PreDeploymentScripts\Patches\Patch_Start_UserHistory_UserAudit_Migration.sql" />
+    <Build Include="Tables\UserAudit.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
@@ -108,7 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PreDeploymentScripts\DisableSystemVersioningTables.sql" />
-    <None Include="Scripts\PostDeploymentScripts\EnableSystemVersioningTables.sql" />
+    <None Include="Scripts\PostDeploymentScripts\Patches\Patch_Complete_UserHistory_UserAudit_Migration.sql" />
+    <Build Include="Scripts\Triggers\TR_User_Audit.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.DAS.DigitalCertificates.Database.refactorlog" />
