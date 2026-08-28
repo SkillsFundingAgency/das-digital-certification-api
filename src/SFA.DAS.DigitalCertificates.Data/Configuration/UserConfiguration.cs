@@ -10,7 +10,8 @@ namespace SFA.DAS.DigitalCertificates.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable(nameof(User))
+            builder.ToTable(nameof(User), tableBuilder =>
+                tableBuilder.UseSqlOutputClause(false))
                 .HasKey(x => x.Id);
 
             builder.HasOne(e => e.UserAuthorisation)
