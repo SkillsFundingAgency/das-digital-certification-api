@@ -15,7 +15,7 @@ BEGIN
     BEGIN TRANSACTION;
 
     DROP TABLE IF EXISTS AdminActionsHistory;
-    DROP TABLE IF EXISTS SharingHistory
+    DROP TABLE IF EXISTS SharingHistory;
     DROP TABLE IF EXISTS SharingEmailHistory;
     DROP TABLE IF EXISTS SharingAccessHistory;
     DROP TABLE IF EXISTS SharingEmailAccessHistory;
