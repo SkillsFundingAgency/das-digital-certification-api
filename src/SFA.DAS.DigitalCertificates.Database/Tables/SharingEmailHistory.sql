@@ -2,7 +2,7 @@
 (
     [Id] UNIQUEIDENTIFIER NOT NULL,
     [SharingId] UNIQUEIDENTIFIER NOT NULL,
-    [EmailAddress] VARCHAR(254) NOT NULL,
+    [EmailAddress] NVARCHAR(256) NOT NULL,
     [EmailLinkCode] UNIQUEIDENTIFIER NOT NULL,
     [SentTime] DATETIME2 NOT NULL,
     [ValidFrom] DATETIME2 (0) NOT NULL,
