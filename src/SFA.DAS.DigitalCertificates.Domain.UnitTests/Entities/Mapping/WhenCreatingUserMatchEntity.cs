@@ -39,7 +39,8 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
                 ProviderName = providerName,
                 Ukprn = ukprn,
                 IsMatched = true,
-                IsFailed = false
+                IsFailed = false,
+                IsUlnMatched = true
             };
 
             match.Id.Should().Be(id);
@@ -56,6 +57,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.UnitTests.Entities.Mapping
             match.Ukprn.Should().Be(ukprn);
             match.IsMatched.Should().BeTrue();
             match.IsFailed.Should().BeFalse();
+            match.IsUlnMatched.Should().BeTrue();
         }
     }
 }
