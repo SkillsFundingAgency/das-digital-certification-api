@@ -42,7 +42,8 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
                 ProviderName = request.ProviderName,
                 Ukprn = request.Ukprn,
                 IsMatched = request.IsMatched,
-                IsFailed = request.IsFailed
+                IsFailed = request.IsFailed,
+                IsUlnMatched = request.IsUlnMatched
             };
 
             _matchContext.Add(entity);
