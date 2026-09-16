@@ -14,4 +14,7 @@ Post-Deployment Script Template
 :r .\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql
 :r .\PostDeploymentScripts\Patches\Drop_UserActionsHistory_Table.sql
 
-:r .\PostDeploymentScripts\EnableSystemVersioningTables.sql
+:r .\PostDeploymentScripts\EnableSystemVersioningTables.sql;
+
+
+DROP TABLE [dbo].[UserAuditMigration];
