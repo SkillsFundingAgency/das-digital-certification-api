@@ -9,9 +9,6 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r .\PreDeploymentScripts\DisableSystemVersioningTables.sql
 :r .\PostDeploymentScripts\LookupData\SynchronizeLookupData.sql
-:r .\PostDeploymentScripts\Patches\Backfill_User_CreatedAt_From_UserHistory_ValidFrom.sql
-:r .\PostDeploymentScripts\Patches\Drop_UserActionsHistory_Table.sql
-
-:r .\PostDeploymentScripts\EnableSystemVersioningTables.sql
+:r .\PostDeploymentScripts\Patches\Patch_Complete_UserHistory_UserAudit_Migration.sql
+:r .\PostDeploymentScripts\Patches\Patch_Drop_SystemVersioned_History_Tables.sql
