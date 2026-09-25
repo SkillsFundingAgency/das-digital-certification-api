@@ -2,7 +2,7 @@
 (
     [Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
     [SharingId] UNIQUEIDENTIFIER NOT NULL,
-    [EmailAddress] VARCHAR(254) NOT NULL,
+    [EmailAddress] NVARCHAR(256) NOT NULL,
     [EmailLinkCode] UNIQUEIDENTIFIER NOT NULL,
     [SentTime] DATETIME2 NOT NULL,
     CONSTRAINT FK_SharingEmail_Sharing FOREIGN KEY ([SharingId]) REFERENCES [dbo].[Sharing]([Id])
