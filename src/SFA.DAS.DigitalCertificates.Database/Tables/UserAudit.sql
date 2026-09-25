@@ -3,7 +3,7 @@
     [AuditId] BIGINT IDENTITY(1, 1) NOT NULL CONSTRAINT [PK_UserAudit] PRIMARY KEY,
     [Id] UNIQUEIDENTIFIER NULL,
     [GovUkIdentifier] VARCHAR(100) NULL,
-    [EmailAddress] NVARCHAR(256) NOT NULL,
+    [EmailAddress] NVARCHAR(256) NULL,
     [PhoneNumber] VARCHAR(20) NULL,
     [LastLoginAt] DATETIME2 NULL,
     [IsLocked] BIT NULL,
