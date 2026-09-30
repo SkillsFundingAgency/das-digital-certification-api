@@ -18,6 +18,7 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
         public int? Ukprn { get; set; }
         public bool IsMatched { get; set; }
         public bool IsFailed { get; set; }
+        public bool IsUlnMatched { get; set; }
 
         public static implicit operator CreateUserMatchCommand(CreateUserMatchRequest source)
         {
@@ -34,7 +35,8 @@ namespace SFA.DAS.DigitalCertificates.Api.Models
                 ProviderName = source.ProviderName,
                 Ukprn = source.Ukprn,
                 IsMatched = source.IsMatched,
-                IsFailed = source.IsFailed
+                IsFailed = source.IsFailed,
+                IsUlnMatched = source.IsUlnMatched
             };
         }
     }

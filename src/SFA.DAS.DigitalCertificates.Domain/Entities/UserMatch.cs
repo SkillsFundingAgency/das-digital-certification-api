@@ -20,6 +20,7 @@ namespace SFA.DAS.DigitalCertificates.Domain.Entities
         public int? Ukprn { get; set; }
         public bool IsMatched { get; set; }
         public bool IsFailed { get; set; }
+        public bool IsUlnMatched { get; set; }
 
         public User? User { get; set; }
     }

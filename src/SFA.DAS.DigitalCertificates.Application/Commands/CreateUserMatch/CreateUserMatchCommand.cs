@@ -19,5 +19,6 @@ namespace SFA.DAS.DigitalCertificates.Application.Commands.CreateUserMatch
         public int? Ukprn { get; set; }
         public bool IsMatched { get; set; }
         public bool IsFailed { get; set; }
+        public bool IsUlnMatched { get; set; }
     }
 }

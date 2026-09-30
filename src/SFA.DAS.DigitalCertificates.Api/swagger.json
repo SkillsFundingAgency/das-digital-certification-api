@@ -1884,6 +1884,9 @@
           },
           "isFailed": {
             "type": "boolean"
+          },
+          "isUlnMatched": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
