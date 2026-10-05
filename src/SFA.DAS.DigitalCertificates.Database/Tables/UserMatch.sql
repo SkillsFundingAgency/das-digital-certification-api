@@ -15,6 +15,7 @@
     [Ukprn] INT NULL,
     [IsMatched] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsMatched] DEFAULT (0),
     [IsFailed] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsFailed] DEFAULT (0),
+    [IsUlnMatched] BIT NOT NULL CONSTRAINT [DF_UserMatch_IsUlnMatched] DEFAULT (0),
     CONSTRAINT FK_UserMatch_User FOREIGN KEY ([UserId]) REFERENCES [dbo].[User]([Id])
 );
 GO
