@@ -21,7 +21,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
 
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
-                Names = new List<Name>
+                Names = new List<IdentityName>
                 {
                     new() { GivenNames = "Jane", FamilyName = "Doe" }
                 },
@@ -44,7 +44,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
 
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
-                Names = new List<Name>(),
+                Names = new List<IdentityName>(),
                 DateOfBirth = now.AddYears(-20)
             }, Guid.NewGuid());
 
@@ -86,7 +86,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
 
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
-                Names = new List<Name>
+                Names = new List<IdentityName>
                 {
                     new() { GivenNames = "Jane", FamilyName = "Doe" }
                 },
@@ -110,7 +110,7 @@ namespace SFA.DAS.DigitalCertificates.Application.UnitTests.Commands.UpdateUserI
 
             var command = new UpdateUserIdentityCommand(new UpdateUserIdentityRequest
             {
-                Names = new List<Name>
+                Names = new List<IdentityName>
                 {
                     new() { GivenNames = "Jane", FamilyName = "Doe" }
                 },

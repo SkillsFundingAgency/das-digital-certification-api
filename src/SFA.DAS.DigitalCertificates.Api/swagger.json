@@ -2248,10 +2248,6 @@
         ],
         "type": "object",
         "properties": {
-          "userIdentityId": {
-            "type": "string",
-            "format": "uuid"
-          },
           "validSince": {
             "type": "string",
             "format": "date-time",
